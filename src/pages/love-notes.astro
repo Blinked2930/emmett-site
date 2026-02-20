@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// We create a simple list of your image paths with the correct .jpeg extension
+const notes = [
+  '/love-notes/1.jpeg',
+  '/love-notes/2.jpeg',
+  '/love-notes/3.jpeg',
+  '/love-notes/4.jpeg',
+  '/love-notes/5.jpeg',
+  '/love-notes/6.jpeg'
+];
+---
+
+<Layout>
+  <main class="max-w-7xl mx-auto px-6 py-20">
+    <a href="/" class="text-zinc-400 hover:text-zinc-100 transition-colors duration-300 font-['Inter'] text-sm tracking-wider uppercase mb-16 inline-block">
+      &larr; Back to Home
+    </a>
+
+    <header class="mb-20 max-w-2xl">
+      <h1 class="font-['Montserrat'] font-extrabold text-5xl md:text-6xl text-zinc-100 mb-6">
+        From A Stranger
+      </h1>
+      <p class="font-['Inter'] text-zinc-400 text-lg leading-relaxed font-light">
+        In an era of passive consumption, I leave 30-word handwritten messages in the places I travel. No context, no agenda—just a brief intersection of two lives.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {notes.map((note) => (
+        <div class="aspect-[4/3] overflow-hidden bg-zinc-800 rounded-sm border border-zinc-700/50 shadow-lg group">
+          <img 
+            src={note} 
+            alt="A handwritten note left for a stranger" 
+            class="w-full h-full object-cover grayscale contrast-125 opacity-80 mix-blend-luminosity group-hover:grayscale-0 group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-105 transition-all duration-700 ease-in-out cursor-pointer"
+          />
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>

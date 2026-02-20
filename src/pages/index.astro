@@ -1,17 +1,76 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import projects from '../data/projects.json';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Emmett Frett - Portfolio">
+	<!-- Hero Section: split layout (text left, headshot right) -->
+	<section class="relative min-h-screen flex flex-col md:flex-row">
+		<!-- Left: dark charcoal panel matching studio background -->
+		<div class="flex-1 flex items-center justify-center md:justify-end py-16 md:py-0 px-8 sm:px-12 md:px-12 lg:px-20 xl:px-24 bg-[#1c1c1e]">
+			<div class="text-left w-full max-w-xl">
+				<h1 class="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl mb-6 tracking-tight text-zinc-100">
+					Emmett Frett
+				</h1>
+				<p class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-zinc-400 tracking-wide">
+					Sound Engineer | Peace Corps Volunteer | Builder
+				</p>
+			</div>
+		</div>
+		<!-- Right: headshot (no text overlay) -->
+		<div class="flex-1 relative min-h-[50vh] md:min-h-screen">
+			<img
+				src="/62-002_Original.jpeg"
+				alt="Emmett Frett"
+				class="absolute inset-0 w-full h-full object-cover object-center md:object-[center_30%]"
+			/>
+		</div>
+	</section>
+
+	<!-- Projects Section -->
+	<section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+		<h2 class="text-4xl sm:text-5xl font-bold mb-16 text-center tracking-tight">
+			My Projects
+		</h2>
+		
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+			{projects.map((project) => {
+				const isExternal = project.title === 'Letters from Albania';
+				return (
+					<a
+						href={project.link}
+						target={isExternal ? '_blank' : undefined}
+						rel={isExternal ? 'noopener noreferrer' : undefined}
+						class="group relative block bg-zinc-800/50 border border-zinc-700/50 rounded-lg p-8 hover:-translate-y-1 transition-all duration-300 hover:border-zinc-600/70 hover:shadow-2xl hover:shadow-zinc-900/50 cursor-pointer no-underline text-inherit"
+					>
+						<div class="absolute inset-0 rounded-lg bg-gradient-to-br from-zinc-800/0 to-zinc-900/0 group-hover:from-zinc-800/20 group-hover:to-zinc-900/20 transition-all duration-300" aria-hidden="true"></div>
+						<div class="relative z-10">
+							<h3 class="text-2xl font-bold mb-3 text-zinc-100">{project.title}</h3>
+							<p class="text-zinc-400 font-light mb-4">{project.description}</p>
+							<span class="text-sm font-medium text-zinc-400 group-hover:text-zinc-100 transition-colors duration-300 border-b border-transparent group-hover:border-zinc-400">
+								View Artifact →
+							</span>
+						</div>
+					</a>
+				);
+			})}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	h1 {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: 800;
+	}
+	
+	h2 {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: 700;
+	}
+	
+	h3 {
+		font-family: 'Montserrat', sans-serif;
+		font-weight: 700;
+	}
+</style>
