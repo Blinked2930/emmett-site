@@ -1,35 +1,1420 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const rCode = `---
+title: "Senior Sem"
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
-<Layout>
-  <main class="max-w-4xl mx-auto px-6 py-32 text-center flex flex-col items-center justify-center min-h-[70vh]">
-    <a href="/" class="text-zinc-500 hover:text-zinc-200 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-12 inline-block">
-      &larr; Back to Home
-    </a>
+ ## Script Name: Senior Sem Coding
 
-    <div class="border border-zinc-800 bg-zinc-900/30 p-12 md:p-20 rounded-2xl shadow-2xl max-w-2xl w-full">
-      
-      <div class="w-32 h-32 mx-auto mb-10 rounded-full overflow-hidden border border-zinc-700/50 shadow-lg relative">
-        <div class="absolute inset-0 bg-zinc-900/20 z-10"></div>
-        <img 
-          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80" 
-          alt="Data Analysis" 
-          class="w-full h-full object-cover grayscale opacity-80 mix-blend-luminosity"
-        />
-      </div>
-      
-      <h1 class="font-['Montserrat'] font-black text-3xl md:text-4xl text-zinc-100 mb-6 tracking-tight">
-        Archive Compiling
-      </h1>
-      
-      <p class="font-['Inter'] text-zinc-400 text-lg leading-relaxed font-light mb-8">
-        I am currently structuring this section to include formal academic papers, due diligence reports, and embedded <span class="text-zinc-200 font-medium">R Studio models</span> evaluating market impacts.
-      </p>
+     Purpose: Analyze Gender and Enivornmental Data for Senior Seminar
+     Author(s): Emmett Frett
+     Date Created: 03.26.25
 
-      <div class="inline-block border border-zinc-700/50 bg-zinc-800/50 px-6 py-3 rounded-full font-['Inter'] text-xs tracking-widest text-zinc-300 uppercase">
-        Deployment Expected 2026
-      </div>
+     Notes:
+
+ ------------------------------------------------------------------------
+ #Working Directory:
+
+\`\`\`{r message=FALSE, warning=FALSE}
+setwd("~/Documents/RStudio/Senior Sem")
+options(scipen = 999)
+\`\`\`
+
+
+ ------------------------------------------------------------------------
+ #Libraries and Packages:
+
+\`\`\`{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dplyr)
+library(readr)
+#install.packages("tidycensus")
+library(tidycensus)
+#install.packages("zipcodeR")
+library(zipcodeR)
+library(readxl)
+library(lubridate)
+#install.packages("modelsummary")
+library(modelsummary)
+library(ggplot2)
+#install.packages("broom")
+library(broom)
+#install.packages("tinytex")
+#tinytex::install_tinytex(force = TRUE)
+#install.packages("patchwork")
+library(patchwork)
+library(rdrobust)
+#install.packages("stargazer")
+library(stargazer)
+
+\`\`\`
+
+ ------------------------------------------------------------------------
+ # Load Data:
+\`\`\`{r message=FALSE, warning=FALSE}
+Municipal_Data <- read_csv("ledb_candidatelevel - ledb_candidatelevel.csv")
+
+Leed_Projects <- read_csv("PublicLEEDProjectsDirectory (2).xlsx - Sheet1.csv")
+
+geo_info <- read_csv("Geo_Info - LandArea_Sheet.csv")
+#source: https://data.census.gov/table/GEOINFO2023.GEOINFO?g=010XX00US$0500000&d=GEO+Geography+Information
+zip_county_fips <- read_excel("ZIP_COUNTY_122024.xlsx") #zip to county fips
+\`\`\`
+Source for crosswalk: https://www.huduser.gov/apps/public/uspscrosswalk/home
+
+
+ ----------------------------------------------------------------------------------------
+ # Data Analysis:
+ 
+ *Cleaning Data*
+Lead projects FIPS codes
+\`\`\`{r message=FALSE, warning=FALSE}
+Leed_Projects <- filter(Leed_Projects, Country == "US") # Look at only US Leed Projects
+
+Leed_Projects <- Leed_Projects %>% 
+  filter(GrossFloorArea != 0) %>% # Removes Projects with 0 area
+  filter(Isconfidential == "No") %>% # Removes Projects that are confidential (NAs)
+  filter(IsCertified == "Yes")
+
+Leed_Projects <- Leed_Projects %>% 
+  mutate(GrossFloorArea = if_else(UnitOfMeasurement == "Sq m",
+                                  GrossFloorArea * 10.7639,
+                                  GrossFloorArea)) %>% 
+  mutate(UnitOfMeasurement = "Sq ft") # converts everything to square foot
+
+zip_fips <- zip_county_fips %>% 
+  select(COUNTY, ZIP, USPS_ZIP_PREF_CITY, USPS_ZIP_PREF_STATE)
+names(zip_fips) <- c("FIPS", "Zipcode", "CITY", "STATE")
+
+zip_fips <- zip_fips %>% 
+  select(FIPS, Zipcode) 
+
+
+
+Leed_Projects <- left_join(Leed_Projects, zip_fips, by = "Zipcode") # Adds fips codes to LEED data
+
+\`\`\`
+ 
+Cleaning Municipal Data
+\`\`\`{r message=FALSE, warning=FALSE}
+names(Municipal_Data) <- c("ledb_candid",         "full_name"  ,         "firstname"    ,       "lastname"      ,      
+                           "FIPS" ,               "geo_name" ,           "state_abb"      ,     "office_consolidated",
+                           "year"   ,             "month"      ,         "district"   ,         "contest"    ,        
+                           "votes" ,              "vote_share"    ,      "n_winners"    ,       "winner"    ,         
+                           "incumbent"   ,        "contributor.cfscore" ,"bonica.cid"  ,        "prob_democrat" ,      
+                           "prob_republican" ,    "pid_est"   ,          "prob_female"    ,     "prob_male"    ,      
+                           "gender_est"  ,        "prob_black" ,         "prob_white"  ,        "prob_hispanic"  ,    
+                           "prob_asian" ,         "prob_other"  ,        "race_est"  ,          "ballotpedia_url" )
+\`\`\`
+
+*Narrowing Municipal data*
+\`\`\`{r message=FALSE, warning=FALSE}
+Municipal_Data <- Municipal_Data %>% 
+  filter(office_consolidated %in% c("Mayor", "County Legislature", "County Executive", "City Council") ) 
+            #Includes only wanted election types
+\`\`\`
+
+*Municipal FIPS codes*
+\`\`\`{r message=FALSE, warning=FALSE}
+Municipal_Data <- Municipal_Data %>%
+  mutate(FIPS = if_else(nchar(FIPS) == 6,
+                        paste0("0", FIPS),
+                        FIPS))                    #Adds leading 0 to 6 digit FIPS codes
+
+
+Municipal_Data <- Municipal_Data %>%
+  mutate(geo_name = if_else(FIPS == 2090, 
+                            "fairbanks north star borough", 
+                            geo_name)) %>% 
+  mutate(geo_name = if_else(FIPS == 2122, 
+                            "kenai peninsula borough", 
+                            geo_name)) %>% 
+  mutate(geo_name = if_else(FIPS == 2170, 
+                            "Matanuska-Susitna Borough", 
+                            geo_name))        # Replaces missing geo_name data based on fips codes
+
+Municipal_Data <- Municipal_Data %>% 
+  mutate(FIPS = if_else(nchar(FIPS) == 4,
+                        paste0("0", FIPS),
+                        FIPS)) # adds leading zeros
+
+
+names(zip_county_fips) <- c("ZIP", "FIPS", "City", "State_abb","RES_RATIO","BUS_RATIO"  ,         "OTH_RATIO"  ,         "TOT_RATIO")
+
+zip_county_fips_clean <- zip_county_fips %>%
+  group_by(State_abb, City) %>%
+  filter(TOT_RATIO == max(TOT_RATIO)) %>%
+  ungroup()
+
+zip_county_fips_clean2 <- zip_county_fips_clean %>% 
+  distinct(City, State_abb, .keep_all = TRUE)
+
+zip_county_fips_clean2 <- zip_county_fips_clean2 %>% 
+  mutate(City = tolower(City)) %>% 
+  mutate(State_abb = toupper(State_abb))
+
+Municipal_Data <- Municipal_Data %>% 
+  mutate(geo_name = tolower(geo_name)) %>% 
+  mutate(state_abb = toupper(state_abb))
+
+Municipal_FIPS <- left_join(
+  Municipal_Data,
+  zip_county_fips_clean2,
+  by = c("geo_name" = "City", "state_abb" = "State_abb")
+)
+
+Municipal_FIPS <- Municipal_FIPS %>% 
+  mutate(FIPS.y= if_else(nchar(FIPS.x)==5,
+                         FIPS.x,
+                         FIPS.y))
+
+Municipal_FIPS <- Municipal_FIPS %>% 
+  mutate(FIPS.y = if_else(geo_name == "hoover" & state_abb == "AL", "01073", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "lakewood" & state_abb == "CO", "08059", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "davie" & state_abb == "FL", "12011", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "lauderhill" & state_abb == "FL", "12011", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "miramar" & state_abb == "FL", "12011", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "north miami" & state_abb == "FL", "12025", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "port st. lucie" & state_abb == "FL", "12111", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. petersburg" & state_abb == "FL", "12103", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "sunrise" & state_abb == "FL", "12011", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "tamarac" & state_abb == "FL", "12011", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "athens-clarke county" & state_abb == "GA", "13059", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "augusta-richmond county" & state_abb == "GA", "13245", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "boise city" & state_abb == "ID", "16001", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "lexington-fayette county" & state_abb == "KY", "21067", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "farmington hills" & state_abb == "MI", "26125", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "kentwood" & state_abb == "MI", "26041", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "rochester hills" & state_abb == "MI", "26125", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. clair shores" & state_abb == "MI", "26099", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "apple valley" & state_abb == "MN", "27037", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "blaine" & state_abb == "MN", "27003", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "bloomington" & state_abb == "MN", "27053", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "brooklyn park" & state_abb == "MN", "27053", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "coon rapids" & state_abb == "MN", "27003", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "eagan" & state_abb == "MN", "27037", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "edina" & state_abb == "MN", "27053", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "plymouth" & state_abb == "MN", "27053", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. cloud" & state_abb == "MN", "27145", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. louis park" & state_abb == "MN", "27053", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. paul" & state_abb == "MN", "27123", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "woodbury" & state_abb == "MN", "27163", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "lee's summit" & state_abb == "MO", "29095", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. charles" & state_abb == "MO", "29183", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "st. joseph" & state_abb == "MO", "29021", FIPS.y)) %>%
+  # Skipping st. louis (independent city)
+  mutate(FIPS.y = if_else(geo_name == "st. peters" & state_abb == "MO", "29183", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "winston-salem" & state_abb == "NC", "37067", FIPS.y)) %>%
+  # Skipping carson (independent city)
+  mutate(FIPS.y = if_else(geo_name == "kettering" & state_abb == "OH", "39113", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "parma" & state_abb == "OH", "39035", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "midwest city" & state_abb == "OK", "40109", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "bartlett" & state_abb == "TN", "47157", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "nashville-davidson county" & state_abb == "TN", "47037", FIPS.y)) %>%
+  mutate(FIPS.y = if_else(geo_name == "taylorsville" & state_abb == "UT", "49035", FIPS.y)) %>% 
+  mutate(FIPS.y = if_else(geo_name == "st. louis" & state_abb == "MO" & office_consolidated == "City Council", "29510", FIPS.y)) %>% 
+  mutate(FIPS.y = if_else(geo_name == "st. louis" & state_abb == "MO" & office_consolidated == "Mayor", "29510", FIPS.y)) %>% 
+  mutate(FIPS.y = if_else(geo_name == "carson" & state_abb == "NV", "32510", FIPS.y))
+
+\`\`\`
+
+*Assign Dummy Variables to gov types*
+\`\`\`{r}
+Leed_Projects$Local_Government <- ifelse(Leed_Projects$OwnerTypes %in% c("Local Government", "Other, Local Government",
+                                                                 "Non-Profit Org., Local Government",
+                                                                 "Profit Org., Local Government",
+                                                                 "State Government, Local Government",
+                                                                 "Local Government, Non-Profit Org.",
+                                                                 "Local Government, Other",
+                                                                 "Local Government, Profit Org.",
+                                                                 "Local Government, State Government",
+                                                                 "Government Use: Local, City",
+                                                                 "Government Use: Other (utility, airport,",
+                                                                 "Government Use: Local, County",
+                                                                 "Government Use: Other (utility, air",
+                                                                 "Government Use: Local, Public Housi",
+                                                                 "Local Government (municipalities an",
+                                                                 "Public Sector: Local Government",
+                                                                 "Government (Public sector)",
+                                                                 "Government Use: Local, Publlic Hous",
+                                                                 "Local Government (municipalities and cou",
+                                                                 "Educational: K-12 School, Public")
+                                         , 1, 0)
+
+Leed_Projects$State_Government <- ifelse(Leed_Projects$OwnerTypes %in% c("Other, State Government", 
+                                                                 "State Government",
+                                                                 "State Government, Local Government",
+                                                                 "Individual, State Government",
+                                                                 "State Government, Other",
+                                                                 "Local Government, State Government",
+                                                                 "Profit Org., State Government",
+                                                                 "State Government, Profit Org.",
+                                                                 "State Government, State Government",
+                                                                 "Government Use: State",
+                                                                 "Educational: University, Public",
+                                                                 "Educational: College, Public",
+                                                                 "Educational: Community College, Pub",
+                                                                 "Educational: Community College, Public",
+                                                                 "Government", # this is all public k-12 schools
+                                                                 "University",
+                                                                 "Educational: University, public",
+                                                                 "Non-Profit Org., State Government",
+                                                                 "Public Sector: College or Universit")
+                                         ,1,0)
+
+Leed_Projects$Federal_Government <- ifelse(Leed_Projects$OwnerTypes %in% c("Federal Government, Local Government",
+                                                                     "Federal Government",
+                                                                     "Federal Government, Other",
+                                                                     "Federal Government, Profit Org.",
+                                                                     "Non-Profit Org., Federal Government",
+                                                                     "Profit Org., Federal Government",
+                                                                     "Government Use: Federal",
+                                                                     "Federal government",
+                                                                     "Government use: Federal",
+                                                                     "\"Government Use: Federal\n\""),
+                                           1,0)
+
+Leed_Projects$Non_Gov <- ifelse(
+  Leed_Projects$Local_Government == 0 &
+  Leed_Projects$State_Government == 0 &
+  Leed_Projects$Federal_Government == 0, 
+  1, 
+  0
+)
+
+\`\`\`
+
+*Aggregating Sq Ft by year and ownertype (local, state, federal, and non-gov)*
+\`\`\`{r}
+
+Leed_Projects %>%
+  mutate(length = as.numeric(CertDate - RegistrationDate, units = "days")) %>% 
+  filter(!is.na(length)) %>%  # Remove missing values for plotting
+  ggplot(aes(x = length)) +
+  geom_histogram(binwidth = 50, fill = "#2c7fb8", color = "white") +
+  labs(
+    title = "Distribution of Time from Registration to Certification",
+    x = "Length (Days)",
+    y = "Number of Projects"
+  ) +
+  theme_minimal()
+
+Leed_Projects %>%
+  mutate(length = as.numeric(CertDate - RegistrationDate, units = "days")) %>% 
+  summarise(median_length_in_days = median(length, na.rm = TRUE)) #725 days is the lag I'll use for future things.
+
+725/365.25
+
+
+Leed_Projects_Long <- Leed_Projects %>%
+  mutate(Year = year(CertDate)) %>%
+  rowwise() %>%
+  mutate(GovOwnerList = list(c(
+    if (Local_Government == 1) "Local_Government" else NULL,
+    if (State_Government == 1) "State_Government" else NULL,
+    if (Federal_Government == 1) "Federal_Government" else NULL,
+    if (Non_Gov == 1) "Non_Gov" else NULL
+  ))) %>%
+  unnest(GovOwnerList) %>%
+  rename(GovOwner = GovOwnerList) %>%
+  ungroup()
+
+Leed_Summary_Wide <- Leed_Projects_Long %>%
+  group_by(Year, GovOwner, FIPS) %>%
+  summarise(Total_GrossFloorArea = sum(GrossFloorArea, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = GovOwner, values_from = Total_GrossFloorArea, values_fill = 0)
+
+# Calculate bounds for outliers
+lower_bound_local <- quantile(Leed_Summary_Wide$Local_Government, 0.25) - 1.5 * IQR(Leed_Summary_Wide$Local_Government, na.rm = TRUE)
+upper_bound_local <- quantile(Leed_Summary_Wide$Local_Government, 0.75) + 1.5 * IQR(Leed_Summary_Wide$Local_Government, na.rm = TRUE)
+
+# Filter out outliers and plot histogram
+Leed_Summary_Wide %>%  
+  filter(Local_Government > lower_bound_local & Local_Government < upper_bound_local) %>% 
+  ggplot(aes(x = Local_Government)) +
+  geom_histogram(binwidth = 100, fill = "#66c2a5", color = "lightblue") +
+  theme_minimal()
+
+# Calculate bounds for outliers
+lower_bound_state <- quantile(Leed_Summary_Wide$State_Government, 0.25) - 1.5 * IQR(Leed_Summary_Wide$State_Government, na.rm = TRUE)
+upper_bound_state <- quantile(Leed_Summary_Wide$State_Government, 0.75) + 1.5 * IQR(Leed_Summary_Wide$State_Government, na.rm = TRUE)
+
+# Filter out outliers and plot histogram
+Leed_Summary_Wide %>%  
+  filter(State_Government > lower_bound_state & State_Government < upper_bound_state) %>% 
+  ggplot(aes(x = State_Government)) +
+  geom_histogram(binwidth = 100, fill = "#66c2a5", color = "lightblue") +
+  theme_minimal()
+
+# Calculate bounds for outliers
+lower_bound_federal <- quantile(Leed_Summary_Wide$Federal_Government, 0.25) - 1.5 * IQR(Leed_Summary_Wide$Federal_Government, na.rm = TRUE)
+upper_bound_federal <- quantile(Leed_Summary_Wide$Federal_Government, 0.75) + 1.5 * IQR(Leed_Summary_Wide$Federal_Government, na.rm = TRUE)
+
+# Filter out outliers and plot histogram
+Leed_Summary_Wide %>%  
+  filter(Federal_Government > lower_bound_federal & Federal_Government < upper_bound_federal) %>% 
+  ggplot(aes(x = Federal_Government)) +
+  geom_histogram(binwidth = 100, fill = "#66c2a5", color = "lightblue") +
+  theme_minimal()
+
+
+#aoeu histogram of leed data
+#log this samantha? this seems incredibly un interesting
+\`\`\`
+
+*Joining the datasets together*
+\`\`\`{r}
+Municipal_FIPS <- Municipal_FIPS %>% 
+  select(-ledb_candid, -firstname, -lastname, -month, -district, -contest, -contributor.cfscore, -bonica.cid, -ballotpedia_url, -ZIP, -FIPS.x, -RES_RATIO, -BUS_RATIO, -OTH_RATIO, -TOT_RATIO)
+
+#Municipal_FIPS <- Municipal_FIPS %>% 
+#  mutate(lagYear3 = year + 3)
+
+Municipal_FIPS <- Municipal_FIPS %>% 
+  mutate(lagYear2 = year + 2)
+
+Municipal_FIPS <- Municipal_FIPS %>% 
+  filter(lagYear2 > 1999)
+
+Final_Boss <- left_join(
+  Municipal_FIPS,
+  Leed_Summary_Wide,
+  by = c("FIPS.y" = "FIPS", "lagYear2" = "Year")
+)
+
+#Final_Boss <- left_join(
+ # Final_Boss,
+  #Leed_Summary_Wide,
+  #by = c("FIPS.y" = "FIPS", "lagYear2" = "Year")
+#)
+
+
+#Final_Boss <- left_join(
+ # Final_Boss,
+ # Leed_Summary_Wide,
+ # by = c("FIPS.y" = "FIPS", "lagYear3" = "Year")
+#)
+
+\`\`\`
+
+*Joining with population data*
+\`\`\`{r}
+Final_Population <- left_join(
+  Final_Boss,
+  geo_info,
+  by = c("FIPS.y" = "FIPS.y")
+)
+
+\`\`\`
+
+*Standardize square feet LEED by square miles of county*
+\`\`\`{r}
+Final_Standard <- Final_Population %>% 
+  mutate(Fed_LeedSqFt_per_SqMi = Federal_Government/AreaLand_SQMI) %>% 
+  mutate(Local_LeedSqFt_per_SqMi = Local_Government/AreaLand_SQMI) %>% 
+  mutate(State_LeedSqFt_per_SqMi = State_Government/AreaLand_SQMI) %>% 
+  mutate(NonGov_LeedSqFt_per_SqMi = Non_Gov/AreaLand_SQMI) 
+\`\`\`
+
+*Descriptive Statistics - Land* \`\`\`{r}
+Final_Standard %>%
+  filter(year==2021) %>% 
+  summarise(
+    min = min(AreaLand_SQMI, na.rm = TRUE),
+    max = max(AreaLand_SQMI, na.rm = TRUE),
+    mean = mean(AreaLand_SQMI, na.rm = TRUE),
+    sd = sd(AreaLand_SQMI, na.rm = TRUE),
+    missing = sum(is.na(AreaLand_SQMI)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  filter(year==max(year)) %>% 
+ggplot(aes(x = AreaLand_SQMI)) +
+  geom_histogram(binwidth = 300, fill = "#66c2a5", color = "lightblue") +
+  labs(
+    title = "Distribution of County Land Area",
+    x = "Land Area (Square Miles)",
+    y = "Number of Counties"
+  ) +
+  theme_minimal()
+
+#filter out high outliers
+Final_Standard %>%
+  filter(year==max(year)) %>% 
+  filter(AreaLand_SQMI <= quantile(AreaLand_SQMI, 0.75) + 1.5 * IQR(AreaLand_SQMI)) %>%
+  ggplot(aes(x = AreaLand_SQMI)) +
+  geom_histogram(binwidth = 25, fill = "#66c2a5", color = "lightblue") +
+  labs(
+    title = "Distribution of County Land Area without Upper Outliers",
+    x = "Land Area (Square Miles)",
+    y = "Number of Counties"
+  ) +
+  theme_minimal()
+
+Final_Standard %>% 
+  ggplot(aes(x=State_LeedSqFt_per_SqMi))+
+  geom_histogram(binwidth = 500) +
+  theme_minimal()
+
+Final_Standard %>% 
+  ggplot(aes(x=Local_LeedSqFt_per_SqMi))+
+  geom_histogram(binwidth = 500) +
+  theme_minimal()
+
+Final_Standard %>% 
+  ggplot(aes(x=Federal_Government))+
+  geom_histogram(binwidth = 500) +
+  theme_minimal()
+#aoeu histogram of standard leed data
+\`\`\`
+
+*Descriptive Statistics - LEED*
+\`\`\`{r}
+
+#Standardized
+Final_Standard %>% 
+  summarise(
+    Min = min(Local_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Max = max(Local_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Average = mean(Local_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    SD = sd(Local_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Missing = sum(is.na(Local_LeedSqFt_per_SqMi)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(State_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Max = max(State_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Average = mean(State_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    SD = sd(State_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Missing = sum(is.na(State_LeedSqFt_per_SqMi)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(Fed_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Max = max(Fed_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Average = mean(Fed_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    SD = sd(Fed_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Missing = sum(is.na(Fed_LeedSqFt_per_SqMi)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Max = max(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Average = mean(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    SD = sd(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE), 
+    Missing = sum(is.na(NonGov_LeedSqFt_per_SqMi)),
+    Observations = n()
+  )
+
+#Non standardized
+Final_Standard %>% 
+  summarise(
+    Min = min(Local_Government, na.rm = TRUE), 
+    Max = max(Local_Government, na.rm = TRUE), 
+    Average = mean(Local_Government, na.rm = TRUE), 
+    SD = sd(Local_Government, na.rm = TRUE), 
+    Missing = sum(is.na(Local_Government)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(State_Government, na.rm = TRUE), 
+    Max = max(State_Government, na.rm = TRUE), 
+    Average = mean(State_Government, na.rm = TRUE), 
+    SD = sd(State_Government, na.rm = TRUE), 
+    Missing = sum(is.na(State_Government)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(Federal_Government, na.rm = TRUE), 
+    Max = max(Federal_Government, na.rm = TRUE), 
+    Average = mean(Federal_Government, na.rm = TRUE), 
+    SD = sd(Federal_Government, na.rm = TRUE), 
+    Missing = sum(is.na(Federal_Government)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  summarise(
+    Min = min(Non_Gov, na.rm = TRUE), 
+    Max = max(Non_Gov, na.rm = TRUE), 
+    Average = mean(Non_Gov, na.rm = TRUE), 
+    SD = sd(Non_Gov, na.rm = TRUE), 
+    Missing = sum(is.na(Non_Gov)),
+    Observations = n()
+  )
+
+Final_Standard %>% 
+  filter(
+    Local_LeedSqFt_per_SqMi < (quantile(Local_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(Local_LeedSqFt_per_SqMi, na.rm = TRUE))),
+    Local_LeedSqFt_per_SqMi > 0) %>% 
+  ggplot(aes(x = Local_LeedSqFt_per_SqMi)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  labs(
+    title = "Local LEED Standardized Square Feet",
+    x = "LEED Square Footage per Square Mile",
+    y = "Count"
+  )
+
+Final_Standard %>%
+  summarise(
+    upper_bound = quantile(Local_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + 
+                  (1.5 * IQR(Local_LeedSqFt_per_SqMi, na.rm = TRUE))
+  ) %>%
+  pull(upper_bound) %>%
+  { 
+    upper_bound <- . 
+    Final_Standard %>%
+      summarise(
+        num_outliers = sum(Local_LeedSqFt_per_SqMi > upper_bound, na.rm = TRUE),
+        num_zeros = sum(Local_LeedSqFt_per_SqMi == 0, na.rm = TRUE)
+      )
+  } %>%
+  { 
+    cat("Number of outliers:", .$num_outliers, "\n")
+    cat("Number of zeros:", .$num_zeros, "\n")
+  }
+
+
+
+Final_Standard %>% 
+  filter(
+    Local_LeedSqFt_per_SqMi >= (quantile(Local_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(Local_LeedSqFt_per_SqMi, na.rm = TRUE))) |
+    Local_LeedSqFt_per_SqMi <= 0
+  ) %>% 
+  nrow()
+
+Final_Standard %>% 
+  nrow()
+            
+
+
+Final_Standard %>% 
+  filter(
+    State_LeedSqFt_per_SqMi < (quantile(State_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(State_LeedSqFt_per_SqMi, na.rm = TRUE))),
+    State_LeedSqFt_per_SqMi > 0) %>% 
+  ggplot(aes(x = State_LeedSqFt_per_SqMi)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  labs(
+    title = "State LEED Standardized Square Feet",
+    x = "LEED Square Footage per Square Mile",
+    y = "Count"
+  )
+
+
+# Calculate the upper bound for outliers
+upper_bound <- quantile(Final_Standard$State_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + 
+               (1.5 * IQR(Final_Standard$State_LeedSqFt_per_SqMi, na.rm = TRUE))
+
+# Count the number of outliers (values above the upper bound)
+num_outliers <- Final_Standard %>%
+  filter(State_LeedSqFt_per_SqMi > upper_bound) %>%
+  nrow()
+
+# Count the number of zeros
+num_zeros <- Final_Standard %>%
+  filter(State_LeedSqFt_per_SqMi == 0) %>%
+  nrow()
+
+# Print the results
+cat("Number of outliers:", num_outliers, "\n")
+cat("Number of zeros:", num_zeros, "\n")
+
+
+Final_Standard %>% 
+  filter(
+    State_LeedSqFt_per_SqMi >= (quantile(State_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(State_LeedSqFt_per_SqMi, na.rm = TRUE))) |
+    State_LeedSqFt_per_SqMi <= 0
+  ) %>% 
+  nrow()
+
+Final_Standard %>% 
+  filter(
+    Fed_LeedSqFt_per_SqMi > 0,
+    abs(scale(Fed_LeedSqFt_per_SqMi)) < 3
+  ) %>% 
+  ggplot(aes(x = Fed_LeedSqFt_per_SqMi)) +
+  geom_histogram(bins = 40, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  labs(
+    title = "Federal LEED Standardized Square Feet",
+    x = "LEED Square Footage per Square Mile",
+    y = "Count"
+  )
+
+# Calculate z-scores
+z_scores <- scale(Final_Standard$Fed_LeedSqFt_per_SqMi)
+
+# Count number of outliers (|z| >= 3)
+num_outliers <- sum(abs(z_scores) >= 3, na.rm = TRUE)
+
+# Count number of zeros
+num_zeros <- Final_Standard %>%
+  filter(Fed_LeedSqFt_per_SqMi == 0) %>%
+  nrow()
+
+# Print the results
+cat("Number of outliers (|z| >= 3):", num_outliers, "\n")
+cat("Number of zeros:", num_zeros, "\n")
+
+
+Final_Standard %>%
+  filter(
+    Fed_LeedSqFt_per_SqMi <= 0 | 
+    abs(scale(Fed_LeedSqFt_per_SqMi)) >= 3
+  ) %>% 
+  nrow()
+
+
+Final_Standard %>% 
+  filter(
+    NonGov_LeedSqFt_per_SqMi < (quantile(NonGov_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE))),
+    NonGov_LeedSqFt_per_SqMi > 0) %>% 
+  ggplot(aes(x = NonGov_LeedSqFt_per_SqMi)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  labs(
+    title = "Non-Government LEED Standardized Square Feet",
+    x = "LEED Square Footage per Square Mile",
+    y = "Count"
+  )
+
+# Calculate upper bound for outliers
+upper_bound <- quantile(Final_Standard$NonGov_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + 
+               1.5 * IQR(Final_Standard$NonGov_LeedSqFt_per_SqMi, na.rm = TRUE)
+
+# Count number of outliers (greater than upper bound)
+num_outliers <- Final_Standard %>%
+  filter(NonGov_LeedSqFt_per_SqMi > upper_bound) %>%
+  nrow()
+
+# Count number of zero values
+num_zeros <- Final_Standard %>%
+  filter(NonGov_LeedSqFt_per_SqMi == 0) %>%
+  nrow()
+
+# Print results
+cat("Number of outliers (above upper bound):", num_outliers, "\n")
+cat("Number of zeros:", num_zeros, "\n")
+
+
+Final_Standard %>% 
+  filter(
+    NonGov_LeedSqFt_per_SqMi >= (quantile(NonGov_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE) + (1.5 * IQR(NonGov_LeedSqFt_per_SqMi, na.rm = TRUE))) |
+    NonGov_LeedSqFt_per_SqMi <= 0
+  ) %>% 
+  nrow()
+
+
+Final_Standard %>% 
+  group_by(lagYear2) %>% 
+  ggplot( aes(x = ))
+
+\`\`\`
+
+
+*Descriptive Stats - Gender*
+\`\`\`{r}
+Final_Standard %>%
+  filter(gender_est %in% c("F", "M")) %>%
+  group_by(gender_est, office_consolidated) %>%
+  summarise(
+    total_races = n(),
+    total_wins = sum(winner == "win"),
+    win_rate = total_wins / total_races
+  )
+
+\`\`\`
+
+*Descriptive stats excel file for Samantha aoeu to delete later*
+\`\`\`{r}
+
+#install.packages("writexl")
+
+library(writexl)
+
+# Create a list of data frames with named elements for the sheet names
+summary_tables <- list(
+  "Descriptive Statistics - Land" = summary_stats_land,
+  "Descriptive Statistics - LEED" = summary_stats_LEED,
+  "Descriptive Stats - Gender" = gender_win_rates
+)
+
+# Export to Excel
+write_xlsx(summary_tables, path = "descriptive_statistics_summary.xlsx")
+
+\`\`\`
+
+*Code male female as dummy*
+\`\`\`{r}
+Final_Standard <- Final_Standard %>% 
+  mutate(Female = if_else(gender_est=="F",1,0))
+\`\`\`
+
+*Regression - Naive model*
+\`\`\`{r}
+# Federal LEED square footage regression for each office_consolidated type
+naive_model_federal_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "Mayor") %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_federal_legislature <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Legislature") %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_federal_executive <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Executive") %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_federal_council <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "City Council") %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female, data = .)
+
+# Local LEED square footage regression for each office_consolidated type
+naive_model_local_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "Mayor") %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_local_legislature <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Legislature") %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_local_executive <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Executive") %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_local_council <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "City Council") %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female, data = .)
+
+# State LEED square footage regression for each office_consolidated type
+naive_model_state_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "Mayor") %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_state_legislature <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Legislature") %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_state_executive <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "County Executive") %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female, data = .)
+
+naive_model_state_council <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated == "City Council") %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female, data = .)
+
+
+# Now you can summarize all the models
+modelsummary(
+  list(
+    # Federal LEED Models
+    "Federal - Mayor"             = naive_model_federal_mayor,
+    "Federal - County Legislature"= naive_model_federal_legislature,
+    "Federal - County Executive"  = naive_model_federal_executive,
+    "Federal - City Council"      = naive_model_federal_council,
+
+    # Local LEED Models
+    "Local - Mayor"               = naive_model_local_mayor,
+    "Local - County Legislature"  = naive_model_local_legislature,
+    "Local - County Executive"    = naive_model_local_executive,
+    "Local - City Council"        = naive_model_local_council,
+
+    # State LEED Models
+    "State - Mayor"               = naive_model_state_mayor,
+    "State - County Legislature"  = naive_model_state_legislature,
+    "State - County Executive"    = naive_model_state_executive,
+    "State - City Council"        = naive_model_state_council
+
+  ),
+  statistic = "({std.error})",
+  output = "default",
+  stars = TRUE
+)
+\`\`\`
+
+*Adding Controls in*
+\`\`\`{r}
+Final_Standard <- Final_Standard %>% 
+  mutate(Democratic = if_else(pid_est == "D",1,0))
+
+Final_Standard <- Final_Standard %>% 
+  mutate(race_Caucasian = if_else(race_est == "caucasian", 1,0)) %>% 
+  mutate(race_black = if_else(race_est == "black", 1,0)) %>% 
+  mutate(race_hispanic = if_else(race_est == "hispanic", 1,0)) %>% 
+  mutate(race_asian = if_else(race_est == "asian", 1,0)) %>% 
+  mutate(race_other = if_else(race_est == "other", 1,0)) 
+
+# Local Base Model (No controls) 
+base_model_local_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("County Executive", "Mayor")) %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female, data = .)
+
+model_local_mayor_race <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("County Executive", "Mayor")) %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other, data = .)
+
+model_local_mayor_incumbent <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("County Executive", "Mayor")) %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other + incumbent, data = .)
+
+model_local_mayor_pid_est <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("County Executive", "Mayor")) %>% 
+  lm(Local_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other + incumbent + Democratic, data = .)
+
+
+summary(base_model_local_mayor)
+summary(model_local_mayor_race)
+summary(model_local_mayor_incumbent)
+summary(model_local_mayor_pid_est)
+
+# State Base Model (No controls)
+base_model_state_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female, data = .)
+
+# State LEED Model with Race Control
+model_state_mayor_race <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other, data = .)
+
+# State LEED Model with Incumbent Control
+model_state_mayor_incumbent <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other + incumbent, data = .)
+
+# State LEED Model with PID Control
+model_state_mayor_pid_est <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(State_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic + race_asian + race_other + incumbent + Democratic, data = .)
+
+
+summary(base_model_state_mayor)
+summary(model_state_mayor_race)
+summary(model_state_mayor_incumbent)
+summary(model_state_mayor_pid_est)
+
+# Summarize the State LEED Models
+modelsummary(
+  list(
+    "Base" = base_model_state_mayor,
+    "Race" = model_state_mayor_race,
+    "Incumbent" = model_state_mayor_incumbent,
+    "PID" = model_state_mayor_pid_est
+  ),
+  statistic = "({std.error})",
+  output = "default",
+  stars = TRUE
+)
+
+# Federal Base Model (No controls)
+base_model_federal_mayor <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female, data = .)
+
+# Federal LEED Model with Race Control
+model_federal_mayor_race <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic +race_asian + race_other, data = .)
+
+# Federal LEED Model with Incumbent Control
+model_federal_mayor_incumbent <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic +race_asian + race_other + incumbent, data = .)
+
+# Federal LEED Model with PID Control
+model_federal_mayor_pid_est <- Final_Standard %>% 
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  lm(Fed_LeedSqFt_per_SqMi ~ Female + race_black + race_hispanic +race_asian + race_other + incumbent + Democratic, data = .)
+
+summary(base_model_federal_mayor)
+summary(model_federal_mayor_race)
+summary(model_federal_mayor_incumbent)
+summary(model_federal_mayor_pid_est)
+
+# Summarize the Federal LEED Models
+modelsummary(
+  list(
+    "Base" = base_model_federal_mayor,
+    "Race" = model_federal_mayor_race,
+    "Incumbent" = model_federal_mayor_incumbent,
+    "PID" = model_federal_mayor_pid_est
+  ),
+  statistic = "({std.error})",
+  output = "default",
+  stars = TRUE
+)
+
+# Summary Race Counts for Mayors and County Executives
+Final_Standard %>%
+  filter(winner == "win", office_consolidated %in% c("Mayor", "County Executive")) %>% 
+  summarise(
+    Hispanic = sum(race_hispanic == 1, na.rm = TRUE),
+    White = sum(race_Caucasian == 1, na.rm = TRUE),
+    Black = sum(race_black == 1, na.rm = TRUE),
+    Asian = sum(race_asian == 1, na.rm = TRUE),
+    Other = sum(race_other == 1, na.rm = TRUE)
+  )
+
+
+\`\`\`
+
+*Full Model*
+\`\`\`{r}
+
+# 1. Filter for mayoral elections
+Final_Mayoral <- Final_Standard %>%
+  filter(office_consolidated %in% c("Mayor", "County Executive"))
+
+#aoeu make it so that there can be more than 2 people but the highest vote getters are male and female
+
+# 2. Identify two-candidate races between a female and a male
+#two_candidate_races <- Final_Mayoral %>%
+#  filter(!is.na(gender_est), gender_est %in% c("F", "M")) %>%
+#  group_by(geo_name, year) %>%
+#  filter(n() == 2,
+#         sum(gender_est == "F") == 1,
+#         sum(gender_est == "M") == 1) %>%
+#  ungroup()
+
+#fix. There needs to be at least two candidates per race
+top_two_mixed_gender <- Final_Mayoral %>%
+  filter(!is.na(gender_est), gender_est %in% c("F", "M")) %>%             # keep only male and female
+  group_by(geo_name, year) %>%
+  arrange(desc(votes)) %>%                                                # sort by votes within each group
+  mutate(rank = row_number()) %>%
+  filter(rank < 3) %>%                                                    # keep only top 2 candidates
+  filter(n() == 2,                                                        # must have two candidates
+         all(c("F", "M") %in% gender_est)) %>%                            # must include one male and one female
+  ungroup() %>% 
+  arrange(geo_name, year, gender_est)
+
+#^ maybe add a filter to filter for only the males being incumbent aoeu
+
+# 3. Calculate vote margins and keep LEED data (without converting NAs to -Inf)
+vote_margins <- top_two_mixed_gender %>%
+  group_by(geo_name, year) %>%
+  summarize(
+    female_vote_share = max(ifelse(gender_est == "F", vote_share, NA), na.rm = TRUE),
+    male_vote_share = max(ifelse(gender_est == "M", vote_share, NA), na.rm = TRUE),
+    # Keep original LEED data as it is without taking the max
+    Fed_LeedSqFt_per_SqMi = first(Fed_LeedSqFt_per_SqMi),
+    Local_LeedSqFt_per_SqMi = first(Local_LeedSqFt_per_SqMi),
+    State_LeedSqFt_per_SqMi = first(State_LeedSqFt_per_SqMi),
+    NonGov_LeedSqFt_per_SqMi = first(NonGov_LeedSqFt_per_SqMi)
+  ) %>%
+  mutate(
+    margin = female_vote_share - male_vote_share,
+    Female_Wins = ifelse(margin > 0, 1, 0)
+  )
+
+# Local RD plot
+rdplot(
+  y = vote_margins$Local_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular",
+  title = "Regression Discontinuity at Margin = 0 (Local)",
+  x.label = "Vote Margin",
+  y.label = "Local LEED SqFt per SqMi"
+)
+
+# Local RD model
+rd_model_local <- rdrobust(
+  y = vote_margins$Local_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular"
+)
+summary(rd_model_local)
+
+# Deciding what order polynomial to use
+for (i in 1:4) {
+  cat("\n=== Polynomial order:", i, "===\n")
+  rd_model <- rdrobust(
+    y = vote_margins$Local_LeedSqFt_per_SqMi,
+    x = vote_margins$margin,
+    c = 0,
+    p = i,
+    kernel = "triangular"
+  )
+  print(summary(rd_model))
+}
+
+
+
+# State RD plot
+rdplot(
+  y = vote_margins$State_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular",
+  title = "Regression Discontinuity at Margin = 0 (State)",
+  x.label = "Vote Margin",
+  y.label = "State LEED SqFt per SqMi"
+)
+
+# State RD model
+rd_model_state <- rdrobust(
+  y = vote_margins$State_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular"
+)
+summary(rd_model_state)
+
+# Deciding what order polynomial to use
+for (i in 1:4) {
+  cat("\n=== Polynomial order:", i, "===\n")
+  rd_model <- rdrobust(
+    y = vote_margins$State_LeedSqFt_per_SqMi,
+    x = vote_margins$margin,
+    c = 0,
+    p = i,
+    kernel = "triangular"
+  )
+  print(summary(rd_model))
+}
+
+# Federal RD plot
+rdplot(
+  y = vote_margins$Fed_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular",
+  title = "Regression Discontinuity at Margin = 0 (Federal)",
+  x.label = "Vote Margin",
+  y.label = "Federal LEED SqFt per SqMi"
+)
+
+# Federal RD model
+rd_model_federal <- rdrobust(
+  y = vote_margins$Fed_LeedSqFt_per_SqMi,
+  x = vote_margins$margin,
+  c = 0,
+  p = 2,
+  kernel = "triangular"
+)
+summary(rd_model_federal)
+
+# Deciding what order polynomial to use
+for (i in 1:4) {
+  cat("\n=== Polynomial order:", i, "===\n")
+  rd_model <- rdrobust(
+    y = vote_margins$Fed_LeedSqFt_per_SqMi,
+    x = vote_margins$margin,
+    c = 0,
+    p = i,
+    kernel = "triangular"
+  )
+  print(summary(rd_model))
+}
+
+
+\`\`\`
+# the number of observations for the regression discontinuity
+\`\`\`{r}
+vote_margins %>%
+  ungroup() %>% 
+  summarise(
+    Local_Good = sum(Local_LeedSqFt_per_SqMi > 0, na.rm = TRUE),
+    Fed_Good = sum(Fed_LeedSqFt_per_SqMi > 0, na.rm = TRUE),
+    State_Good = sum(State_LeedSqFt_per_SqMi > 0, na.rm = TRUE),
+    
+    Local_Zero = sum(Local_LeedSqFt_per_SqMi == 0, na.rm = TRUE),
+    Fed_Zero = sum(Fed_LeedSqFt_per_SqMi == 0, na.rm = TRUE),
+    State_Zero = sum(State_LeedSqFt_per_SqMi == 0, na.rm = TRUE),
+    
+    Local_NA = sum(is.na(Local_LeedSqFt_per_SqMi)),
+    Fed_NA = sum(is.na(Fed_LeedSqFt_per_SqMi)),
+    State_NA = sum(is.na(State_LeedSqFt_per_SqMi)),
+    
+    All_Total = n()  # changed from Total
+  ) %>%
+  pivot_longer(cols = everything(),
+               names_to = c("Government", "Type"),
+               names_sep = "_",
+               values_to = "value") %>% 
+  pivot_wider(names_from = Government, values_from = value)# summarize the number of 0s for each 
+\`\`\`
+
+#Do RD manually
+
+
+
+# Unfiltered scatterplot LOCAL
+vote_margins %>%
+  ggplot(aes(x = margin, y = Local_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  theme_minimal()
+
+# IQR filtering bounds
+Q1_local <- quantile(vote_margins$Local_LeedSqFt_per_SqMi, 0.25, na.rm = TRUE)
+Q3_local <- quantile(vote_margins$Local_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE)
+IQR_local <- IQR(vote_margins$Local_LeedSqFt_per_SqMi, na.rm = TRUE)
+
+upper_bound_local <- Q3_local + 1.5 * IQR_local
+
+
+# Unfiltered scatterplot - State
+vote_margins %>%
+  ggplot(aes(x = margin, y = State_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  theme_minimal()
+
+# IQR filtering bounds - State
+Q1_state <- quantile(vote_margins$State_LeedSqFt_per_SqMi, 0.25, na.rm = TRUE)
+Q3_state <- quantile(vote_margins$State_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE)
+IQR_state <- IQR(vote_margins$State_LeedSqFt_per_SqMi, na.rm = TRUE)
+
+upper_bound_state <- Q3_state + 1.5 * IQR_state
+
+
+
+# Unfiltered scatterplot - Federal
+vote_margins %>%
+  ggplot(aes(x = margin, y = Fed_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  theme_minimal()
+
+# IQR filtering bounds - Federal
+Q1_fed <- quantile(vote_margins$Fed_LeedSqFt_per_SqMi, 0.25, na.rm = TRUE)
+Q3_fed <- quantile(vote_margins$Fed_LeedSqFt_per_SqMi, 0.75, na.rm = TRUE)
+IQR_fed <- IQR(vote_margins$Fed_LeedSqFt_per_SqMi, na.rm = TRUE)
+
+upper_bound_fed <- Q3_fed + 1.5 * IQR_fed
+
+
+
+# Federal plot
+p_fed <- vote_margins %>% 
+  filter(Fed_LeedSqFt_per_SqMi < 6000,
+         Fed_LeedSqFt_per_SqMi != 0) %>%
+  ggplot(aes(x = margin, y = Fed_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin < 0,
+                       Fed_LeedSqFt_per_SqMi < 6000,
+                       Fed_LeedSqFt_per_SqMi != 0),
+              aes(x = margin, y = Fed_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin > 0,
+                       Fed_LeedSqFt_per_SqMi < 6000,
+                       Fed_LeedSqFt_per_SqMi != 0),
+              aes(x = margin, y = Fed_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Federal", x = "Vote Margin", y = "LEED SqFt / SqMi") +
+  theme_minimal()
+
+# State plot
+p_state <- vote_margins %>% 
+  filter(State_LeedSqFt_per_SqMi < upper_bound_state,
+         State_LeedSqFt_per_SqMi != 0) %>%
+  ggplot(aes(x = margin, y = State_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin < 0,
+                       State_LeedSqFt_per_SqMi < upper_bound_state,
+                       State_LeedSqFt_per_SqMi != 0), 
+              aes(x = margin, y = State_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin > 0,
+                       State_LeedSqFt_per_SqMi < upper_bound_state,
+                       State_LeedSqFt_per_SqMi != 0), 
+              aes(x = margin, y = State_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "State", x = "Vote Margin", y = "LEED SqFt / SqMi") +
+  theme_minimal()
+
+# Local plot
+p_local <- vote_margins %>% 
+  filter(Local_LeedSqFt_per_SqMi < upper_bound_local,
+         Local_LeedSqFt_per_SqMi != 0) %>%
+  ggplot(aes(x = margin, y = Local_LeedSqFt_per_SqMi)) +
+  geom_point() +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin < 0,
+                       Local_LeedSqFt_per_SqMi < upper_bound_local,
+                       Local_LeedSqFt_per_SqMi != 0), 
+              aes(x = margin, y = Local_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_smooth(data = vote_margins %>% 
+                filter(margin > 0,
+                       Local_LeedSqFt_per_SqMi < upper_bound_local,
+                       Local_LeedSqFt_per_SqMi != 0), 
+              aes(x = margin, y = Local_LeedSqFt_per_SqMi), 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Local", x = "Vote Margin", y = "LEED SqFt / SqMi") +
+  theme_minimal()
+
+
+p_fed + p_state + p_local
+
+
+
+# Descriptive Stats of elections after narrowing to 2 person elections with one male and one female
+vote_margins_stats <- vote_margins %>%
+  ungroup() %>%  # Make sure no grouping is active
+  summarise(
+    total_elections = n(),
+    female_wins_count = sum(Female_Wins, na.rm = TRUE),
+    female_win_proportion = round(female_wins_count / total_elections, 2),
+    earliest_year = min(year, na.rm = TRUE),
+    latest_year = max(year, na.rm = TRUE),
+    median_margin = median(margin, na.rm = TRUE),
+    mean_margin = round(mean(margin, na.rm = TRUE), 4),
+    sd_margin = round(sd(margin, na.rm = TRUE), 4)
+  )
+print(vote_margins_stats)
+
+# 4. Restrict to close elections (e.g., within ±15%)
+close_elections <- vote_margins %>% 
+  filter(abs(margin) <= 0.15)
+
+# Descriptive Stats of elections after narrowing to 2 person elections with one male and one female and to close races
+close_elections_stats <- close_elections %>%
+  ungroup() %>%  # Make sure no grouping is active
+  summarise(
+    total_elections = n(),
+    female_wins_count = sum(Female_Wins, na.rm = TRUE),
+    female_win_proportion = round(female_wins_count / total_elections, 2),
+    earliest_year = min(year, na.rm = TRUE),
+    latest_year = max(year, na.rm = TRUE),
+    median_margin = median(margin, na.rm = TRUE),
+    mean_margin = round(mean(margin, na.rm = TRUE), 4),
+    sd_margin = round(sd(margin, na.rm = TRUE), 4)
+  )
+
+close_elections %>%
+  ungroup() %>%
+  summarise(
+    total_state_NON_NAs = sum(!is.na(State_LeedSqFt_per_SqMi)),
+    total_local_NON_NAs = sum(!is.na(Local_LeedSqFt_per_SqMi)),
+    total_fed_NON_NAs = sum(!is.na(Fed_LeedSqFt_per_SqMi)),
+    total_nongov_NON_NAs = sum(!is.na(NonGov_LeedSqFt_per_SqMi))
+  ) %>% 
+  print()
+
+
+# 6. Create dataframes for each leed type
+# Local LEED
+local_close_elections <- close_elections %>% 
+  filter(!is.na(Local_LeedSqFt_per_SqMi)) %>% 
+  select(-NonGov_LeedSqFt_per_SqMi, -Fed_LeedSqFt_per_SqMi, -State_LeedSqFt_per_SqMi)
+
+# State LEED
+state_close_elections <- close_elections %>% 
+  filter(!is.na(State_LeedSqFt_per_SqMi)) %>% 
+  select(-NonGov_LeedSqFt_per_SqMi, -Fed_LeedSqFt_per_SqMi, -Local_LeedSqFt_per_SqMi)
+
+# Federal LEED
+fed_close_elections <- close_elections %>% 
+  filter(!is.na(Fed_LeedSqFt_per_SqMi)) %>% 
+  select(-NonGov_LeedSqFt_per_SqMi, -State_LeedSqFt_per_SqMi, -Local_LeedSqFt_per_SqMi)
+
+# 7. Run RD regression for each LEED type
+
+# Local LEED - Using Female_Wins as the running variable
+rd_model_local_female_wins <- lm(Local_LeedSqFt_per_SqMi ~ Female_Wins, data = local_close_elections)
+summary(rd_model_local_female_wins)
+
+# State LEED - Using Female_Wins as the running variable
+rd_model_state_female_wins <- lm(State_LeedSqFt_per_SqMi ~ Female_Wins, data = state_close_elections)
+
+# Federal LEED - Using Female_Wins as the running variable
+rd_model_fed_female_wins <- lm(Fed_LeedSqFt_per_SqMi ~ Female_Wins, data = fed_close_elections)
+
+# Tidy results from each model
+local_results <- tidy(rd_model_local_female_wins)
+state_results <- tidy(rd_model_state_female_wins)
+fed_results <- tidy(rd_model_fed_female_wins)
+
+# Add a column to indicate the type of model
+local_results$model_type <- "Local LEED"
+state_results$model_type <- "State LEED"
+fed_results$model_type <- "Federal LEED"
+
+# Combine all results into one table
+all_results <- bind_rows(local_results, state_results, fed_results)
+
+# View the combined results
+print(all_results)
+
+
+\`\`\`
+`;
+---
+
+<Layout title="Intellectual Inquiry & Research | Emmett Frett">
+  <main class="min-h-screen bg-zinc-50 text-zinc-900 py-24 px-6 sm:px-12 md:px-24">
+    <div class="max-w-6xl mx-auto">
+      <a href="/" class="inline-flex text-xs font-bold tracking-widest uppercase font-['Inter'] text-zinc-500 hover:text-zinc-900 transition-colors duration-200 mb-16 items-center gap-2">
+        &larr; Back to Home
+      </a>
+
+      <header class="mb-12">
+        <h1 class="font-['Montserrat'] text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          Economic Research & Analysis
+        </h1>
+        <p class="text-zinc-500 text-lg leading-relaxed max-w-3xl">
+          Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics.
+        </p>
+      </header>
+
+      <article class="w-full max-w-5xl mx-auto mt-24 border-b border-zinc-200 pb-20 mb-20">
+        
+        <h3 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-2">Gender and Green Governance</h3>
+        <p class="text-zinc-500 text-lg mb-10">Do Female Mayors Increase LEED-Certified Infrastructure?</p>
+
+        <section class="mb-20">
+          <h2 class="text-base tracking-widest uppercase text-zinc-500 font-bold mb-6">Part I: Formal Paper</h2>
+          <div class="w-full h-[120vh] bg-white rounded-xl shadow-2xl border border-zinc-200 overflow-hidden">
+            <iframe
+              src="/research-paper.pdf"
+              title="Economic Research Paper"
+              class="w-full h-full"
+            ></iframe>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-base tracking-widest uppercase text-zinc-500 font-bold mb-6">Part II: Quantitative Methodology & R Code</h2>
+          <details class="group">
+            <summary class="text-zinc-500 hover:text-zinc-900 font-bold uppercase tracking-widest text-base cursor-pointer transition-all list-none py-2 [&::-webkit-details-marker]:hidden flex items-center">
+              <span class="block group-open:hidden">▶ View Raw RStudio Script</span>
+              <span class="hidden group-open:block">▼ Hide Raw RStudio Script</span>
+            </summary>
+            <pre class="mt-4 bg-[#0d0d0e] text-zinc-300 p-8 rounded-xl font-mono text-sm overflow-x-auto shadow-inner leading-relaxed"><code>{rCode}</code></pre>
+          </details>
+        </section>
+
+      </article>
     </div>
   </main>
 </Layout>
