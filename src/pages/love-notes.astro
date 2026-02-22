@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// We create a simple list of your image paths with the correct .jpeg extension
+// Image paths for your "From A Stranger" project
 const notes = [
   '/love-notes/1.jpeg',
   '/love-notes/2.jpeg',
@@ -18,7 +18,7 @@ const notes = [
       &larr; Back to Home
     </a>
 
-    <header class="mb-20 max-w-2xl">
+    <header class="mb-20 max-w-2xl glide">
       <h1 class="font-['Montserrat'] font-extrabold text-5xl md:text-6xl text-zinc-900 mb-6">
         From A Stranger
       </h1>
@@ -29,7 +29,7 @@ const notes = [
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
       {notes.map((note) => (
-        <div class="aspect-[4/3] overflow-hidden bg-white rounded-sm border border-zinc-200 shadow-sm group">
+        <div class="glide aspect-[4/3] overflow-hidden bg-white rounded-sm border border-zinc-200 shadow-sm group">
           <img 
             src={note} 
             alt="A handwritten note left for a stranger" 

@@ -275,7 +275,7 @@ Leed_Projects$Federal_Government <- ifelse(Leed_Projects$OwnerTypes %in% c("Fede
                                                                      "Government Use: Federal",
                                                                      "Federal government",
                                                                      "Government use: Federal",
-                                                                     "\"Government Use: Federal\n\""),
+                                                                     "\"Government Use: Federal\\n\""),
                                            1,0)
 
 Leed_Projects$Non_Gov <- ifelse(
@@ -586,8 +586,8 @@ Final_Standard %>%
       )
   } %>%
   { 
-    cat("Number of outliers:", .$num_outliers, "\n")
-    cat("Number of zeros:", .$num_zeros, "\n")
+    cat("Number of outliers:", .$num_outliers, "\\n")
+    cat("Number of zeros:", .$num_zeros, "\\n")
   }
 
 
@@ -633,8 +633,8 @@ num_zeros <- Final_Standard %>%
   nrow()
 
 # Print the results
-cat("Number of outliers:", num_outliers, "\n")
-cat("Number of zeros:", num_zeros, "\n")
+cat("Number of outliers:", num_outliers, "\\n")
+cat("Number of zeros:", num_zeros, "\\n")
 
 
 Final_Standard %>% 
@@ -670,8 +670,8 @@ num_zeros <- Final_Standard %>%
   nrow()
 
 # Print the results
-cat("Number of outliers (|z| >= 3):", num_outliers, "\n")
-cat("Number of zeros:", num_zeros, "\n")
+cat("Number of outliers (|z| >= 3):", num_outliers, "\\n")
+cat("Number of zeros:", num_zeros, "\\n")
 
 
 Final_Standard %>%
@@ -710,8 +710,8 @@ num_zeros <- Final_Standard %>%
   nrow()
 
 # Print results
-cat("Number of outliers (above upper bound):", num_outliers, "\n")
-cat("Number of zeros:", num_zeros, "\n")
+cat("Number of outliers (above upper bound):", num_outliers, "\\n")
+cat("Number of zeros:", num_zeros, "\\n")
 
 
 Final_Standard %>% 
@@ -825,22 +825,22 @@ naive_model_state_council <- Final_Standard %>%
 modelsummary(
   list(
     # Federal LEED Models
-    "Federal - Mayor"             = naive_model_federal_mayor,
+    "Federal - Mayor"               = naive_model_federal_mayor,
     "Federal - County Legislature"= naive_model_federal_legislature,
-    "Federal - County Executive"  = naive_model_federal_executive,
-    "Federal - City Council"      = naive_model_federal_council,
+    "Federal - County Executive"   = naive_model_federal_executive,
+    "Federal - City Council"       = naive_model_federal_council,
 
     # Local LEED Models
-    "Local - Mayor"               = naive_model_local_mayor,
-    "Local - County Legislature"  = naive_model_local_legislature,
-    "Local - County Executive"    = naive_model_local_executive,
-    "Local - City Council"        = naive_model_local_council,
+    "Local - Mayor"                = naive_model_local_mayor,
+    "Local - County Legislature"   = naive_model_local_legislature,
+    "Local - County Executive"     = naive_model_local_executive,
+    "Local - City Council"         = naive_model_local_council,
 
     # State LEED Models
-    "State - Mayor"               = naive_model_state_mayor,
-    "State - County Legislature"  = naive_model_state_legislature,
-    "State - County Executive"    = naive_model_state_executive,
-    "State - City Council"        = naive_model_state_council
+    "State - Mayor"                = naive_model_state_mayor,
+    "State - County Legislature"   = naive_model_state_legislature,
+    "State - County Executive"     = naive_model_state_executive,
+    "State - City Council"         = naive_model_state_council
 
   ),
   statistic = "({std.error})",
@@ -1048,7 +1048,7 @@ summary(rd_model_local)
 
 # Deciding what order polynomial to use
 for (i in 1:4) {
-  cat("\n=== Polynomial order:", i, "===\n")
+  cat("\\n=== Polynomial order:", i, "===\\n")
   rd_model <- rdrobust(
     y = vote_margins$Local_LeedSqFt_per_SqMi,
     x = vote_margins$margin,
@@ -1085,7 +1085,7 @@ summary(rd_model_state)
 
 # Deciding what order polynomial to use
 for (i in 1:4) {
-  cat("\n=== Polynomial order:", i, "===\n")
+  cat("\\n=== Polynomial order:", i, "===\\n")
   rd_model <- rdrobust(
     y = vote_margins$State_LeedSqFt_per_SqMi,
     x = vote_margins$margin,
@@ -1120,7 +1120,7 @@ summary(rd_model_federal)
 
 # Deciding what order polynomial to use
 for (i in 1:4) {
-  cat("\n=== Polynomial order:", i, "===\n")
+  cat("\\n=== Polynomial order:", i, "===\\n")
   rd_model <- rdrobust(
     y = vote_margins$Fed_LeedSqFt_per_SqMi,
     x = vote_margins$margin,
@@ -1378,21 +1378,23 @@ print(all_results)
         &larr; Back to Home
       </a>
 
-      <header class="mb-12">
+      <header class="mb-12 glide">
         <h1 class="font-['Montserrat'] text-4xl sm:text-5xl font-bold tracking-tight mb-4">
           Economic Research & Analysis
         </h1>
         <p class="text-zinc-500 text-lg leading-relaxed max-w-3xl">
-          Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics.
+          Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics. [cite: 2025-08-06, 2025-09-16]
         </p>
       </header>
 
       <article class="w-full max-w-5xl mx-auto mt-24 border-b border-zinc-200 pb-20 mb-20">
         
-        <h3 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-2">Gender and Green Governance</h3>
-        <p class="text-zinc-500 text-lg mb-10">Do Female Mayors Increase LEED-Certified Infrastructure?</p>
+        <div class="glide">
+          <h3 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-2">Gender and Green Governance</h3>
+          <p class="text-zinc-500 text-lg mb-10">Do Female Mayors Increase LEED-Certified Infrastructure?</p>
+        </div>
 
-        <section class="mb-20">
+        <section class="mb-20 glide">
           <h2 class="text-base tracking-widest uppercase text-zinc-500 font-bold mb-6">Part I: Formal Paper</h2>
           <div class="w-full h-[120vh] bg-white rounded-xl shadow-2xl border border-zinc-200 overflow-hidden">
             <iframe
@@ -1403,7 +1405,7 @@ print(all_results)
           </div>
         </section>
 
-        <section>
+        <section class="glide">
           <h2 class="text-base tracking-widest uppercase text-zinc-500 font-bold mb-6">Part II: Quantitative Methodology & R Code</h2>
           <details class="group">
             <summary class="text-zinc-500 hover:text-zinc-900 font-bold uppercase tracking-widest text-base cursor-pointer transition-all list-none py-2 [&::-webkit-details-marker]:hidden flex items-center">
