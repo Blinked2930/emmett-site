@@ -22,7 +22,6 @@ const allEssays = await Astro.glob('./essays/*.md');
     </header>
 
     <div class="flex flex-col gap-10">
-      {/* We map over the fetched files and use 'index' to stagger the reveal */}
       {allEssays.map((essay, index) => (
         <a 
           href={essay.url} 
@@ -30,12 +29,12 @@ const allEssays = await Astro.glob('./essays/*.md');
           style={`transition-delay: ${index * 0.15}s;`}
         >
           
-          <div class="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative">
-            {/* The Mathematical Bridge for a smooth, calculated reveal */}
+          {/* THE FIX: Fixed container with absolute image for perfect cropping */}
+          <div class="w-full md:w-2/5 min-h-[16rem] md:min-h-full overflow-hidden relative">
             <img 
               src={essay.frontmatter.image} 
               alt={essay.frontmatter.title} 
-              class="w-full h-full object-cover scale-100 grayscale contrast-100 brightness-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-105 group-hover:brightness-105 transition-all duration-[1500ms] ease-out" 
+              class="absolute inset-0 w-full h-full object-cover scale-100 grayscale contrast-100 brightness-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-105 group-hover:brightness-105 transition-all duration-[1500ms] ease-out" 
             />
           </div>
 
@@ -49,7 +48,6 @@ const allEssays = await Astro.glob('./essays/*.md');
             <p class="font-['Inter'] text-zinc-600 leading-relaxed text-base md:text-lg mb-8">
               {essay.frontmatter.excerpt}
             </p>
-            {/* Replaced 'Drafting in Progress' with an interactive button */}
             <div class="font-['Inter'] text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mt-auto border border-zinc-200 inline-block px-4 py-2 rounded-sm self-start group-hover:bg-zinc-900 group-hover:text-white transition-colors duration-300">
               Read Essay &rarr;
             </div>

@@ -3,7 +3,7 @@ layout: ../../layouts/EssayLayout.astro
 title: "The Boundaries of Heart"
 date: "January 2026"
 excerpt: "A defense of an inclusive definition of family. Exploring the physical and emotional friction of setting boundaries to protect the people who matter most."
-image: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&q=80"
+image: "/essay-photos/boundaries-of-the-heart.jpg"
 ---
 
 For as long as I can remember, I have made a conscious, daily effort to ensure that my siblings are never viewed through the lens of being "step" or "second-rate." To me, they are simply my siblings that I love more than my own heart. This is not a passive fact of biology; it is a bond I have actively nurtured and protected to ensure they never felt "othered." Two weeks ago, my sister turned to my mom, she thought I was out of earshot, and said “I don’t want Emmett to go to the peace corps. I don’t want Emmett time to be done.”
