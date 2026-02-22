@@ -1,29 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const essays = [
-  {
-    date: "Expected 2026",
-    title: "Coming Soon",
-    excerpt: "I am currently organizing my thoughts on the neurological loop of digital numbing agents. Instead of rigid forcing, this will be an exploration of the felt sense of the urge.",
-    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    date: "Expected 2026",
-    title: "Coming Soon",
-    excerpt: "A future essay examining the choice between a life of comfortable 'Well-Rounded Happiness' versus choosing the difficult path to push limits and build a stronger foundation.",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    date: "Expected 2026",
-    title: "Coming Soon",
-    excerpt: "Notes and reflections on an experiment in radical focus. What happens when you limit yourself to a single project per day and make everything else off-limits? [cite: 2025-10-08]",
-    image: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&q=80"
-  }
-];
+// This single line automates your entire publishing system. 
+// It fetches every Markdown file inside the essays folder.
+const allEssays = await Astro.glob('./essays/*.md');
 ---
 
-<Layout title="Vulnerable Storytelling | Emmett Frett">
+<Layout title="Essays | Emmett Frett">
   <main class="min-h-screen bg-zinc-50 max-w-5xl mx-auto px-6 py-20">
     <a href="/" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold">
       &larr; Back to Home
@@ -34,38 +17,45 @@ const essays = [
         Essays
       </h1>
       <p class="font-['Inter'] text-zinc-500 text-lg md:text-xl leading-relaxed font-light">
-        Life is best understood through the friction it provides. These are stories from my life—crafted to be unapologetic, genuine, and focused on the lessons learned in the pursuit of courageous authenticity. [cite: 2025-09-22]
+        Life is best understood through the friction it provides. These are stories from my life—crafted to be unapologetic, genuine, and focused on the lessons learned in the pursuit of courageous authenticity.
       </p>
     </header>
 
     <div class="flex flex-col gap-10">
-      {essays.map((essay) => (
-        <div class="glide group block bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow">
+      {/* We map over the fetched files and use 'index' to stagger the reveal */}
+      {allEssays.map((essay, index) => (
+        <a 
+          href={essay.url} 
+          class="glide group block bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow"
+          style={`transition-delay: ${index * 0.15}s;`}
+        >
           
-          <div class="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-500">
+          <div class="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+            {/* The Mathematical Bridge for a smooth, calculated reveal */}
             <img 
-              src={essay.image} 
-              alt={essay.title} 
-              class="w-full h-full object-cover" 
+              src={essay.frontmatter.image} 
+              alt={essay.frontmatter.title} 
+              class="w-full h-full object-cover scale-100 grayscale contrast-100 brightness-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-105 group-hover:brightness-105 transition-all duration-[1500ms] ease-out" 
             />
           </div>
 
           <div class="w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
             <time class="font-['Inter'] text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4 block">
-              {essay.date}
+              {essay.frontmatter.date}
             </time>
             <h2 class="font-['Montserrat'] font-bold text-2xl md:text-3xl text-zinc-900 mb-4">
-              {essay.title}
+              {essay.frontmatter.title}
             </h2>
             <p class="font-['Inter'] text-zinc-600 leading-relaxed text-base md:text-lg mb-8">
-              {essay.excerpt}
+              {essay.frontmatter.excerpt}
             </p>
-            <div class="font-['Inter'] text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mt-auto border border-zinc-200 inline-block px-4 py-2 rounded-sm self-start">
-              [ Drafting in Progress ]
+            {/* Replaced 'Drafting in Progress' with an interactive button */}
+            <div class="font-['Inter'] text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mt-auto border border-zinc-200 inline-block px-4 py-2 rounded-sm self-start group-hover:bg-zinc-900 group-hover:text-white transition-colors duration-300">
+              Read Essay &rarr;
             </div>
           </div>
           
-        </div>
+        </a>
       ))}
     </div>
   </main>

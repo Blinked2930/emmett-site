@@ -1,0 +1,60 @@
+---
+import Layout from './Layout.astro';
+
+// Astro automatically passes the markdown frontmatter into this layout
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={`${frontmatter.title} | Emmett Frett`}>
+  <main class="min-h-screen bg-zinc-50 max-w-3xl mx-auto px-6 py-20">
+    
+    <a href="/essays" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold">
+      &larr; Back to Essays
+    </a>
+    
+    <header class="mb-16 glide">
+      <time class="font-['Inter'] text-sm font-bold tracking-widest text-zinc-400 uppercase mb-6 block">
+        {frontmatter.date}
+      </time>
+      <h1 class="font-['Montserrat'] font-black text-4xl md:text-5xl text-zinc-900 mb-8 leading-tight">
+        {frontmatter.title}
+      </h1>
+      
+      {/* Optional: Render the header image if you want it on the reading page */}
+      <div class="w-full aspect-[21/9] overflow-hidden rounded-sm mb-12 bg-zinc-200">
+        <img 
+          src={frontmatter.image} 
+          alt={frontmatter.title} 
+          class="w-full h-full object-cover grayscale contrast-125 opacity-90" 
+        />
+      </div>
+    </header>
+
+    <article class="essay-content glide font-['Inter'] font-light text-lg md:text-xl leading-relaxed text-zinc-700">
+      <slot />
+    </article>
+
+  </main>
+</Layout>
+
+<style is:global>
+  /* This automatically styles your markdown paragraphs and headings */
+  .essay-content p {
+    margin-bottom: 2rem;
+  }
+  .essay-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #18181b;
+  }
+  .essay-content blockquote {
+    border-left: 4px solid #d4d4d8;
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #52525b;
+    margin-bottom: 2rem;
+  }
+</style>
