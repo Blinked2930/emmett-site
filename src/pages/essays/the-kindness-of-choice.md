@@ -3,7 +3,7 @@ layout: ../../layouts/EssayLayout.astro
 title: "V7.0 The Kindness of Choice, the Freedom of No Choice"
 date: "August 2025"
 excerpt: "We are taught to venerate pure altruism, the selfless act untainted by personal gain. Yet this idealized kindness may be a ghost, a concept more useful in fables than in real life."
-image: "public/essay-photos/the-kindness-of-choice.jpg"
+image: "/essay-photos/the-kindness-of-choice.jpg"
 ---
 
 We are taught to venerate pure altruism, the selfless act untainted by personal gain. Yet this idealized kindness may be a ghost, a concept more useful in fables than in real life, setting up a false war between who we are and who we believe we ought to be. The uncomfortable truth is that our most generous acts are often intertwined with our own self-interest.
