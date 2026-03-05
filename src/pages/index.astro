@@ -14,36 +14,37 @@ import projects from '../data/projects.json';
 			{/* Slide 1: The Scene (Abstract/Atmospheric) */}
 			<div class="min-w-full h-full relative">
 				<img src="/images/albanian-sunset.jpeg" alt="Albanian Sunset" class="w-full h-full object-cover" />
-				<div class="absolute inset-0 bg-zinc-900/60 mix-blend-multiply"></div>
+				<div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply"></div>
 			</div>
 
 			{/* Slide 2: The Action (You in your element) */}
 			<div class="min-w-full h-full relative">
 				<img src="/images/on-top-bunker.jpeg" alt="Sunset in Albania" class="w-full h-full object-cover" />
-				<div class="absolute inset-0 bg-zinc-900/60 mix-blend-multiply"></div>
+				<div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply"></div>
 			</div>
 
 			{/* Slide 3: The Artifact (Proof of Outcome) */}
 			<div class="min-w-full h-full relative">
 				<img src="/images/shaking-hands.jpeg" alt="Shaking Hands" class="w-full h-full object-cover" />
-				<div class="absolute inset-0 bg-zinc-900/70 mix-blend-multiply"></div>
+				<div class="absolute inset-0 bg-zinc-900/60 mix-blend-multiply"></div>
 			</div>
 
 		</div>
 
 		{/* Gradient Overlay for Text Readability */}
-		<div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/50 to-zinc-50 pointer-events-none z-10"></div>
+		<div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/60 to-zinc-50 pointer-events-none z-10"></div>
 
 		{/* Hero Content (Static on top of sliding images) */}
 		<div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 max-w-4xl mx-auto mt-20 glide">
-			<h1 class="font-['Montserrat'] font-black text-6xl sm:text-7xl md:text-8xl text-white mb-6 tracking-tight drop-shadow-lg">
+			<h1 class="font-['Montserrat'] font-black text-6xl sm:text-7xl md:text-8xl text-white mb-6 tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
 				Emmett Frett
 			</h1>
 			
-			{/* The Explicit Purpose */}
-			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-200 font-light mb-12 leading-relaxed max-w-2xl mx-auto drop-shadow-md">
-				Life is the adventure. This is the work. <br class="hidden sm:block"/>
-				<span class="text-white font-medium">Currently building systems and community in Albania.</span>
+			{/* The Explicit Purpose - High Contrast Typography */}
+			<p class="font-['Inter'] text-xl sm:text-2xl md:text-3xl text-zinc-100 font-light mb-12 leading-relaxed max-w-3xl mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+				<span class="font-semibold text-white tracking-wide">Exploring</span> the world, 
+				<span class="font-semibold text-white tracking-wide">building</span> systems, and 
+				<span class="font-semibold text-white tracking-wide">documenting</span> the work <span class="italic font-normal text-zinc-300">here.</span>
 			</p>
 
 			{/* The Y-Intersection Buttons */}
@@ -96,8 +97,6 @@ import projects from '../data/projects.json';
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 			{projects.map((project) => {
 				const isExternal = project.title === 'Letters from Albania';
-				// You can add an "image" field to your projects.json later. 
-				// For now, using a placeholder if one isn't defined.
 				const bgImage = project.image || 'https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=2940&auto=format&fit=crop'; 
 				
 				return (
