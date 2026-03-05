@@ -1,22 +1,26 @@
 [
-    {
-      "title": "Letters from Albania",
-      "description": "A Substack chronicling my 24-month Peace Corps journey in Community Development.",
-      "link": "https://emmettfrett.substack.com"
-    },
-    {
-      "title": "From A Stranger",
-      "description": "An analog project of 30-word handwritten messages left in public spaces across the world to spark connection and reflection.",
-      "link": "/love-notes"
-    },
-    {
-      "title": "Economic Research & Analysis",
-      "description": "Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics.",
-      "link": "/research"
-    },
-    {
-      "title": "Essays",
-      "description": "Reflections on life's friction, crafted to teach lessons on growth and the pursuit of courageous authenticity.",
-      "link": "/essays"
-    }
-  ]
+  {
+    "title": "Letters from Albania",
+    "description": "A Substack chronicling my 24-month Peace Corps journey in Community Development.",
+    "link": "https://emmettfrett.substack.com",
+    "image": "/images/smiling-in-sunset.jpeg"
+  },
+  {
+    "title": "From A Stranger",
+    "description": "An analog project of 30-word handwritten messages left in public spaces across the world to spark connection and reflection.",
+    "link": "/love-notes",
+    "image": "/love-notes/folded-1.jpeg"
+  },
+  {
+    "title": "Economic Research & Analysis",
+    "description": "Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics.",
+    "link": "/research",
+    "image": "/images/research-presentation.jpeg"
+  },
+  {
+    "title": "Essays",
+    "description": "Reflections on life's friction, crafted to teach lessons on growth and the pursuit of courageous authenticity.",
+    "link": "/essays",
+    "image": "/images/albanian-sunset.jpeg"
+  }
+]
