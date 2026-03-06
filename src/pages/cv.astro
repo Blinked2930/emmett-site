@@ -17,8 +17,8 @@ import Layout from '../layouts/Layout.astro';
 		</p>
 	</section>
 
-	{/* Tabbed CV Viewer Section */}
-	<section class="max-w-6xl mx-auto px-6 pb-40 glide">
+	{/* Tabbed CV Viewer Section - Padding reduced to pb-24 */}
+	<section class="max-w-6xl mx-auto px-6 pb-24 glide">
 		
 		{/* Tab Controls */}
 		<div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-6 mb-12" id="cv-tabs" role="tablist">
@@ -64,9 +64,9 @@ import Layout from '../layouts/Layout.astro';
 			</a>
 		</div>
 
-		{/* The Embed Container (Height increased to 1200px) */}
-		<div class="w-full h-[900px] bg-zinc-100 border border-zinc-200 rounded-sm overflow-hidden shadow-inner">
-			{/* Initial src includes the hash parameters for zooming and hiding the sidebar */}
+		{/* The Embed Container - Scaled to max-w-3xl for perfect desktop viewing */}
+		<div class="w-full max-w-3xl mx-auto aspect-[8.5/11] bg-zinc-100 border border-zinc-200 rounded-sm overflow-hidden shadow-inner">
+			{/* Changed back to Fit to show the whole page, paired with the responsive aspect ratio */}
 			<iframe 
 				id="cv-frame"
 				src="/cv/Emmett_Frett_Leadership_CV.pdf#view=Fit&pagemode=none" 
@@ -93,7 +93,7 @@ import Layout from '../layouts/Layout.astro';
 				sound: '/cv/Emmett_Frett_Sound_CV.pdf'
 			};
 
-			// The viewing parameters to force fit-to-page and hide the sidebar
+			// Reverted to Fit to prevent aggressive zooming, kept pagemode=none to hide sidebar
 			const pdfParams = '#view=Fit&pagemode=none';
 
 			buttons.forEach(button => {
