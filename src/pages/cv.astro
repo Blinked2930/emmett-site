@@ -64,11 +64,12 @@ import Layout from '../layouts/Layout.astro';
 			</a>
 		</div>
 
-		{/* The Embed Container */}
-		<div class="w-full h-[800px] bg-zinc-100 border border-zinc-200 rounded-sm overflow-hidden shadow-inner">
+		{/* The Embed Container (Height increased to 1200px) */}
+		<div class="w-full h-[900px] bg-zinc-100 border border-zinc-200 rounded-sm overflow-hidden shadow-inner">
+			{/* Initial src includes the hash parameters for zooming and hiding the sidebar */}
 			<iframe 
 				id="cv-frame"
-				src="/cv/Emmett_Frett_Leadership_CV.pdf" 
+				src="/cv/Emmett_Frett_Leadership_CV.pdf#view=Fit&pagemode=none" 
 				class="w-full h-full border-none"
 				title="Emmett Frett CV"
 			>
@@ -85,12 +86,15 @@ import Layout from '../layouts/Layout.astro';
 			const iframe = document.getElementById('cv-frame');
 			const downloadBtn = document.getElementById('download-btn');
 
-			// Define the file paths for each CV
+			// Define the base file paths for each CV
 			const cvFiles = {
 				leadership: '/cv/Emmett_Frett_Leadership_CV.pdf',
 				economics: '/cv/Emmett_Frett_Economics_CV.pdf',
 				sound: '/cv/Emmett_Frett_Sound_CV.pdf'
 			};
+
+			// The viewing parameters to force fit-to-page and hide the sidebar
+			const pdfParams = '#view=Fit&pagemode=none';
 
 			buttons.forEach(button => {
 				button.addEventListener('click', () => {
@@ -108,10 +112,11 @@ import Layout from '../layouts/Layout.astro';
 
 					// 3. Update the iframe and download link
 					const target = button.getAttribute('data-target');
-					const newSrc = cvFiles[target];
+					const baseSrc = cvFiles[target];
 					
-					iframe.src = newSrc;
-					downloadBtn.href = newSrc;
+					// Apply parameters ONLY to the iframe, keep the download link clean
+					iframe.src = baseSrc + pdfParams;
+					downloadBtn.href = baseSrc;
 				});
 			});
 		});
