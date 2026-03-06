@@ -44,7 +44,7 @@ import projects from '../data/projects.json';
 			<p class="font-['Inter'] text-xl sm:text-2xl md:text-3xl text-zinc-100 font-light mb-12 leading-relaxed max-w-3xl mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
 				<span class="font-semibold text-white tracking-wide">Exploring</span> the world, 
 				<span class="font-semibold text-white tracking-wide">building</span> systems, and 
-				<span class="font-semibold text-white tracking-wide">documenting</span> the work <span class="italic font-normal text-zinc-300">here.</span>
+				<span class="font-semibold text-white tracking-wide">documenting</span> the work <span class="italic text-zinc-200">here.</span>
 			</p>
 
 			{/* The Y-Intersection Buttons */}
@@ -124,31 +124,60 @@ import projects from '../data/projects.json';
 		</div>
 	</section>
 
-	{/* IN THE NEWS / PRESS SECTION (Coming Soon) */}
+	{/* IN THE NEWS / PRESS SECTION */}
 	<section class="py-24 px-6 bg-white border-t border-zinc-100">
 		<div class="max-w-6xl mx-auto glide">
 			<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
 				<div>
 					<h2 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-3 tracking-tight">In The News</h2>
-					<p class="font-['Inter'] text-zinc-500 font-light">Features, academic press, and public recognition.</p>
+					<p class="font-['Inter'] text-zinc-500 font-light">Features, press, and public recognition.</p>
 				</div>
-				<a href="https://www.linkedin.com/in/emmett-frett/" target="_blank" class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
+				<a href="/cv" class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
 					View Full CV &rarr;
 				</a>
 			</div>
+			
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-				{/* Placholder items... */}
-				{[1, 2, 3].map(() => (
-					<div class="group block space-y-4 opacity-50">
-						<div class="aspect-video w-full bg-zinc-50 border border-zinc-200 flex items-center justify-center rounded-sm">
-							<span class="font-['Inter'] text-[9px] uppercase tracking-widest text-zinc-300">Pending Update</span>
-						</div>
-						<div>
-							<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-300 mb-2">Feature</p>
-							<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-400 leading-snug">Coming Soon</h3>
-						</div>
+				
+				{/* Article 1: Family Promise */}
+				<a href="https://familypromise.org/latest/marathon-for-family-homelessness/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full bg-zinc-50 group-hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center rounded-sm transition-colors duration-500 overflow-hidden relative">
+						<span class="font-['Inter'] text-[9px] uppercase tracking-widest text-zinc-400 group-hover:scale-110 transition-transform duration-500">Read Article</span>
 					</div>
-				))}
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">Community & Charity</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							Marathon for Family Homelessness
+						</h3>
+					</div>
+				</a>
+
+				{/* Article 2: Hamline Provost Search */}
+				<a href="https://hamlineoracle.com/13297/news/the-search-begins-for-a-new-provost/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full bg-zinc-50 group-hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center rounded-sm transition-colors duration-500 overflow-hidden relative">
+						<span class="font-['Inter'] text-[9px] uppercase tracking-widest text-zinc-400 group-hover:scale-110 transition-transform duration-500">Read Article</span>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">Academic Leadership</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							The Search Begins for a New Provost
+						</h3>
+					</div>
+				</a>
+
+				{/* Article 3: RecordSetter */}
+				<a href="https://recordsetter.com/world-record/consecutive-one-handed-football-catches-alternating-between-two-people/54854" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full bg-zinc-50 group-hover:bg-zinc-100 border border-zinc-200 flex items-center justify-center rounded-sm transition-colors duration-500 overflow-hidden relative">
+						<span class="font-['Inter'] text-[9px] uppercase tracking-widest text-zinc-400 group-hover:scale-110 transition-transform duration-500">View Record</span>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">World Record</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							Consecutive One-Handed Football Catches
+						</h3>
+					</div>
+				</a>
+
 			</div>
 		</div>
 	</section>

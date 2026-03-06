@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Emmett Frett | Curriculum Vitae">
+	
+	{/* Minimal Hero Section */}
+	<section class="pt-40 pb-16 px-6 max-w-4xl mx-auto text-center glide">
+		<a href="/" class="inline-block mb-8 font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
+			&larr; Back to Archive
+		</a>
+		<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl text-zinc-900 mb-6 tracking-tight">
+			Curriculum Vitae
+		</h1>
+		<p class="font-['Inter'] text-lg sm:text-xl text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto">
+			A multi-disciplinary approach to problem-solving, spanning quantitative analysis, institutional leadership, and technical design.
+		</p>
+	</section>
+
+	{/* Tabbed CV Viewer Section */}
+	<section class="max-w-6xl mx-auto px-6 pb-40 glide">
+		
+		{/* Tab Controls */}
+		<div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-6 mb-12" id="cv-tabs" role="tablist">
+			<button 
+				role="tab" 
+				aria-selected="true"
+				aria-controls="cv-leadership"
+				class="cv-tab-btn active px-8 py-4 text-sm font-['Inter'] font-bold tracking-[0.1em] uppercase transition-all duration-300 border-b-2 border-zinc-900 text-zinc-900"
+				data-target="leadership"
+			>
+				Leadership
+			</button>
+			<button 
+				role="tab" 
+				aria-selected="false"
+				aria-controls="cv-economics"
+				class="cv-tab-btn px-8 py-4 text-sm font-['Inter'] font-bold tracking-[0.1em] uppercase transition-all duration-300 border-b-2 border-transparent text-zinc-400 hover:text-zinc-600 hover:border-zinc-300"
+				data-target="economics"
+			>
+				Economics & Finance
+			</button>
+			<button 
+				role="tab" 
+				aria-selected="false"
+				aria-controls="cv-sound"
+				class="cv-tab-btn px-8 py-4 text-sm font-['Inter'] font-bold tracking-[0.1em] uppercase transition-all duration-300 border-b-2 border-transparent text-zinc-400 hover:text-zinc-600 hover:border-zinc-300"
+				data-target="sound"
+			>
+				Sound Engineering
+			</button>
+		</div>
+
+		{/* Action Bar (Download Button) */}
+		<div class="flex justify-end mb-6">
+			<a 
+				id="download-btn"
+				href="/cv/Emmett_Frett_Leadership_CV.pdf" 
+				download 
+				class="group flex items-center gap-3 px-6 py-3 bg-zinc-100 text-zinc-900 rounded-full font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-300 hover:bg-zinc-200"
+			>
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+				<span>Download PDF</span>
+			</a>
+		</div>
+
+		{/* The Embed Container */}
+		<div class="w-full h-[800px] bg-zinc-100 border border-zinc-200 rounded-sm overflow-hidden shadow-inner">
+			<iframe 
+				id="cv-frame"
+				src="/cv/Emmett_Frett_Leadership_CV.pdf" 
+				class="w-full h-full border-none"
+				title="Emmett Frett CV"
+			>
+				<p>Your browser does not support PDFs. <a href="/cv/Emmett_Frett_Leadership_CV.pdf">Download the PDF</a>.</p>
+			</iframe>
+		</div>
+
+	</section>
+
+	{/* Interactive Tab Logic */}
+	<script is:inline>
+		document.addEventListener('DOMContentLoaded', () => {
+			const buttons = document.querySelectorAll('.cv-tab-btn');
+			const iframe = document.getElementById('cv-frame');
+			const downloadBtn = document.getElementById('download-btn');
+
+			// Define the file paths for each CV
+			const cvFiles = {
+				leadership: '/cv/Emmett_Frett_Leadership_CV.pdf',
+				economics: '/cv/Emmett_Frett_Economics_CV.pdf',
+				sound: '/cv/Emmett_Frett_Sound_CV.pdf'
+			};
+
+			buttons.forEach(button => {
+				button.addEventListener('click', () => {
+					// 1. Remove active state from all buttons
+					buttons.forEach(btn => {
+						btn.setAttribute('aria-selected', 'false');
+						btn.classList.remove('border-zinc-900', 'text-zinc-900', 'active');
+						btn.classList.add('border-transparent', 'text-zinc-400');
+					});
+
+					// 2. Add active state to clicked button
+					button.setAttribute('aria-selected', 'true');
+					button.classList.remove('border-transparent', 'text-zinc-400');
+					button.classList.add('border-zinc-900', 'text-zinc-900', 'active');
+
+					// 3. Update the iframe and download link
+					const target = button.getAttribute('data-target');
+					const newSrc = cvFiles[target];
+					
+					iframe.src = newSrc;
+					downloadBtn.href = newSrc;
+				});
+			});
+		});
+	</script>
+</Layout>
