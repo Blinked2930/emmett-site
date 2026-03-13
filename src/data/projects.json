@@ -1,25 +1,33 @@
 [
   {
     "title": "Letters from Albania",
+    "title_sq": "Letra nga Shqipëria",
     "description": "A Substack chronicling my 24-month Peace Corps journey in Community Development.",
+    "description_sq": "Një Substack që kronikon udhëtimin tim 24-mujor në Korpusin e Paqes në Zhvillimin e Komunitetit.",
     "link": "https://substack.com/@emmettfrett",
     "image": "/images/smiling-in-sunset.jpeg"
   },
   {
     "title": "From A Stranger",
+    "title_sq": "Nga Një i Huaj",
     "description": "An analog project of 30-word handwritten messages left in public spaces across the world to spark connection and reflection.",
+    "description_sq": "Një projekt analog i mesazheve të shkruara me dorë prej 30 fjalësh të lëna në hapësira publike për të ndezur lidhjen.",
     "link": "/love-notes",
     "image": "/love-notes/folded-1.jpeg"
   },
   {
     "title": "Economic Research & Analysis",
+    "title_sq": "Kërkim dhe Analizë Ekonomike",
     "description": "Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in finance and economics.",
+    "description_sq": "Vlerësime formale të ndikimit në treg për teknologjitë në zhvillim, duke përdorur sfondin tim në financë dhe ekonomi.",
     "link": "/research",
     "image": "/images/Mayo.jpeg"
   },
   {
     "title": "Essays",
+    "title_sq": "Ese",
     "description": "Reflections on life's friction, crafted to teach lessons on growth and the pursuit of courageous authenticity.",
+    "description_sq": "Reflektime mbi fërkimet e jetës, të krijuara për të dhënë mësime mbi rritjen dhe ndjekjen e autenticitetit të guximshëm.",
     "link": "/essays",
     "image": "/images/albanian-sunset.jpeg"
   }

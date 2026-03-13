@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import projects from '../data/projects.json';
+import { useTranslations } from '../i18n/utils';
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Layout title="Emmett Frett | Life is the Adventure">
+	
+	<section class="relative h-screen overflow-hidden bg-zinc-900 group">
+		
+		<div id="hero-slider" class="flex w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.7,0,0.3,1)]">
+			<div class="min-w-full h-full relative">
+				<img src="/images/albanian-sunset.jpeg" alt="Albanian Sunset" class="w-full h-full object-cover" />
+				<div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply"></div>
+			</div>
+			<div class="min-w-full h-full relative">
+				<img src="/images/on-top-bunker.jpeg" alt="Sunset in Albania" class="w-full h-full object-cover" />
+				<div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply"></div>
+			</div>
+			<div class="min-w-full h-full relative">
+				<img src="/images/shaking-hands.jpeg" alt="Shaking Hands" class="w-full h-full object-cover" />
+				<div class="absolute inset-0 bg-zinc-900/60 mix-blend-multiply"></div>
+			</div>
+		</div>
+
+		<div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/60 to-zinc-50 pointer-events-none z-10"></div>
+
+		<div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 max-w-4xl mx-auto mt-20 glide">
+			<h1 class="font-['Montserrat'] font-black text-6xl sm:text-7xl md:text-8xl text-white mb-6 tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+				Emmett Frett
+			</h1>
+			
+			<p class="font-['Inter'] text-xl sm:text-2xl md:text-3xl text-zinc-100 font-light mb-12 leading-relaxed max-w-3xl mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+				<span class="font-semibold text-white tracking-wide">{t('hero.exploring')}</span>{t('hero.the_world')}
+				<span class="font-semibold text-white tracking-wide">{t('hero.building')}</span>{t('hero.systems')}
+				<span class="font-semibold text-white tracking-wide">{t('hero.documenting')}</span><span class="italic text-zinc-200">{t('hero.the_work_here')}</span>
+			</p>
+
+			<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+				<a 
+					href="https://substack.com/@emmettfrett" 
+					target="_blank"
+					rel="noopener noreferrer"
+					class="group w-full sm:w-auto px-8 py-4 bg-white text-zinc-900 rounded-full font-['Inter'] text-xs font-bold tracking-[0.2em] uppercase hover:bg-zinc-100 hover:scale-105 hover:shadow-2xl transition-all duration-500"
+				>
+					{t('hero.btn.peace_corps')}
+				</a>
+				<a 
+					href="#archive" 
+					class="group w-full sm:w-auto px-8 py-4 bg-transparent border border-white/40 text-white rounded-full font-['Inter'] text-xs font-bold tracking-[0.2em] uppercase hover:bg-white/10 hover:border-white transition-all duration-500 backdrop-blur-sm"
+				>
+					{t('hero.btn.archive')}
+				</a>
+			</div>
+		</div>
+
+		<div class="absolute bottom-12 left-0 right-0 z-30 flex justify-center gap-4">
+			<button class="slider-dot w-2 h-2 rounded-full bg-white transition-all duration-300 scale-150 opacity-100" data-index="0" aria-label="Slide 1"></button>
+			<button class="slider-dot w-2 h-2 rounded-full bg-white opacity-40 transition-all duration-300 hover:opacity-100" data-index="1" aria-label="Slide 2"></button>
+			<button class="slider-dot w-2 h-2 rounded-full bg-white opacity-40 transition-all duration-300 hover:opacity-100" data-index="2" aria-label="Slide 3"></button>
+		</div>
+	</section>
+
+	<section class="bg-zinc-50 border-b border-zinc-200 py-32 px-4 sm:px-6 lg:px-8">
+		<div class="max-w-4xl mx-auto flex flex-col items-center text-center glide">
+			<div class="w-12 h-px bg-zinc-300 mb-8" aria-hidden="true"></div>
+			<blockquote class="font-['Montserrat'] text-3xl sm:text-4xl lg:text-5xl font-medium text-zinc-800 leading-tight">
+				{t('quote.text')}
+			</blockquote>
+			<cite class="mt-6 not-italic font-['Inter'] text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">
+				{t('quote.author')}
+			</cite>
+		</div>
+	</section>
+
+	<section class="py-24 px-6 bg-white border-b border-zinc-100">
+		<div class="max-w-3xl mx-auto text-center glide">
+			<h2 class="font-['Montserrat'] text-2xl font-bold text-zinc-900 mb-6 tracking-tight">{t('about.title')}</h2>
+			<p class="font-['Inter'] text-lg text-zinc-600 font-light leading-relaxed">
+				{t('about.text')}
+			</p>
+		</div>
+	</section>
+
+	<section id="archive" class="py-32 px-6 max-w-7xl mx-auto">
+		<div class="mb-20 text-center glide">
+			<h2 class="font-['Montserrat'] text-4xl font-bold text-zinc-900 mb-4 tracking-tight">{t('archive.title')}</h2>
+			<p class="font-['Inter'] text-zinc-500 font-light">{t('archive.subtitle')}</p>
+		</div>
+		
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			{projects.map((project) => {
+				const isExternal = project.title === 'Letters from Albania';
+				const bgImage = project.image || 'https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=2940&auto=format&fit=crop'; 
+				
+				return (
+					<a
+						href={project.link}
+						target={isExternal ? '_blank' : undefined}
+						rel={isExternal ? 'noopener noreferrer' : undefined}
+						class="glide group relative flex flex-col justify-end min-h-[400px] overflow-hidden bg-zinc-900 rounded-sm hover:-translate-y-1 transition-all duration-500 hover:shadow-2xl cursor-pointer no-underline text-inherit"
+					>
+						<img src={bgImage} alt={project.title} class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/60 to-transparent"></div>
+						
+						<div class="relative z-10 p-10">
+							<h3 class="font-['Montserrat'] text-2xl font-bold mb-3 text-white">
+                                {lang === 'sq' && project.title_sq ? project.title_sq : project.title}
+                            </h3>
+							<p class="font-['Inter'] text-zinc-300 font-light leading-relaxed mb-6 max-w-lg line-clamp-2">
+                                {lang === 'sq' && project.description_sq ? project.description_sq : project.description}
+                            </p>
+							<div class="flex items-center text-[10px] font-bold font-['Inter'] uppercase tracking-[0.2em] text-white/70 group-hover:text-white transition-colors duration-300">
+								{t('archive.explore')} <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
+							</div>
+						</div>
+					</a>
+				);
+			})}
+		</div>
+	</section>
+
+	<section class="py-24 px-6 bg-white border-t border-zinc-100">
+		<div class="max-w-6xl mx-auto glide">
+			<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+				<div>
+					<h2 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-3 tracking-tight">{t('news.title')}</h2>
+					<p class="font-['Inter'] text-zinc-500 font-light">{t('news.subtitle')}</p>
+				</div>
+				<a href="/cv" class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
+					{t('news.view_cv')}
+				</a>
+			</div>
+			
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				
+				<a href="https://familypromise.org/latest/marathon-for-family-homelessness/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-marathon.jpg" alt="Marathon for Family Homelessness" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">{t('news.article1.category')}</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							{t('news.article1.title')}
+						</h3>
+					</div>
+				</a>
+
+				<a href="https://hamlineoracle.com/13297/news/the-search-begins-for-a-new-provost/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-provost.jpg" alt="Provost Search Committee" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">{t('news.article2.category')}</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							{t('news.article2.title')}
+						</h3>
+					</div>
+				</a>
+
+				<a href="https://www.kimlartz.com/copy-of-concord-floral" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-floral.jpg" alt="Concord Floral Production" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">{t('news.article3.category')}</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							{t('news.article3.title')}
+						</h3>
+					</div>
+				</a>
+
+			</div>
+		</div>
+	</section>
+
+	<script is:inline>
+		document.addEventListener('DOMContentLoaded', () => {
+			const slider = document.getElementById('hero-slider');
+			const dots = document.querySelectorAll('.slider-dot');
+			const slideCount = dots.length;
+			let currentIndex = 0;
+			let interval;
+
+			function goToSlide(index) {
+				slider.style.transform = `translateX(-${index * 100}%)`;
+				dots.forEach((dot, i) => {
+					if (i === index) {
+						dot.classList.replace('opacity-40', 'opacity-100');
+						dot.classList.add('scale-150');
+					} else {
+						dot.classList.replace('opacity-100', 'opacity-40');
+						dot.classList.remove('scale-150');
+					}
+				});
+				currentIndex = index;
+			}
+
+			function nextSlide() {
+				goToSlide((currentIndex + 1) % slideCount);
+			}
+
+			function startAutoplay() {
+				interval = setInterval(nextSlide, 5000); 
+			}
+
+			function resetAutoplay() {
+				clearInterval(interval);
+				startAutoplay();
+			}
+
+			dots.forEach((dot, index) => {
+				dot.addEventListener('click', () => {
+					goToSlide(index);
+					resetAutoplay();
+				});
+			});
+
+			startAutoplay();
+		});
+	</script>
+</Layout>

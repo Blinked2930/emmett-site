@@ -1,73 +1,53 @@
 ---
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getLangFromUrl } from '../i18n/utils';
 
 interface Props {
-	title?: string;
+  title?: string;
 }
 
 const { title = 'Emmett Frett' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Emmett Frett - Sound Engineer | Peace Corps Volunteer | Builder" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-		
-		<title>{title}</title>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Emmett Frett - Exploring the world, building systems, and documenting the work." />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-white text-zinc-900 antialiased">
+    
+    {/* This slot is the magic portal where your Home.astro content appears */}
+    <slot />
+    
+    {/* The dynamically translated footer we just built */}
+    <Footer />
 
-		<style is:inline>
-			/* Set initial state to invisible and slightly lower */
-			body { 
-				opacity: 0; 
-				transform: translateY(20px);
-				transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-			}
-			/* This class will be added by the script below */
-			body.loaded { 
-				opacity: 1; 
-				transform: translateY(0);
-			}
-		</style>
-	</head>
-	<body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-zinc-300">
-		
-		{/* Only ONE slot tag. This is where your page content goes. */}
-		<slot />
-		
-		<Footer />
+    {/* The Glide animation engine */}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('glide-in');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
 
-		<script is:inline>
-			// As soon as the DOM is ready, add the 'loaded' class
-			document.addEventListener('DOMContentLoaded', () => {
-				document.body.classList.add('loaded');
-			});
-
-			// Scroll-triggered glide-in using Intersection Observer
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							entry.target.classList.add('glide-in');
-							observer.unobserve(entry.target);
-						}
-					});
-				},
-				{ threshold: 0.15 }
-			);
-
-			document.addEventListener('DOMContentLoaded', () => {
-				document.querySelectorAll('.glide').forEach((el) => observer.observe(el));
-			});
-		</script>
-	</body>
+        document.querySelectorAll('.glide').forEach((el) => {
+          observer.observe(el);
+        });
+      });
+    </script>
+  </body>
 </html>

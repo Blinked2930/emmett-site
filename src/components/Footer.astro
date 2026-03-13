@@ -1,42 +1,48 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Logic to build the URL for the language toggle switch
+let currentPath = Astro.url.pathname;
+if (currentPath.startsWith('/sq/')) {
+  currentPath = currentPath.replace('/sq/', '/');
+} else if (currentPath === '/sq') {
+  currentPath = '/';
+}
+const togglePath = lang === 'en' ? `/sq${currentPath === '/' ? '' : currentPath}` : currentPath;
+const toggleText = lang === 'en' ? 'Shqip (SQ)' : 'English (EN)';
 ---
 <footer class="mt-40 border-t border-zinc-100 bg-white">
   <div class="max-w-6xl mx-auto px-6 py-24">
     
-    {/* Main Flex Container */}
     <div class="flex flex-col lg:flex-row justify-between items-start gap-16">
       
-      {/* Left Side: The Narrative */}
       <div class="max-w-xl glide">
         <h2 class="font-['Inter'] text-2xl md:text-3xl font-light text-zinc-900 leading-snug tracking-tight">
-          The best parts of life are found in genuine connection and shared stories.
+          {t('footer.headline')}
         </h2>
       </div>
 
-      {/* Right Side: Action & Location */}
       <div class="flex flex-col items-center lg:items-end gap-10 w-full lg:w-auto glide">
         
-        {/* Action Bar (Refined Optical Weight & Hierarchy) */}
         <div class="flex flex-col sm:flex-row items-center gap-5 sm:gap-6 w-full sm:w-auto">
           
-          {/* Primary CTA: Slimmer, more elegant pill (h-12) */}
           <a 
             href="mailto:emmettfrett@gmail.com?subject=Hello%20from%20the%20website" 
             class="group flex items-center justify-center gap-3 h-12 px-7 w-full sm:w-fit bg-zinc-900 text-white rounded-full font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 hover:bg-zinc-800 hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
           >
-            <span>Email Me</span>
+            <span>{t('footer.btn')}</span>
             <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
             </svg>
           </a>
 
-          {/* Subtle Divider (Matched to icon height) */}
           <div class="hidden sm:block w-px h-6 bg-zinc-200"></div>
 
-          {/* Secondary Actions: Scaled back to elegant w-6 h-6 line art */}
           <div class="flex items-center gap-5">
-             {/* LinkedIn */}
              <a href="https://www.linkedin.com/in/emmettfrett/" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 hover:scale-110" aria-label="LinkedIn">
                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -45,7 +51,6 @@
                </svg>
              </a>
              
-             {/* Substack */} 
              <a href="https://substack.com/@emmettfrett" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 hover:scale-110" aria-label="Substack">
                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                  <path d="M4 5h16v3H4z"></path>
@@ -55,20 +60,25 @@
           </div>
         </div>
 
-        {/* Dynamic Location Tag */}
         <div class="text-center lg:text-right w-full lg:w-auto">
-          <p class="font-['Inter'] text-[10px] uppercase tracking-[0.3em] text-zinc-400 mb-1 font-bold">Albania</p>
-          <p class="font-['Inter'] text-[9px] text-zinc-300 italic uppercase tracking-widest">Peace Corps 2026</p>
+          <p class="font-['Inter'] text-[10px] uppercase tracking-[0.3em] text-zinc-400 mb-1 font-bold">{t('footer.location')}</p>
+          <p class="font-['Inter'] text-[9px] text-zinc-300 italic uppercase tracking-widest">{t('footer.year')}</p>
         </div>
 
       </div>
     </div>
 
-    {/* Bottom Bar: Metadata */}
-    <div class="mt-24 pt-10 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6 opacity-30">
-      <div class="flex gap-6 font-['Inter'] text-[9px] uppercase tracking-[0.4em] font-medium">
+    <div class="mt-24 pt-10 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6">
+      
+      {/* THE LANGUAGE TOGGLE BUTTON */}
+      <a href={togglePath} class="font-['Inter'] text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors">
+        {toggleText}
+      </a>
+
+      <div class="flex gap-6 font-['Inter'] text-[9px] uppercase tracking-[0.4em] font-medium opacity-30">
         <span>&copy; 2026 Emmett Frett</span>
       </div>
+
     </div>
   </div>
 </footer>
