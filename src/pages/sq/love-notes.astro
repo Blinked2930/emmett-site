@@ -1,11 +1,31 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
+import fs from 'node:fs';
+import path from 'node:path';
+
 // We'll use your two folded note photos as "Process" images
 const processImages = [
   '/love-notes/folded-1.jpeg',
   '/love-notes/folded-2.jpeg'
 ];
+
+// Calculate notes stats dynamically
+const notesDir = path.join(process.cwd(), 'public', 'love-notes');
+let totalNotes = 226; // fallback
+try {
+  const files = fs.readdirSync(notesDir);
+  totalNotes = files.filter((f: string) => /^\d+\.jpeg$/.test(f)).length;
+} catch (e) {
+  console.error("Error reading love-notes directory", e);
+}
+
+const minutesPerNote = 7;
+const totalMinutes = totalNotes * minutesPerNote;
+const totalHours = Math.round(totalMinutes / 60);
+
+// Helper for formatting numbers with commas
+const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 ---
 
 <Layout title="Nga Një i Huaj | Emmett Frett">
@@ -24,15 +44,15 @@ const processImages = [
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10 border-y border-zinc-200">
         <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">226</span>
+          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalNotes)}</span>
           <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Totali i Shënimeve</span>
         </div>
         <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">1,582</span>
+          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalMinutes)}</span>
           <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Minuta të Shpenzuara</span>
         </div>
         <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">~26</span>
+          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">~{formatNumber(totalHours)}</span>
           <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Orë Krijimi</span>
         </div>
       </div>
@@ -69,9 +89,9 @@ const processImages = [
   </main>
 </Layout>
 
-<script is:inline>
+<script define:vars={{ totalNotes }}>
   function renderRandomNotes() {
-    const TOTAL_NOTES = 226; 
+    const TOTAL_NOTES = totalNotes; 
     const DISPLAY_COUNT = 8; 
     const grid = document.getElementById('notes-grid');
     
