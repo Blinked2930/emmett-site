@@ -1,15 +1,19 @@
 ---
 import Layout from './Layout.astro';
+import { getLangFromUrl } from '../i18n/utils';
 
 // Astro automatically passes the markdown frontmatter into this layout
 const { frontmatter } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const backUrl = lang === 'sq' ? '/sq/essays' : '/essays';
+const backText = lang === 'sq' ? 'Kthehu tek Esetë' : 'Back to Essays';
 ---
 
 <Layout title={`${frontmatter.title} | Emmett Frett`}>
   <main class="min-h-screen bg-zinc-50 max-w-3xl mx-auto px-6 py-20">
     
-    <a href="/essays" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold">
-      &larr; Back to Essays
+    <a href={backUrl} class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold">
+      &larr; {backText}
     </a>
     
     <header class="mb-16 glide">

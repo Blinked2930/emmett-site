@@ -9,6 +9,16 @@ interface Props {
 
 const { title = 'Emmett Frett' } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+
+// Logic to build the URL for the language toggle switch
+let currentPath = Astro.url.pathname;
+if (currentPath.startsWith('/sq/')) {
+  currentPath = currentPath.replace('/sq/', '/');
+} else if (currentPath === '/sq') {
+  currentPath = '/';
+}
+const togglePath = lang === 'en' ? `/sq${currentPath === '/' ? '' : currentPath}` : currentPath;
+const toggleText = lang === 'en' ? 'Shqip (SQ)' : 'English (EN)';
 ---
 
 <!doctype html>
@@ -26,6 +36,13 @@ const lang = getLangFromUrl(Astro.url);
   </head>
   <body class="bg-white text-zinc-900 antialiased">
     
+    {/* Language Toggle */}
+    <div class="absolute top-6 right-6 z-50">
+      <a href={togglePath} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 bg-white/80 backdrop-blur-sm rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors">
+        {toggleText}
+      </a>
+    </div>
+
     {/* This slot is the magic portal where your Home.astro content appears */}
     <slot />
     

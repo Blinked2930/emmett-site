@@ -98,7 +98,7 @@ const t = useTranslations(lang);
 				
 				return (
 					<a
-						href={project.link}
+						href={lang === 'sq' && !isExternal ? `/sq${project.link}` : project.link}
 						target={isExternal ? '_blank' : undefined}
 						rel={isExternal ? 'noopener noreferrer' : undefined}
 						class="glide group relative flex flex-col justify-end min-h-[400px] overflow-hidden bg-zinc-900 rounded-sm hover:-translate-y-1 transition-all duration-500 hover:shadow-2xl cursor-pointer no-underline text-inherit"
