@@ -13,9 +13,13 @@ const processImages = [
 // Calculate notes stats dynamically
 const notesDir = path.join(process.cwd(), 'public', 'love-notes');
 let totalNotes = 226; // fallback
+let noteFiles: string[] = [];
 try {
   const files = fs.readdirSync(notesDir);
-  totalNotes = files.filter((f: string) => /^\d+\.jpeg$/.test(f)).length;
+  noteFiles = files.filter((f: string) => f.endsWith('.jpeg') && !f.startsWith('folded'));
+  if (noteFiles.length > 0) {
+    totalNotes = noteFiles.length;
+  }
 } catch (e) {
   console.error("Error reading love-notes directory", e);
 }
@@ -89,22 +93,21 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
   </main>
 </Layout>
 
-<script define:vars={{ totalNotes }}>
+<script define:vars={{ noteFiles }}>
   function renderRandomNotes() {
-    const TOTAL_NOTES = totalNotes; 
     const DISPLAY_COUNT = 8; 
     const grid = document.getElementById('notes-grid');
     
-    const indices = Array.from({ length: TOTAL_NOTES }, (_, i) => i + 1);
+    const files = [...noteFiles];
     
-    for (let i = indices.length - 1; i > 0; i--) {
+    for (let i = files.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
+      [files[i], files[j]] = [files[j], files[i]];
     }
     
-    const selected = indices.slice(0, DISPLAY_COUNT);
+    const selected = files.slice(0, DISPLAY_COUNT);
     
-    selected.forEach((num, index) => {
+    selected.forEach((filename, index) => {
       const wrapper = document.createElement('div');
       wrapper.className = 'glide aspect-[4/3] overflow-hidden bg-white rounded-sm border border-zinc-200 shadow-sm group';
       wrapper.style.transitionDelay = `${index * 0.1}s`;
@@ -112,8 +115,8 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
       // --- THE MATHEMATICAL BRIDGE FIX IS HERE ---
       wrapper.innerHTML = `
         <img 
-          src="/love-notes/${num}.jpeg" 
-          alt="Handwritten note #${num}" 
+          src="/love-notes/${filename}" 
+          alt="Handwritten note" 
           class="w-full h-full object-contain bg-zinc-100 opacity-80 grayscale contrast-125 brightness-100 group-hover:opacity-100 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-110 transition-all duration-[1000ms] ease-out cursor-pointer"
           loading="lazy"
         />
