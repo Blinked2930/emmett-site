@@ -8,6 +8,7 @@ export const defaultLang = 'en';
 
 export const ui = {
   en: {
+    'nav.title': 'Emmett Frett | Life is the Adventure',
     'hero.exploring': 'Exploring',
     'hero.the_world': ' the world, ',
     'hero.building': 'building',
@@ -39,6 +40,7 @@ export const ui = {
     'footer.year': 'Peace Corps 2026',
   },
   sq: {
+    'nav.title': 'Emmett Frett | Jeta është një Aventurë',
     'hero.exploring': 'Eksplorimi',
     'hero.the_world': ' i botës, ',
     'hero.building': 'ndërtimi',

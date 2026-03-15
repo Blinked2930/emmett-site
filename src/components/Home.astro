@@ -7,7 +7,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<Layout title="Emmett Frett | Life is the Adventure">
+<Layout title={t('nav.title')}>
 	
 	<section class="relative h-screen overflow-hidden bg-zinc-900 group">
 		
