@@ -8,193 +8,194 @@ const t = useTranslations(lang);
 ---
 
 <Layout title="Software | Emmett Frett">
-	<!-- Hero Section -->
-	<section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
-		<div class="absolute inset-0 z-0">
-			<!-- A subtle animated gradient or tech-focused background -->
-			<div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-zinc-900 to-purple-900/30"></div>
+    <section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-zinc-900 to-purple-900/30"></div>
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
-		</div>
+        </div>
 
-		<div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
-			<a href="/" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
-				&larr; Back to Home
-			</a>
-			<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
-				Software & Solutions
-			</h1>
-			
-			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-300 font-light max-w-3xl leading-relaxed mx-auto">
-				Over the past few months, I've focused my energy on crafting robust <span class="font-semibold text-white">Progressive Web Apps</span> (PWAs). These applications represent my journey into modern web development, designed for performance, immediate impact, and solving real problems seamlessly on any device.
-			</p>
-			
-			<div class="mt-12">
-				<a 
-					href="#pwa-guide" 
-					class="px-6 py-3 bg-white/10 border border-white/20 text-white rounded-full font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-zinc-900 transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
-				>
-					Learn To Install
-				</a>
-			</div>
-		</div>
-	</section>
+        <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
+            <a href="/" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
+                &larr; Back to Home
+            </a>
+            <h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+                Software & Solutions
+            </h1>
+            
+            <p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-300 font-light max-w-3xl leading-relaxed mx-auto">
+                Over the past few months, I've focused my energy on crafting robust <span class="font-semibold text-white">Progressive Web Apps</span> (PWAs). These applications represent my journey into modern web development, designed for performance, immediate impact, and solving real problems seamlessly on any device.
+            </p>
+            
+            <div class="mt-12">
+                <a 
+                    href="#pwa-guide" 
+                    class="px-6 py-3 bg-white/10 border border-white/20 text-white rounded-full font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-zinc-900 transition-all duration-300 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                >
+                    Learn To Install
+                </a>
+            </div>
+        </div>
+    </section>
 
-	<!-- App Gallery Grid -->
-	<section class="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 relative">
-		<div class="max-w-7xl mx-auto">
-			<div class="mb-16 text-center glide">
-				<h2 class="font-['Montserrat'] text-3xl md:text-4xl font-bold text-zinc-900 mb-4 tracking-tight">The Portfolio</h2>
-				<p class="font-['Inter'] text-zinc-500 font-light max-w-2xl mx-auto">A showcase of utility, design, and continuous learning. Explore the live demos and dive deep into the source code.</p>
-			</div>
+    <section class="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 text-center glide">
+                <h2 class="font-['Montserrat'] text-3xl md:text-4xl font-bold text-zinc-900 mb-4 tracking-tight">The Portfolio</h2>
+                <p class="font-['Inter'] text-zinc-500 font-light max-w-2xl mx-auto">A showcase of utility, design, and continuous learning. Explore the live demos and dive deep into the source code.</p>
+            </div>
 
-			<div class="space-y-24">
-				{apps.map((app, index) => {
-					const isEven = index % 2 === 0;
-					return (
-						<article id={app.id} class="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
-							
-							{/* Image Container */}
-							<div class={`w-full lg:w-1/2 relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/3] lg:aspect-[16/10] bg-zinc-200 ${!isEven ? 'lg:order-2' : ''}`}>
+            <div class="space-y-24">
+                {apps.map((app, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
+                        <article id={app.id} class="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
+                            
+                            {/* Image Container */}
+                            <a 
+                                href={app.demo_url !== '#' ? app.demo_url : undefined}
+                                target={app.demo_url !== '#' ? "_blank" : undefined}
+                                rel={app.demo_url !== '#' ? "noopener noreferrer" : undefined}
+                                class={`block w-full lg:w-1/2 relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/3] lg:aspect-[16/10] bg-zinc-200 ${!isEven ? 'lg:order-2' : ''} ${app.demo_url !== '#' ? 'cursor-pointer' : 'cursor-default'}`}
+                            >
                                 <div class="absolute inset-0 bg-zinc-800/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
-								<img 
-									src={app.image} 
-									alt={`${app.title} UI Preview`}
-									onerror="this.onerror=null; this.src='/images/albanian-sunset.jpeg';"
-									class="absolute inset-0 w-full h-full object-cover object-center origin-center scale-[1.03] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)]"
-								/>
-							</div>
+                                <img 
+                                    src={app.image} 
+                                    alt={`${app.title} UI Preview`}
+                                    onerror="this.onerror=null; this.src='/images/albanian-sunset.jpeg';"
+                                    class="absolute inset-0 w-full h-full object-cover object-center origin-center scale-[1.03] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)]"
+                                />
+                            </a>
 
-							{/* Content Container */}
-							<div class={`w-full lg:w-1/2 flex flex-col justify-center ${!isEven ? 'lg:order-1' : ''}`}>
-								<div class="mb-4 flex flex-wrap gap-2">
-									{app.features.map(feature => (
-										<span class="px-3 py-1 bg-zinc-100 text-zinc-600 text-[10px] font-['Inter'] font-bold uppercase tracking-[0.1em] rounded-full">
-											{feature}
-										</span>
-									))}
-								</div>
-								
-								<h3 class="font-['Montserrat'] text-4xl font-bold text-zinc-900 mb-3 tracking-tighter">
-									{app.title}
-								</h3>
-								
-								<p class="font-['Inter'] text-xl font-medium text-zinc-700 mb-6 border-l-4 border-indigo-500 pl-4 py-1">
-									{app.selling_point}
-								</p>
-								
-								<p class="font-['Inter'] text-zinc-500 font-light leading-relaxed mb-8">
-									{app.description}
-								</p>
-								
-								<div class="flex flex-wrap items-center gap-4 mt-auto">
-									<a 
-										href={app.demo_url} 
-										target="_blank" 
-										rel="noopener noreferrer"
+                            {/* Content Container */}
+                            <div class={`w-full lg:w-1/2 flex flex-col justify-center ${!isEven ? 'lg:order-1' : ''}`}>
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    {app.features.map(feature => (
+                                        <span class="px-3 py-1 bg-zinc-100 text-zinc-600 text-[10px] font-['Inter'] font-bold uppercase tracking-[0.1em] rounded-full">
+                                            {feature}
+                                        </span>
+                                    ))}
+                                </div>
+                                
+                                <h3 class="font-['Montserrat'] text-4xl font-bold text-zinc-900 mb-3 tracking-tighter">
+                                    {app.title}
+                                </h3>
+                                
+                                <p class="font-['Inter'] text-xl font-medium text-zinc-700 mb-6 border-l-4 border-indigo-500 pl-4 py-1">
+                                    {app.selling_point}
+                                </p>
+                                
+                                <p class="font-['Inter'] text-zinc-500 font-light leading-relaxed mb-8">
+                                    {app.description}
+                                </p>
+                                
+                                <div class="flex flex-wrap items-center gap-4 mt-auto">
+                                    <a 
+                                        href={app.demo_url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
                                         class={`px-8 py-3 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 shadow-lg ${app.demo_url !== '#' ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:-translate-y-1' : 'bg-zinc-300 text-zinc-500 cursor-not-allowed'}`}
-									>
-										Live Demo
-									</a>
-									<a 
-										href={app.github_url} 
-										target="_blank" 
-										rel="noopener noreferrer"
-										class={`px-8 py-3 bg-white border-2 border-zinc-200 text-zinc-900 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 hover:border-zinc-900 hover:shadow-lg ${app.github_url === '#' ? 'opacity-50 cursor-not-allowed' : ''}`}
-									>
-										Source Code
-									</a>
-								</div>
-							</div>
-						</article>
-					);
-				})}
-			</div>
-		</div>
-	</section>
-
-	<!-- Deep Dive / PWA Guide Section -->
-	<section id="pwa-guide" class="py-32 px-6 bg-zinc-900 text-white relative overflow-hidden">
-		<div class="absolute top-0 right-0 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-		<div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-
-		<div class="max-w-6xl mx-auto relative z-10 glide">
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-				<div>
-					<h2 class="font-['Montserrat'] text-4xl md:text-5xl font-bold mb-6 tracking-tight">Experience them natively.</h2>
-					<p class="font-['Inter'] text-lg text-zinc-400 font-light leading-relaxed mb-8">
-						All of the applications featured here are built as Progressive Web Apps (PWAs). This means you don't need an app store to install them. You can save them directly to your phone's home screen for a fast, native-like experience that works beautifully even when your connection is unstable.
-					</p>
-					
-					<div class="space-y-8">
-						<div class="flex gap-4">
-							<div class="flex-shrink-0 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold font-['Montserrat']">1</div>
-							<div>
-								<h4 class="font-['Montserrat'] font-bold text-xl mb-1">Open the Demo</h4>
-								<p class="font-['Inter'] text-zinc-400 text-sm">Navigate to any of the live demo links using Safari (iOS) or Chrome (Android).</p>
-							</div>
-						</div>
-						<div class="flex gap-4">
-							<div class="flex-shrink-0 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold font-['Montserrat']">2</div>
-							<div>
-								<h4 class="font-['Montserrat'] font-bold text-xl mb-1">Access the Menu</h4>
-								<p class="font-['Inter'] text-zinc-400 text-sm">Tap the Share icon <span class="inline-block px-1 bg-zinc-800 rounded mx-1">↑</span> in Safari, or the three-dot menu <span class="inline-block px-1 bg-zinc-800 rounded mx-1">⋮</span> in Chrome.</p>
-							</div>
-						</div>
-						<div class="flex gap-4">
-							<div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold font-['Montserrat']">3</div>
-							<div>
-								<h4 class="font-['Montserrat'] font-bold text-xl mb-1">Add to Home Screen</h4>
-								<p class="font-['Inter'] text-zinc-400 text-sm">Scroll down and tap <span class="font-bold text-white">"Add to Home Screen"</span>. The app will now appear natively alongside your other apps!</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="relative flex justify-center">
-					{/* Abstract Phone Mockup showing "Add to Home Screen" */}
-					<div class="w-72 h-[600px] bg-zinc-950 rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl relative overflow-hidden flex flex-col items-center pt-8">
-						{/* Notch */}
-						<div class="absolute top-0 w-1/2 h-6 bg-zinc-800 rounded-b-xl"></div>
-						
-						{/* Mock App Interface */}
-						<div class="w-[85%] mt-8 flex flex-col gap-4">
-							<div class="h-10 border border-zinc-800 rounded-full bg-zinc-900 flex items-center px-4">
-								<div class="w-4 h-4 rounded-full bg-zinc-700"></div>
-								<div class="w-3/4 h-2 ml-4 rounded-full bg-zinc-800"></div>
-							</div>
-							<div class="h-48 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center">
-                                <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-									<svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-								</div>
+                                    >
+                                        Live Demo
+                                    </a>
+                                    <a 
+                                        href={app.github_url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        class={`px-8 py-3 bg-white border-2 border-zinc-200 text-zinc-900 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 hover:border-zinc-900 hover:shadow-lg ${app.github_url === '#' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        Source Code
+                                    </a>
+                                </div>
                             </div>
-							<div class="h-2 rounded-full w-full bg-zinc-800"></div>
-							<div class="h-2 rounded-full w-4/5 bg-zinc-800"></div>
-							<div class="h-2 rounded-full w-3/5 bg-zinc-800"></div>
-						</div>
+                        </article>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
 
-						{/* Mock Share Sheet sliding up */}
-						<div class="absolute bottom-0 w-full h-[300px] bg-zinc-800 rounded-t-3xl border-t border-zinc-700 p-6 flex flex-col gap-4 translate-y-12 animate-pulse-slow">
-							<div class="w-12 h-1 bg-zinc-600 rounded-full mx-auto mb-2"></div>
-							<div class="h-14 w-full bg-zinc-700/50 rounded-xl"></div>
-							<div class="h-14 w-full bg-zinc-700/50 rounded-xl"></div>
-							<div class="h-14 w-full bg-indigo-600/40 border border-indigo-500 rounded-xl flex items-center px-4">
+    <section id="pwa-guide" class="py-32 px-6 bg-zinc-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10 glide">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="font-['Montserrat'] text-4xl md:text-5xl font-bold mb-6 tracking-tight">Experience them natively.</h2>
+                    <p class="font-['Inter'] text-lg text-zinc-400 font-light leading-relaxed mb-8">
+                        All of the applications featured here are built as Progressive Web Apps (PWAs). This means you don't need an app store to install them. You can save them directly to your phone's home screen for a fast, native-like experience that works beautifully even when your connection is unstable.
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold font-['Montserrat']">1</div>
+                            <div>
+                                <h4 class="font-['Montserrat'] font-bold text-xl mb-1">Open the Demo</h4>
+                                <p class="font-['Inter'] text-zinc-400 text-sm">Navigate to any of the live demo links using Safari (iOS) or Chrome (Android).</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center font-bold font-['Montserrat']">2</div>
+                            <div>
+                                <h4 class="font-['Montserrat'] font-bold text-xl mb-1">Access the Menu</h4>
+                                <p class="font-['Inter'] text-zinc-400 text-sm">Tap the Share icon <span class="inline-block px-1 bg-zinc-800 rounded mx-1">↑</span> in Safari, or the three-dot menu <span class="inline-block px-1 bg-zinc-800 rounded mx-1">⋮</span> in Chrome.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold font-['Montserrat']">3</div>
+                            <div>
+                                <h4 class="font-['Montserrat'] font-bold text-xl mb-1">Add to Home Screen</h4>
+                                <p class="font-['Inter'] text-zinc-400 text-sm">Scroll down and tap <span class="font-bold text-white">"Add to Home Screen"</span>. The app will now appear natively alongside your other apps!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex justify-center">
+                    {/* Abstract Phone Mockup showing "Add to Home Screen" */}
+                    <div class="w-72 h-[600px] bg-zinc-950 rounded-[3rem] border-[8px] border-zinc-800 shadow-2xl relative overflow-hidden flex flex-col items-center pt-8">
+                        {/* Notch */}
+                        <div class="absolute top-0 w-1/2 h-6 bg-zinc-800 rounded-b-xl"></div>
+                        
+                        {/* Mock App Interface */}
+                        <div class="w-[85%] mt-8 flex flex-col gap-4">
+                            <div class="h-10 border border-zinc-800 rounded-full bg-zinc-900 flex items-center px-4">
+                                <div class="w-4 h-4 rounded-full bg-zinc-700"></div>
+                                <div class="w-3/4 h-2 ml-4 rounded-full bg-zinc-800"></div>
+                            </div>
+                            <div class="h-48 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                                    <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="h-2 rounded-full w-full bg-zinc-800"></div>
+                            <div class="h-2 rounded-full w-4/5 bg-zinc-800"></div>
+                            <div class="h-2 rounded-full w-3/5 bg-zinc-800"></div>
+                        </div>
+
+                        {/* Mock Share Sheet sliding up */}
+                        <div class="absolute bottom-0 w-full h-[300px] bg-zinc-800 rounded-t-3xl border-t border-zinc-700 p-6 flex flex-col gap-4 translate-y-12 animate-pulse-slow">
+                            <div class="w-12 h-1 bg-zinc-600 rounded-full mx-auto mb-2"></div>
+                            <div class="h-14 w-full bg-zinc-700/50 rounded-xl"></div>
+                            <div class="h-14 w-full bg-zinc-700/50 rounded-xl"></div>
+                            <div class="h-14 w-full bg-indigo-600/40 border border-indigo-500 rounded-xl flex items-center px-4">
                                 <svg class="w-6 h-6 text-indigo-300 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-								<div class="h-3 rounded-full w-32 bg-indigo-200"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                <div class="h-3 rounded-full w-32 bg-indigo-200"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-	<style>
-		.animate-pulse-slow {
-			animation: float 6s ease-in-out infinite;
-		}
-		@keyframes float {
-			0%, 100% { transform: translateY(2rem); }
-			50% { transform: translateY(1.5rem); }
-		}
-	</style>
+    <style>
+        .animate-pulse-slow {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(2rem); }
+            50% { transform: translateY(1.5rem); }
+        }
+    </style>
 </Layout>
