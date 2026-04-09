@@ -92,7 +92,7 @@ const t = useTranslations(lang);
 		</div>
 		
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-			{projects.map((project) => {
+			{projects.map((project, index) => {
 				const isExternal = project.title === 'Letters from Albania';
 				const bgImage = project.image || 'https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=2940&auto=format&fit=crop'; 
 				
@@ -101,7 +101,7 @@ const t = useTranslations(lang);
 						href={lang === 'sq' && !isExternal ? `/sq${project.link}` : project.link}
 						target={isExternal ? '_blank' : undefined}
 						rel={isExternal ? 'noopener noreferrer' : undefined}
-						class="glide group relative flex flex-col justify-end min-h-[400px] overflow-hidden bg-zinc-900 rounded-sm hover:-translate-y-1 transition-all duration-500 hover:shadow-2xl cursor-pointer no-underline text-inherit"
+						class={`glide group relative flex flex-col justify-end min-h-[400px] overflow-hidden bg-zinc-900 rounded-sm hover:-translate-y-1 transition-all duration-500 hover:shadow-2xl cursor-pointer no-underline text-inherit ${index === 0 ? 'lg:col-span-2 min-h-[500px]' : ''}`}
 					>
 						<img src={bgImage} alt={project.title} class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700" />
 						<div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/60 to-transparent"></div>

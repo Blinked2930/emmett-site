@@ -8,6 +8,14 @@
     "image": "/images/smiling-in-sunset.jpeg"
   },
   {
+    "title": "Software & Web Apps",
+    "title_sq": "Softuer dhe Aplikacione Ueb",
+    "description": "A collection of Progressive Web Apps built to solve real-world problems natively in the browser.",
+    "description_sq": "Një koleksion i aplikacioneve progresive të uebit që adresojnë probleme reale drejtpërdrejt në shfletues.",
+    "link": "/software",
+    "image": "/images/fjaleflow-screenshot.png"
+  },
+  {
     "title": "From A Stranger",
     "title_sq": "Nga Një i Huaj",
     "description": "An analog project of 30-word handwritten messages left in public spaces across the world to spark connection and reflection.",

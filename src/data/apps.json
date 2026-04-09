@@ -1,0 +1,50 @@
+[
+  {
+    "id": "fjaleflow",
+    "title": "FjalëFlow",
+    "selling_point": "Master Albanian dynamically with Spaced Repetition.",
+    "selling_point_sq": "Përvetësoni shqipen në mënyrë dinamike me Përsëritjen në Hapësirë.",
+    "description": "A progressive web app built for language learners to dynamically practice and retain Albanian vocabulary with advanced spaced repetition (SRS). Offers real-time tracking, custom cram decks, sentence practice, and more.",
+    "description_sq": "Një aplikacion progresiv i uebit i ndërtuar për nxënësit e gjuhëve për të praktikuar dhe mbajtur fjalorin shqip me përsëritje në hapësirë (SRS). Ofron gjurmim në kohë reale, praktika fjalish dhe më shumë.",
+    "demo_url": "https://fjaleflow-demo.emmettfrett.com/",
+    "github_url": "https://github.com/Blinked2930/albanian-srs-app",
+    "image": "/images/fjaleflow-screenshot.png",
+    "features": ["Progressive Web App", "Spaced Repetition System", "React & Vite"]
+  },
+  {
+    "id": "app-two",
+    "title": "App Number Two",
+    "selling_point": "The selling point for the second web app.",
+    "selling_point_sq": "Pika e shitjes për aplikacionin e dytë të uebit.",
+    "description": "Provide a brief description of what this application does, who it is for, and the impact it has on its users.",
+    "description_sq": "Jepni një përshkrim të shkurtër të asaj që bën ky aplikacion, për kë është dhe ndikimin që ka tek përdoruesit e tij.",
+    "demo_url": "#",
+    "github_url": "#",
+    "image": "/images/apps/placeholder-2.png",
+    "features": ["Progressive Web App", "Offline Support"]
+  },
+  {
+    "id": "app-three",
+    "title": "App Number Three",
+    "selling_point": "The selling point for the third web app.",
+    "selling_point_sq": "Pika e shitjes për aplikacionin e tretë të uebit.",
+    "description": "Provide a brief description of what this application does, who it is for, and the impact it has on its users.",
+    "description_sq": "Jepni një përshkrim të shkurtër të asaj që bën ky aplikacion, për kë është dhe ndikimin që ka tek përdoruesit e tij.",
+    "demo_url": "#",
+    "github_url": "#",
+    "image": "/images/apps/placeholder-3.png",
+    "features": ["Progressive Web App", "Real-time sync"]
+  },
+  {
+    "id": "app-four",
+    "title": "App Number Four",
+    "selling_point": "The selling point for the fourth web app.",
+    "selling_point_sq": "Pika e shitjes për aplikacionin e katërt të uebit.",
+    "description": "Provide a brief description of what this application does, who it is for, and the impact it has on its users.",
+    "description_sq": "Jepni një përshkrim të shkurtër të asaj që bën ky aplikacion, për kë është dhe ndikimin që ka tek përdoruesit e tij.",
+    "demo_url": "#",
+    "github_url": "#",
+    "image": "/images/apps/placeholder-4.png",
+    "features": ["Progressive Web App", "Modern UI"]
+  }
+]

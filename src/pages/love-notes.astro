@@ -1,22 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from "node:fs";
+import path from "node:path";
 
 // We'll use your two folded note photos as "Process" images
 const processImages = [
-  '/love-notes/folded-1.jpeg',
-  '/love-notes/folded-2.jpeg'
+  "/love-notes/folded-1.jpeg",
+  "/love-notes/folded-2.jpeg",
 ];
 
 // Calculate notes stats dynamically
-const notesDir = path.join(process.cwd(), 'public', 'love-notes');
+const notesDir = path.join(process.cwd(), "public", "love-notes");
 let totalNotes = 226; // fallback
 let noteFiles: string[] = [];
 try {
   const files = fs.readdirSync(notesDir);
-  noteFiles = files.filter((f: string) => f.endsWith('.jpeg') && !f.startsWith('folded'));
+  noteFiles = files.filter(
+    (f: string) => f.endsWith(".jpeg") && !f.startsWith("folded"),
+  );
   if (noteFiles.length > 0) {
     totalNotes = noteFiles.length;
   }
@@ -29,90 +31,149 @@ const totalMinutes = totalNotes * minutesPerNote;
 const totalHours = Math.round(totalMinutes / 60);
 
 // Helper for formatting numbers with commas
-const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
+const formatNumber = (num: number) =>
+  new Intl.NumberFormat("en-US").format(num);
 ---
 
 <Layout title="From A Stranger | Emmett Frett">
-  <main class="min-h-screen bg-zinc-50 max-w-7xl mx-auto px-6 py-20">
-    <a href="/" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-wider uppercase mb-16 inline-flex items-center gap-2 font-bold">
-      &larr; Back to Home
-    </a>
+  <section
+    class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24"
+  >
+    <div class="absolute inset-0 z-0">
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-amber-900/40 via-zinc-900 to-orange-900/20"
+      >
+      </div>
+      <div
+        class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"
+      >
+      </div>
+    </div>
 
-    <header class="mb-20 max-w-3xl glide">
-      <h1 class="font-['Montserrat'] font-extrabold text-5xl md:text-6xl text-zinc-900 mb-6">
+    <div
+      class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10"
+    >
+      <a
+        href="/"
+        class="text-amber-200/60 hover:text-amber-100 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20"
+      >
+        &larr; Back to Home
+      </a>
+      <h1
+        class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl"
+      >
         From A Stranger
       </h1>
-      <p class="font-['Inter'] text-zinc-500 text-lg leading-relaxed font-light mb-12">
-        In an era of passive consumption, I leave 30-word handwritten messages in the places I travel. No context, no agenda—just a brief intersection of two lives.
-      </p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10 border-y border-zinc-200">
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalNotes)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Total Notes</span>
-        </div>
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalMinutes)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Minutes Spent</span>
-        </div>
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">~{formatNumber(totalHours)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Hours of Creating</span>
-        </div>
-      </div>
-    </header>
-
-    <section class="mb-32">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {processImages.map((img) => (
-          <div class="glide aspect-video overflow-hidden rounded-sm bg-zinc-200 grayscale contrast-125">
-             <img 
-               src={img} 
-               alt="Handwritten notes folded and ready to be left" 
-               class="w-full h-full object-cover opacity-90"
-             />
-          </div>
-        ))}
-      </div>
-      <p class="mt-6 font-['Inter'] text-zinc-400 text-sm italic text-center">
-        Every note is folded by hand, ensuring everyone feels the simplicity of love.
-      </p>
-    </section>
-
-    <div id="notes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-16">
-      </div>
-
-    <div class="mt-24 text-center glide">
-      <button 
-        onclick="window.location.reload()" 
-        class="px-8 py-4 bg-white border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-900 transition-all duration-300 rounded-sm font-['Inter'] text-xs font-bold tracking-[0.3em] uppercase"
+      <p
+        class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-amber-100/70 font-light max-w-3xl leading-relaxed mx-auto mb-16"
       >
-        See Some New Notes
-      </button>
+        In an era of passive consumption, I leave 30-word handwritten messages
+        in the places I travel. No context, no agenda—just a brief <span
+          class="font-semibold text-white">intersection of two lives.</span
+        >
+      </p>
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl mx-auto px-4 mt-8"
+      >
+        <div
+          class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300"
+        >
+          <span
+            class="block font-['Montserrat'] font-black text-4xl text-white mb-2"
+            >{formatNumber(totalNotes)}</span
+          >
+          <span
+            class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold"
+            >Total Notes</span
+          >
+        </div>
+        <div
+          class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300"
+        >
+          <span
+            class="block font-['Montserrat'] font-black text-4xl text-white mb-2"
+            >{formatNumber(totalMinutes)}</span
+          >
+          <span
+            class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold"
+            >Minutes Spent</span
+          >
+        </div>
+        <div
+          class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300"
+        >
+          <span
+            class="block font-['Montserrat'] font-black text-4xl text-white mb-2"
+            >~{formatNumber(totalHours)}</span
+          >
+          <span
+            class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold"
+            >Hours of Creating</span
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="bg-zinc-50 py-24 px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-7xl mx-auto">
+      <section id="process-section" class="mb-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {
+            processImages.map((img) => (
+              <div class="glide aspect-video overflow-hidden rounded-sm bg-zinc-200 grayscale contrast-125">
+                <img
+                  src={img}
+                  alt="Handwritten notes folded and ready to be left"
+                  class="w-full h-full object-cover opacity-90"
+                />
+              </div>
+            ))
+          }
+        </div>
+        <p class="mt-6 font-['Inter'] text-zinc-400 text-sm italic text-center">
+          Every note is folded by hand, ensuring everyone feels the simplicity
+          of love.
+        </p>
+      </section>
+
+      <div id="notes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-16"></div>
+
+      <div class="mt-24 text-center glide">
+        <button
+          id="reload-btn"
+          class="px-8 py-4 bg-zinc-900 border border-zinc-900 text-white hover:bg-zinc-800 transition-all duration-300 rounded-full font-['Inter'] text-xs font-bold tracking-[0.2em] uppercase shadow-xl hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
+        >
+          See Some New Notes
+        </button>
+      </div>
     </div>
   </main>
 </Layout>
 
 <script define:vars={{ noteFiles }}>
   function renderRandomNotes() {
-    const DISPLAY_COUNT = 8; 
-    const grid = document.getElementById('notes-grid');
-    
+    const DISPLAY_COUNT = 8;
+    const grid = document.getElementById("notes-grid");
+    if (!grid) return;
+
     const files = [...noteFiles];
-    
+
     for (let i = files.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [files[i], files[j]] = [files[j], files[i]];
     }
-    
+
     const selected = files.slice(0, DISPLAY_COUNT);
-    
+
     selected.forEach((filename, index) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'glide aspect-[4/3] overflow-hidden bg-white rounded-sm border border-zinc-200 shadow-sm group';
+      const wrapper = document.createElement("div");
+      wrapper.className =
+        "glide aspect-[4/3] overflow-hidden bg-white rounded-sm border border-zinc-200 shadow-sm group";
       wrapper.style.transitionDelay = `${index * 0.1}s`;
-      
-      // --- THE MATHEMATICAL BRIDGE FIX IS HERE ---
+
       wrapper.innerHTML = `
         <img 
           src="/love-notes/${filename}" 
@@ -121,22 +182,68 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
           loading="lazy"
         />
       `;
-      // ----------------------------------------
       grid.appendChild(wrapper);
     });
 
     if (window.IntersectionObserver) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('glide-in');
-          }
-        });
-      }, { threshold: 0.1 });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("glide-in");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
-      document.querySelectorAll('.glide').forEach((el) => observer.observe(el));
+      grid.querySelectorAll(".glide").forEach((el) => observer.observe(el));
     }
   }
 
-  document.addEventListener('DOMContentLoaded', renderRandomNotes);
+  function reloadAndScroll() {
+    const grid = document.getElementById("notes-grid");
+    const targetSection = document.getElementById("process-section");
+    if (!grid || !targetSection) return;
+
+    // Clear and re-render
+    grid.innerHTML = "";
+    renderRandomNotes();
+
+    // Scroll back to the process images smoothly
+    const yOffset = -40; // Adds breathing room above the folded pictures
+    const y =
+      targetSection.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Initial render
+    renderRandomNotes();
+
+    // Attach event listener to the button here instead of using inline onclick
+    const reloadBtn = document.getElementById("reload-btn");
+    if (reloadBtn) {
+      reloadBtn.addEventListener("click", reloadAndScroll);
+    }
+
+    // Initial observer for other glide elements on page load
+    if (window.IntersectionObserver) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("glide-in");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll("body > main .glide, header.glide, section.glide")
+        .forEach((el) => observer.observe(el));
+    }
+  });
 </script>

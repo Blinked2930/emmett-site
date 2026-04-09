@@ -32,35 +32,47 @@ const totalHours = Math.round(totalMinutes / 60);
 const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
 ---
 
-<Layout title="Nga Një i Huaj | Emmett Frett">
-  <main class="min-h-screen bg-zinc-50 max-w-7xl mx-auto px-6 py-20">
-    <a href="/sq" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-wider uppercase mb-16 inline-flex items-center gap-2 font-bold">
-      &larr; Kthehu në Kryefaqe
-    </a>
+<Layout title="Nga Një I Huaj | Emmett Frett">
+	<!-- Hero Section -->
+	<section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
+		<div class="absolute inset-0 z-0">
+			<!-- A warm analog background to evoke parchment or amber streetlights -->
+			<div class="absolute inset-0 bg-gradient-to-br from-amber-900/40 via-zinc-900 to-orange-900/20"></div>
+            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+		</div>
 
-    <header class="mb-20 max-w-3xl glide">
-      <h1 class="font-['Montserrat'] font-extrabold text-5xl md:text-6xl text-zinc-900 mb-6">
-        Nga Një i Huaj
-      </h1>
-      <p class="font-['Inter'] text-zinc-500 text-lg leading-relaxed font-light mb-12">
-        Në një epokë të konsumit pasiv, unë lë mesazhe të shkruara me dorë prej 30 fjalësh në vendet që udhëtoj. Asnjë kontekst, asnjë axhendë—vetëm një ndërthurje e shkurtër e dy jetëve.
-      </p>
+		<div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
+			<a href="/sq" class="text-amber-200/60 hover:text-amber-100 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
+				&larr; Kthehu në Kryefaqe
+			</a>
+			<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+				Nga Një I Huaj
+			</h1>
+			
+			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-amber-100/70 font-light max-w-3xl leading-relaxed mx-auto mb-16">
+				Në një epokë të konsumit pasiv, lë mesazhe të shkruara me dorë prej 30 fjalësh në vendet që udhëtoj. Pa kontekst, pa axhendë—vetëm një <span class="font-semibold text-white">kryqëzim i shkurtër i dy jetëve.</span>
+			</p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10 border-y border-zinc-200">
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalNotes)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Totali i Shënimeve</span>
-        </div>
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">{formatNumber(totalMinutes)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Minuta të Shpenzuara</span>
-        </div>
-        <div>
-          <span class="block font-['Montserrat'] font-bold text-3xl text-zinc-900">~{formatNumber(totalHours)}</span>
-          <span class="font-['Inter'] text-xs uppercase tracking-widest text-zinc-400 font-bold">Orë Krijimi</span>
-        </div>
-      </div>
-    </header>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl mx-auto px-4 mt-8">
+                <!-- Glassmorphism stat cards -->
+                <div class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300">
+                    <span class="block font-['Montserrat'] font-black text-4xl text-white mb-2">{formatNumber(totalNotes)}</span>
+                    <span class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold">Totali I Shënimeve</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300">
+                    <span class="block font-['Montserrat'] font-black text-4xl text-white mb-2">{formatNumber(totalMinutes)}</span>
+                    <span class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold">Minuta Të Shpenzuara</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center shadow-2xl hover:bg-white/10 transition-colors duration-300">
+                    <span class="block font-['Montserrat'] font-black text-4xl text-white mb-2">~{formatNumber(totalHours)}</span>
+                    <span class="font-['Inter'] text-[10px] uppercase tracking-[0.2em] text-amber-200/50 font-bold">Orë Krijimi</span>
+                </div>
+            </div>
+		</div>
+	</section>
+
+	<main class="bg-zinc-50 py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div class="max-w-7xl mx-auto">
 
     <section class="mb-32">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -84,11 +96,12 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
 
     <div class="mt-24 text-center glide">
       <button 
-        onclick="window.location.reload()" 
-        class="px-8 py-4 bg-white border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-900 transition-all duration-300 rounded-sm font-['Inter'] text-xs font-bold tracking-[0.3em] uppercase"
+        onclick="reloadAndScroll()" 
+        class="px-8 py-4 bg-zinc-900 border border-zinc-900 text-white hover:bg-zinc-800 transition-all duration-300 rounded-full font-['Inter'] text-xs font-bold tracking-[0.2em] uppercase shadow-xl hover:shadow-2xl hover:-translate-y-1"
       >
-        Shiko Disa Shënime të Reja
+        Shiko Shënime Të Reja
       </button>
+    </div>
     </div>
   </main>
 </Layout>
@@ -97,6 +110,7 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
   function renderRandomNotes() {
     const DISPLAY_COUNT = 8; 
     const grid = document.getElementById('notes-grid');
+    if (!grid) return;
     
     const files = [...noteFiles];
     
@@ -130,13 +144,43 @@ const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num)
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('glide-in');
+            observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('.glide').forEach((el) => observer.observe(el));
+      grid.querySelectorAll('.glide').forEach((el) => observer.observe(el));
     }
   }
 
-  document.addEventListener('DOMContentLoaded', renderRandomNotes);
+  function reloadAndScroll() {
+    const grid = document.getElementById('notes-grid');
+    if (!grid) return;
+    
+    // Clear and re-render
+    grid.innerHTML = '';
+    renderRandomNotes();
+    
+    // Scroll back to the top of the grid smoothly
+    const yOffset = -20; // adding a little breathing room
+    const y = grid.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderRandomNotes();
+    
+    // Initial observer for other glide elements on page load
+    if (window.IntersectionObserver) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('glide-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('body > main .glide, header.glide, section.glide').forEach((el) => observer.observe(el));
+    }
+  });
 </script>

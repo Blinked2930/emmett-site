@@ -7,54 +7,68 @@ const allEssays = await Astro.glob('./essays/*.md');
 ---
 
 <Layout title="Essays | Emmett Frett">
-  <main class="min-h-screen bg-zinc-50 max-w-5xl mx-auto px-6 py-20">
-    <a href="/" class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold">
-      &larr; Back to Home
-    </a>
+	<!-- Hero Section -->
+	<section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
+		<div class="absolute inset-0 z-0">
+			<!-- A subtle monochrome/editorial background -->
+			<div class="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-800"></div>
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+		</div>
 
-    <header class="mb-20 max-w-2xl glide">
-      <h1 class="font-['Montserrat'] font-black text-5xl md:text-6xl text-zinc-900 mb-6 tracking-tight">
-        Essays
-      </h1>
-      <p class="font-['Inter'] text-zinc-500 text-lg md:text-xl leading-relaxed font-light">
-        Life is best understood through the friction it provides. These are stories from my life—crafted to be unapologetic, genuine, and focused on the lessons learned in the pursuit of courageous authenticity.
-      </p>
-    </header>
+		<div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
+			<a href="/" class="text-zinc-400 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
+				&larr; Back to Home
+			</a>
+			<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+				Essays
+			</h1>
+			
+			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-400 font-light max-w-3xl leading-relaxed mx-auto">
+				Life is best understood through the friction it provides. These are stories from my life—crafted to be unapologetic, genuine, and focused on the lessons learned in the pursuit of courageous <span class="font-semibold text-white">authenticity.</span>
+			</p>
+		</div>
+	</section>
 
-    <div class="flex flex-col gap-10">
-      {allEssays.map((essay, index) => (
+	<section class="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 relative min-h-screen">
+		<div class="max-w-5xl mx-auto">
+
+    <div class="space-y-16">
+      {allEssays.map((essay, index) => {
+        const isEven = index % 2 === 0;
+        return (
         <a 
           href={essay.url} 
-          class="glide group block bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-md transition-shadow"
+          class="glide group block bg-white border border-zinc-200 rounded-xl overflow-hidden flex flex-col md:flex-row shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
           style={`transition-delay: ${index * 0.15}s;`}
         >
           
-          {/* THE FIX: Fixed container with absolute image for perfect cropping */}
-          <div class="w-full md:w-2/5 min-h-[16rem] md:min-h-full overflow-hidden relative">
+          <div class={`w-full md:w-2/5 min-h-[16rem] md:min-h-full overflow-hidden relative ${!isEven ? 'md:order-2 border-l border-zinc-200' : 'border-r border-zinc-200'}`}>
+            <div class="absolute inset-0 bg-zinc-900/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
             <img 
               src={essay.frontmatter.image} 
               alt={essay.frontmatter.title} 
-              class="absolute inset-0 w-full h-full object-cover scale-100 grayscale contrast-100 brightness-100 group-hover:scale-105 group-hover:grayscale-0 group-hover:contrast-105 group-hover:brightness-105 transition-all duration-[1500ms] ease-out" 
+              class="absolute inset-0 w-full h-full object-cover grayscale contrast-125 brightness-95 group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:contrast-105 group-hover:brightness-105 transition-all duration-[1000ms] ease-[cubic-bezier(0.2,1,0.2,1)]" 
             />
           </div>
 
-          <div class="w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-            <time class="font-['Inter'] text-xs font-bold tracking-widest text-zinc-400 uppercase mb-4 block">
+          <div class={`w-full md:w-3/5 p-8 md:p-12 flex flex-col justify-center bg-white z-0 ${!isEven ? 'md:order-1' : ''}`}>
+            <time class="font-['Inter'] text-xs font-bold tracking-[0.25em] text-zinc-400 uppercase mb-4 block group-hover:text-zinc-600 transition-colors">
               {essay.frontmatter.date}
             </time>
-            <h2 class="font-['Montserrat'] font-bold text-2xl md:text-3xl text-zinc-900 mb-4">
+            <h2 class="font-['Montserrat'] font-bold text-2xl md:text-3xl text-zinc-900 mb-4 group-hover:text-zinc-700 transition-colors tracking-tight">
               {essay.frontmatter.title}
             </h2>
-            <p class="font-['Inter'] text-zinc-600 leading-relaxed text-base md:text-lg mb-8">
+            <p class="font-['Inter'] text-zinc-500 leading-relaxed text-base md:text-lg mb-8 font-light">
               {essay.frontmatter.excerpt}
             </p>
-            <div class="font-['Inter'] text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase mt-auto border border-zinc-200 inline-block px-4 py-2 rounded-sm self-start group-hover:bg-zinc-900 group-hover:text-white transition-colors duration-300">
+            <div class="font-['Inter'] text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mt-auto border border-zinc-200 inline-block px-6 py-3 rounded-full self-start group-hover:bg-zinc-900 group-hover:text-white transition-all duration-300 group-hover:border-zinc-900 shadow-sm">
               Read Essay &rarr;
             </div>
           </div>
           
         </a>
-      ))}
+      )})}
     </div>
-  </main>
+    </div>
+  </section>
 </Layout>
