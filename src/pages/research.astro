@@ -1372,29 +1372,27 @@ print(all_results)
 ---
 
 <Layout title="Intellectual Inquiry & Research | Emmett Frett">
-	<!-- Hero Section -->
-	<section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
-		<div class="absolute inset-0 z-0">
-			<!-- A structured, formal background to evoke data and analysis -->
-			<div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-zinc-900 to-blue-900/30"></div>
+  <section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-zinc-900 to-blue-900/30"></div>
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
-		</div>
+    </div>
 
-		<div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
-			<a href="/" class="text-blue-200/60 hover:text-blue-100 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
-				&larr; Back to Home
-			</a>
-			<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
-				Economic Research & Analysis
-			</h1>
-			
-			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-blue-100/70 font-light max-w-3xl leading-relaxed mx-auto">
-				Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in <span class="font-semibold text-white">finance and economics.</span>
-			</p>
-		</div>
-	</section>
+    <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
+      <a href="/" class="text-blue-200/60 hover:text-blue-100 transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
+        &larr; Back to Home
+      </a>
+      <h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+        Economic Research & Analysis
+      </h1>
+      
+      <p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-blue-100/70 font-light max-w-3xl leading-relaxed mx-auto">
+        Formal due diligence and market impact evaluations for emerging technologies, utilizing my background in <span class="font-semibold text-white">finance and economics.</span>
+      </p>
+    </div>
+  </section>
 
-	<main class="bg-zinc-50 py-24 px-4 sm:px-6 lg:px-8 relative">
+  <main class="bg-zinc-50 py-24 px-4 sm:px-6 lg:px-8 relative">
         <div class="max-w-7xl mx-auto flex flex-col items-center">
             
       <article
@@ -1415,17 +1413,30 @@ print(all_results)
           >
             Part I: Formal Paper
           </h2>
-          <div
-            class="w-full max-w-4xl mx-auto h-[900px] bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-zinc-200 overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-          >
-            <iframe
-              src="/research-paper.pdf#view=FitH&pagemode=none"
-              title="Economic Research Paper"
-              class="w-full h-full border-none"
-            >
-              <p>Your browser does not support PDFs. <a
-              href="/research-paper.pdf">Download the PDF</a>.</p>
-            </iframe>
+          
+          <div class="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-zinc-200 overflow-hidden transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            
+            <div class="hidden md:block h-[900px]">
+              <iframe
+                src="/research-paper.pdf#view=FitH&pagemode=none"
+                title="Economic Research Paper"
+                class="w-full h-full border-none"
+              >
+                <p>Your browser does not support PDFs. <a href="/research-paper.pdf">Download the PDF</a>.</p>
+              </iframe>
+            </div>
+
+            <div class="md:hidden flex flex-col items-center justify-center p-10 text-center bg-zinc-50/50">
+              <svg class="w-12 h-12 text-zinc-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <h3 class="text-xl font-bold text-zinc-900 mb-2">Gender and Green Governance</h3>
+              <p class="text-zinc-500 mb-6 text-sm">Mobile browsers don't play nicely with embedded PDFs. Click below to view or download the full paper.</p>
+              <a href="/research-paper.pdf" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-sm text-sm tracking-wide">
+                Open Research Paper
+              </a>
+            </div>
+
           </div>
         </section>
 
