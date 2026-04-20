@@ -19,7 +19,7 @@
     "description": "A progressive web app designed to eliminate gym distractions. Features include an interactive volume tracker, AI-generated workouts, offline synchronization, and a comprehensive exercise database.",
     "description_sq": "Një aplikacion progresiv i uebit i dizajnuar për të eliminuar shpërqendrimet në palestër. Veçoritë përfshijnë një gjurmues ndërveprues të volumit, stërvitje të gjeneruara nga AI, sinkronizim jashtë linje dhe një bazë të dhënash gjithëpërfshirëse të ushtrimeve.",
     "demo_url": "https://repvault-demo.emmettfrett.com/",
-    "github_url": "https://github.com/Blinked2930/LiftLogPAW",
+    "github_url": "https://github.com/Blinked2930/Workout",
     "image": "/images/repvault-screenshot.png",
     "features": ["Progressive Web App", "Convex DB", "React & Vite"]
   },
