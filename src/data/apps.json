@@ -12,16 +12,16 @@
     "features": ["Progressive Web App", "Spaced Repetition System", "React & Vite"]
   },
   {
-    "id": "app-two",
-    "title": "App Number Two",
-    "selling_point": "The selling point for the second web app.",
-    "selling_point_sq": "Pika e shitjes për aplikacionin e dytë të uebit.",
-    "description": "Provide a brief description of what this application does, who it is for, and the impact it has on its users.",
-    "description_sq": "Jepni një përshkrim të shkurtër të asaj që bën ky aplikacion, për kë është dhe ndikimin që ka tek përdoruesit e tij.",
-    "demo_url": "#",
-    "github_url": "#",
-    "image": "/images/apps/placeholder-2.png",
-    "features": ["Progressive Web App", "Offline Support"]
+    "id": "repvault",
+    "title": "RepVault",
+    "selling_point": "A minimalist, offline-ready workout tracker built for deep focus.",
+    "selling_point_sq": "Një gjurmues stërvitjeje minimalist, gati jashtë linje, i ndërtuar për fokus të thellë.",
+    "description": "A progressive web app designed to eliminate gym distractions. Features include an interactive volume tracker, AI-generated workouts, offline synchronization, and a comprehensive exercise database.",
+    "description_sq": "Një aplikacion progresiv i uebit i dizajnuar për të eliminuar shpërqendrimet në palestër. Veçoritë përfshijnë një gjurmues ndërveprues të volumit, stërvitje të gjeneruara nga AI, sinkronizim jashtë linje dhe një bazë të dhënash gjithëpërfshirëse të ushtrimeve.",
+    "demo_url": "https://repvault-demo.emmettfrett.com/",
+    "github_url": "https://github.com/Blinked2930/LiftLogPAW",
+    "image": "/images/repvault-screenshot.png",
+    "features": ["Progressive Web App", "Convex DB", "React & Vite"]
   },
   {
     "id": "app-three",
