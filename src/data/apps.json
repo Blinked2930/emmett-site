@@ -1,5 +1,17 @@
 [
   {
+    "id": "kafe",
+    "title": "Kafe",
+    "selling_point": "Track your coffee intake and discover your brewing habits.",
+    "selling_point_sq": "Gjurmoni marrjen e kafesë dhe zbuloni zakonet tuaja të përgatitjes.",
+    "description": "A progressive web app built for users to log and share their daily coffee runs. Offers a real-time social feed, custom reaction tracking, personal habit insights, and native push notifications to keep friends connected. Users have joined from North America, South America, and Europe.",
+    "description_sq": "Një aplikacion progresiv i uebit i ndërtuar për përdoruesit për të regjistruar dhe ndarë daljet e tyre të përditshme për kafe. Ofron një furnizim social në kohë reale, gjurmim të reagimeve të personalizuara, njohuri mbi zakonet personale dhe njoftime native (push) për të mbajtur miqtë të lidhur. Përdorues i janë bashkuar nga Amerika e Veriut, Amerika e Jugut dhe Evropa.",
+    "demo_url": "https://kafe.emmettfrett.com/",
+    "github_url": "https://github.com/Blinked2930/coffee-tracking",
+    "image": "/images/kafe-screenshot.png",
+    "features": ["Analytics", "Data Visualization", "Next.js"]
+  },
+  {
     "id": "fjaleflow",
     "title": "FjalëFlow",
     "selling_point": "Master Albanian dynamically with Spaced Repetition.",
@@ -28,8 +40,8 @@
     "title": "Gritify",
     "selling_point": "Daily habit and task tracker for ultimate consistency.",
     "selling_point_sq": "Gjurmues ditor i zakoneve dhe detyrave për qëndrueshmëri maksimale.",
-    "description": "A dark-themed PWA designed to build discipline. Features partner synchronization, a grid view for long-term consistency tracking, and immersive daily celebrations.",
-    "description_sq": "Një PWA me temë të errët e dizajnuar për të ndërtuar disiplinë. Përfshin sinkronizimin me partnerin, një pamje rrjetë për gjurmimin afatgjatë të qëndrueshmërisë dhe festime ditore gjithëpërfshirëse.",
+    "description": "A progressive web app built for high-performers to actively track their 75-day challenges alongside an accountability squad. Offers real-time data syncing, dynamic workout and diet logging, universal unit translation, and a private legacy vault.",
+    "description_sq": "Një aplikacion progresiv i uebit i ndërtuar për performues të lartë për të gjurmuar në mënyrë aktive sfidat e tyre 75-ditore së bashku me një skuadër llogaridhënieje. Ofron sinkronizim të të dhënave në kohë reale, regjistrim dinamik të stërvitjeve dhe dietës, përkthim universal të njësive dhe një kasafortë private të trashëgimisë.",
     "demo_url": "https://gritify.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/Gritify",
     "image": "/images/gritify-screenshot.png",
@@ -52,23 +64,11 @@
     "title": "Birth Timer",
     "selling_point": "A clinical-grade APGAR scoring tool for midwives.",
     "selling_point_sq": "Një mjet i nivelit klinik për vlerësimin APGAR për mamitë.",
-    "description": "A mobile-first application designed for midwives to accurately track and record APGAR scores during childbirth. Features offline support and secure history management.",
-    "description_sq": "Një aplikacion i dizajnuar për mamitë për të gjurmuar dhe regjistruar saktësisht rezultatet APGAR gjatë lindjes. Përfshin mbështetje jashtë linje dhe menaxhim të sigurt të historisë.",
+    "description": "A secure, offline-first Progressive Web App that helps midwives track delivery milestones and APGAR intervals in real-time. Features automated audio/visual prompts, one-tap logging, and a strict zero-cloud architecture for absolute patient privacy.",
+    "description_sq": "Një Aplikacion Progresiv i Uebit i sigurt, me funksionalitet jashtë linje si parësor (offline-first), që ndihmon mamitë të gjurmojnë momentet e rëndësishme të lindjes dhe intervalet APGAR në kohë reale. Përfshin sinjalizime automatike audio/vizuale, regjistrim me një prekje dhe një arkitekturë strikte pa cloud për privatësi absolute të pacientit.",
     "demo_url": "https://birthtimer.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/APGARPWA",
     "image": "/images/birthtimer-screenshot.png",
     "features": ["Progressive Web App", "Clinical Tool", "Offline Support"]
-  },
-  {
-    "id": "kafe",
-    "title": "Kafe",
-    "selling_point": "Track your coffee intake and discover your brewing habits.",
-    "selling_point_sq": "Gjurmoni marrjen e kafesë dhe zbuloni zakonet tuaja të përgatitjes.",
-    "description": "A sleek tracker for coffee enthusiasts. Log your daily brews, analyze your caffeine consumption patterns, and perfect your recipes.",
-    "description_sq": "Një gjurmues i hijshëm për entuziastët e kafesë. Regjistroni kafet tuaja të përditshme, analizoni modelet tuaja të konsumit të kafeinës dhe përsosni recetat tuaja.",
-    "demo_url": "https://kafe.emmettfrett.com/",
-    "github_url": "https://github.com/Blinked2930/coffee-tracking",
-    "image": "/images/kafe-screenshot.png",
-    "features": ["Analytics", "Data Visualization", "Next.js"]
   }
 ]
