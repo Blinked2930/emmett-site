@@ -9,7 +9,8 @@
     "demo_url": "https://kafe.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/coffee-tracking",
     "image": "/images/kafe-screenshot.png",
-    "features": ["Analytics", "Data Visualization", "Next.js"]
+    "features": ["Analytics", "Data Visualization", "Next.js"],
+    "is_full_version": true
   },
   {
     "id": "fjaleflow",
@@ -45,7 +46,8 @@
     "demo_url": "https://gritify.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/Gritify",
     "image": "/images/gritify-screenshot.png",
-    "features": ["Progressive Web App", "Next.js", "Partner Sync"]
+    "features": ["Progressive Web App", "Next.js", "Partner Sync"],
+    "is_full_version": true
   },
   {
     "id": "fotion",
@@ -57,7 +59,8 @@
     "demo_url": "https://fotion.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/Fotion",
     "image": "/images/fotion-screenshot.png",
-    "features": ["Block Editor", "Real-time Sync", "Next.js"]
+    "features": ["Block Editor", "Real-time Sync", "Next.js"],
+    "is_full_version": true
   },
   {
     "id": "birthtimer",
@@ -69,6 +72,7 @@
     "demo_url": "https://birthtimer.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/APGARPWA",
     "image": "/images/birthtimer-screenshot.png",
-    "features": ["Progressive Web App", "Clinical Tool", "Offline Support"]
+    "features": ["Progressive Web App", "Clinical Tool", "Offline Support"],
+    "is_full_version": true
   }
 ]
