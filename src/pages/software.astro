@@ -88,7 +88,7 @@ const t = useTranslations(lang);
                                         rel="noopener noreferrer"
                                         class={`px-8 py-3 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 shadow-lg ${app.demo_url !== '#' ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:-translate-y-1' : 'bg-zinc-300 text-zinc-500 cursor-not-allowed'}`}
                                     >
-                                        Live Demo
+                                        {app.is_full_version ? 'Open App' : 'Live Demo'}
                                     </a>
                                     <a 
                                         href={app.github_url} 

@@ -8,112 +8,112 @@ const t = useTranslations(lang);
 ---
 
 <Layout title="Softuer | Emmett Frett">
-	<!-- Hero Section -->
-	<section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
-		<div class="absolute inset-0 z-0">
-			<!-- A subtle animated gradient or tech-focused background -->
-			<div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-zinc-900 to-purple-900/30"></div>
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex flex-col justify-center overflow-hidden bg-zinc-900 group py-24">
+        <div class="absolute inset-0 z-0">
+            <!-- A subtle animated gradient or tech-focused background -->
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-zinc-900 to-purple-900/30"></div>
             <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
-		</div>
+        </div>
 
-		<div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
-			<a href="/sq" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
-				&larr; Kthehu në Kryefaqe
-			</a>
-			<h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
-				Softuer & Zgjidhje
-			</h1>
-			
-			<p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-300 font-light max-w-3xl leading-relaxed mx-auto">
-				Gjatë muajve të fundit, kam përqendruar energjinë time në krijimin e <span class="font-semibold text-white">Aplikacioneve Progresive të Uebit</span> (PWA). Këto aplikacione përfaqësojnë udhëtimin tim në zhvillimin modern të uebit, të dizajnuara për performancë dhe zgjidhjen e problemeve reale në çdo pajisje.
-			</p>
-			
+        <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
+            <a href="/sq" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
+                &larr; Kthehu në Kryefaqe
+            </a>
+            <h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+                Softuer & Zgjidhje
+            </h1>
+            
+            <p class="font-['Inter'] text-lg sm:text-xl md:text-2xl text-zinc-300 font-light max-w-3xl leading-relaxed mx-auto">
+                Gjatë muajve të fundit, kam përqendruar energjinë time në krijimin e <span class="font-semibold text-white">Aplikacioneve Progresive të Uebit</span> (PWA). Këto aplikacione përfaqësojnë udhëtimin tim në zhvillimin modern të uebit, të dizajnuara për performancë dhe zgjidhjen e problemeve reale në çdo pajisje.
+            </p>
+            
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<!-- App Gallery Grid -->
-	<section class="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 relative">
-		<div class="max-w-7xl mx-auto">
-			<div class="mb-16 text-center glide">
-				<h2 class="font-['Montserrat'] text-3xl md:text-4xl font-bold text-zinc-900 mb-4 tracking-tight">Portofoli</h2>
-				<p class="font-['Inter'] text-zinc-500 font-light max-w-2xl mx-auto">Një vitrinë e dobisë, dizajnit dhe mësimit të vazhdueshëm. Eksploroni demot live dhe zhytuni thellë në kodin burimor.</p>
-			</div>
+    <!-- App Gallery Grid -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 text-center glide">
+                <h2 class="font-['Montserrat'] text-3xl md:text-4xl font-bold text-zinc-900 mb-4 tracking-tight">Portofoli</h2>
+                <p class="font-['Inter'] text-zinc-500 font-light max-w-2xl mx-auto">Një vitrinë e dobisë, dizajnit dhe mësimit të vazhdueshëm. Eksploroni demot live dhe zhytuni thellë në kodin burimor.</p>
+            </div>
 
-			<div class="space-y-24">
-				{apps.map((app, index) => {
-					const isEven = index % 2 === 0;
-					return (
-						<article id={app.id} class="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
-							
-							{/* Image Container */}
-							<div class={`w-full lg:w-1/2 relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/3] lg:aspect-[16/10] bg-zinc-200 ${!isEven ? 'lg:order-2' : ''}`}>
+            <div class="space-y-24">
+                {apps.map((app, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
+                        <article id={app.id} class="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
+                            
+                            {/* Image Container */}
+                            <div class={`w-full lg:w-1/2 relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/3] lg:aspect-[16/10] bg-zinc-200 ${!isEven ? 'lg:order-2' : ''}`}>
                                 <div class="absolute inset-0 bg-zinc-800/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
-								<img 
-									src={app.image} 
-									alt={`${app.title} UI Preview`}
-									onerror="this.onerror=null; this.src='/images/albanian-sunset.jpeg';"
-									class="absolute inset-0 w-full h-full object-cover object-center origin-center scale-[1.03] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)]"
-								/>
-							</div>
+                                <img 
+                                    src={app.image} 
+                                    alt={`${app.title} UI Preview`}
+                                    onerror="this.onerror=null; this.src='/images/albanian-sunset.jpeg';"
+                                    class="absolute inset-0 w-full h-full object-cover object-center origin-center scale-[1.03] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.2,1,0.2,1)]"
+                                />
+                            </div>
 
-							{/* Content Container */}
-							<div class={`w-full lg:w-1/2 flex flex-col justify-center ${!isEven ? 'lg:order-1' : ''}`}>
-								<div class="mb-4 flex flex-wrap gap-2">
-									{app.features.map(feature => (
-										<span class="px-3 py-1 bg-zinc-100 text-zinc-600 text-[10px] font-['Inter'] font-bold uppercase tracking-[0.1em] rounded-full">
-											{feature}
-										</span>
-									))}
-								</div>
-								
-								<h3 class="font-['Montserrat'] text-4xl font-bold text-zinc-900 mb-3 tracking-tighter">
-									{app.title}
-								</h3>
-								
-								<p class="font-['Inter'] text-xl font-medium text-zinc-700 mb-6 border-l-4 border-indigo-500 pl-4 py-1">
-									{app.selling_point_sq || app.selling_point}
-								</p>
-								
-								<p class="font-['Inter'] text-zinc-500 font-light leading-relaxed mb-8">
-									{app.description_sq || app.description}
-								</p>
-								
-								<div class="flex flex-wrap items-center gap-4 mt-auto">
-									<a 
-										href={app.demo_url} 
-										target="_blank" 
-										rel="noopener noreferrer"
+                            {/* Content Container */}
+                            <div class={`w-full lg:w-1/2 flex flex-col justify-center ${!isEven ? 'lg:order-1' : ''}`}>
+                                <div class="mb-4 flex flex-wrap gap-2">
+                                    {app.features.map(feature => (
+                                        <span class="px-3 py-1 bg-zinc-100 text-zinc-600 text-[10px] font-['Inter'] font-bold uppercase tracking-[0.1em] rounded-full">
+                                            {feature}
+                                        </span>
+                                    ))}
+                                </div>
+                                
+                                <h3 class="font-['Montserrat'] text-4xl font-bold text-zinc-900 mb-3 tracking-tighter">
+                                    {app.title}
+                                </h3>
+                                
+                                <p class="font-['Inter'] text-xl font-medium text-zinc-700 mb-6 border-l-4 border-indigo-500 pl-4 py-1">
+                                    {app.selling_point_sq || app.selling_point}
+                                </p>
+                                
+                                <p class="font-['Inter'] text-zinc-500 font-light leading-relaxed mb-8">
+                                    {app.description_sq || app.description}
+                                </p>
+                                
+                                <div class="flex flex-wrap items-center gap-4 mt-auto">
+                                    <a 
+                                        href={app.demo_url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
                                         class={`px-8 py-3 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 shadow-lg ${app.demo_url !== '#' ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:-translate-y-1' : 'bg-zinc-300 text-zinc-500 cursor-not-allowed'}`}
-									>
-										Demo Live
-									</a>
-									<a 
-										href={app.github_url} 
-										target="_blank" 
-										rel="noopener noreferrer"
-										class={`px-8 py-3 bg-white border-2 border-zinc-200 text-zinc-900 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 hover:border-zinc-900 hover:shadow-lg ${app.github_url === '#' ? 'opacity-50 cursor-not-allowed' : ''}`}
-									>
-										Kodi Burimor
-									</a>
-								</div>
-							</div>
-						</article>
-					);
-				})}
-			</div>
-		</div>
-	</section>
+                                    >
+                                        {app.is_full_version ? 'Hap Aplikacionin' : 'Demo Live'}
+                                    </a>
+                                    <a 
+                                        href={app.github_url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        class={`px-8 py-3 bg-white border-2 border-zinc-200 text-zinc-900 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 hover:border-zinc-900 hover:shadow-lg ${app.github_url === '#' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        Kodi Burimor
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    );
+                })}
+            </div>
+        </div>
+    </section>
 
 
 
-	<style>
-		.animate-pulse-slow {
-			animation: float 6s ease-in-out infinite;
-		}
-		@keyframes float {
-			0%, 100% { transform: translateY(2rem); }
-			50% { transform: translateY(1.5rem); }
-		}
-	</style>
+    <style>
+        .animate-pulse-slow {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(2rem); }
+            50% { transform: translateY(1.5rem); }
+        }
+    </style>
 </Layout>
