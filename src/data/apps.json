@@ -60,7 +60,6 @@
     "github_url": "https://github.com/Blinked2930/Fotion",
     "image": "/images/fotion-screenshot.png",
     "features": ["Block Editor", "Real-time Sync", "Next.js"],
-    "is_full_version": true
   },
   {
     "id": "birthtimer",
