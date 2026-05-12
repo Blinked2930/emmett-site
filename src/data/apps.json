@@ -59,7 +59,7 @@
     "demo_url": "https://fotion.emmettfrett.com/",
     "github_url": "https://github.com/Blinked2930/Fotion",
     "image": "/images/fotion-screenshot.png",
-    "features": ["Block Editor", "Real-time Sync", "Next.js"],
+    "features": ["Block Editor", "Real-time Sync", "Next.js"]
   },
   {
     "id": "birthtimer",
