@@ -6,10 +6,10 @@ import { useTranslations } from '../i18n/utils';
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Reorder projects to ensure "Letters from Albania" is at the bottom
+// Make "Letters from Albania" the primary featured project (index 0)
 const lettersProject = projects.find(p => p.title === 'Letters from Albania');
 const otherProjects = projects.filter(p => p.title !== 'Letters from Albania');
-const reorderedProjects = lettersProject ? [...otherProjects, lettersProject] : projects;
+const reorderedProjects = lettersProject ? [lettersProject, ...otherProjects] : projects;
 ---
 
 <style is:global>
@@ -93,9 +93,12 @@ const reorderedProjects = lettersProject ? [...otherProjects, lettersProject] : 
     <section class="py-24 px-6 bg-white border-b border-zinc-100">
         <div class="max-w-3xl mx-auto text-center glide">
             <h2 class="font-['Montserrat'] text-2xl font-bold text-zinc-900 mb-6 tracking-tight">{t('about.title')}</h2>
-            <p class="font-['Inter'] text-lg text-zinc-600 font-light leading-relaxed">
+            <p class="font-['Inter'] text-lg text-zinc-600 font-light leading-relaxed mb-8">
                 {t('about.text')}
             </p>
+            <a href="/cv" class="inline-block font-['Inter'] text-xs font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors">
+                {t('news.view_cv')}
+            </a>
         </div>
     </section>
 
@@ -181,7 +184,7 @@ const reorderedProjects = lettersProject ? [...otherProjects, lettersProject] : 
                 let gridSpanClass = "col-span-1 row-span-1";
                 if (index === 0) {
                     gridSpanClass = "md:col-span-2 md:row-span-2";
-                } else if (isExternal) {
+                } else if (index === 4) {
                     gridSpanClass = "md:col-span-2 lg:col-span-2";
                 }
 
