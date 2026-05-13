@@ -79,6 +79,59 @@ import Layout from '../layouts/Layout.astro';
 
 	</section>
 
+	{/* In The Media Section */}
+	<section class="py-24 px-6 bg-zinc-50 border-t border-zinc-200">
+		<div class="max-w-6xl mx-auto glide">
+			<div class="mb-16">
+				<h2 class="font-['Montserrat'] text-3xl font-bold text-zinc-900 mb-3 tracking-tight">In The Media</h2>
+				<p class="font-['Inter'] text-zinc-500 font-light">Features, press, and public recognition.</p>
+			</div>
+			
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				
+				<a href="https://familypromise.org/latest/marathon-for-family-homelessness/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-marathon.jpg" alt="Marathon for Family Homelessness" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">Community & Charity</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							Marathon for Family Homelessness
+						</h3>
+					</div>
+				</a>
+
+				<a href="https://hamlineoracle.com/13297/news/the-search-begins-for-a-new-provost/" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-provost.jpg" alt="Provost Search Committee" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">Academic Leadership</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							The Search Begins for a New Provost
+						</h3>
+					</div>
+				</a>
+
+				<a href="https://www.kimlartz.com/copy-of-concord-floral" target="_blank" rel="noopener noreferrer" class="group block space-y-4">
+					<div class="aspect-video w-full overflow-hidden rounded-sm relative bg-zinc-900">
+						<img src="/images/news-floral.jpg" alt="Concord Floral Production" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+						<div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-sm pointer-events-none"></div>
+					</div>
+					<div>
+						<p class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-400 mb-2">Sound Engineering</p>
+						<h3 class="font-['Montserrat'] font-bold text-lg text-zinc-900 leading-snug group-hover:underline decoration-zinc-300 underline-offset-4">
+							Hamline University Production of Concord Floral
+						</h3>
+					</div>
+				</a>
+
+			</div>
+		</div>
+	</section>
+
 	{/* Interactive Tab Logic */}
 	<script is:inline>
 		document.addEventListener('DOMContentLoaded', () => {
