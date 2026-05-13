@@ -154,16 +154,10 @@ const reorderedProjects = lettersProject
                 {t("about.title")}
             </h2>
             <p
-                class="font-['Inter'] text-lg text-zinc-600 font-light leading-relaxed mb-8"
+                class="font-['Inter'] text-lg text-zinc-600 font-light leading-relaxed"
             >
                 {t("about.text")}
             </p>
-            <a
-                href="/cv"
-                class="inline-block font-['Inter'] text-xs font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-zinc-900 transition-colors"
-            >
-                {t("news.view_cv")}
-            </a>
         </div>
     </section>
 
@@ -400,6 +394,15 @@ const reorderedProjects = lettersProject
                     );
                 })
             }
+        </div>
+
+        <div class="mt-20 text-center glide">
+            <a
+                href="/cv"
+                class="inline-block px-8 py-4 border border-zinc-200 text-zinc-600 rounded-full font-['Inter'] text-xs font-bold tracking-[0.2em] uppercase hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition-all duration-500"
+            >
+                {t("news.view_cv")}
+            </a>
         </div>
     </section>
 
