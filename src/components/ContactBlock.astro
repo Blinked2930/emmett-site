@@ -5,20 +5,17 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section
-    id="contact"
-    class="py-32 px-6 bg-white scroll-mt-0 border-t border-zinc-200 relative"
->
+<section id="contact" class="py-32 px-6 bg-zinc-900 scroll-mt-0 relative">
     <div class="max-w-4xl mx-auto text-center glide">
         <h2
-            class="font-['Montserrat'] text-5xl md:text-7xl font-black text-zinc-900 mb-8 tracking-tight leading-tight"
+            class="font-['Montserrat'] text-5xl md:text-7xl font-black text-white mb-8 tracking-tight leading-tight"
         >
             {t("contact.title")}<br />
             <span class="text-zinc-400 italic">{t("contact.title_italic")}</span
             >
         </h2>
         <p
-            class="font-['Inter'] text-xl text-zinc-600 font-light leading-relaxed mb-12 max-w-2xl mx-auto"
+            class="font-['Inter'] text-xl text-zinc-300 font-light leading-relaxed mb-12 max-w-2xl mx-auto"
         >
             {t("contact.subtitle")}
         </p>
@@ -26,14 +23,14 @@ const t = useTranslations(lang);
         <div class="flex flex-col items-center justify-center gap-8 relative">
             <div
                 id="toast-notification"
-                class="absolute -top-16 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-2 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase shadow-xl opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-50 whitespace-nowrap"
+                class="absolute -top-16 left-1/2 -translate-x-1/2 bg-white text-zinc-900 px-6 py-2 rounded-full font-['Inter'] text-xs font-bold tracking-[0.1em] uppercase shadow-[0_4px_24px_rgba(255,255,255,0.2)] opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-50 whitespace-nowrap"
             >
                 {t("contact.copied_toast")}
             </div>
 
             <a
                 href="mailto:emmettfrett@gmail.com?subject=Let's%20Collaborate"
-                class="inline-flex items-center justify-center gap-4 px-12 py-5 bg-zinc-900 text-white rounded-full font-['Inter'] text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 hover:bg-zinc-800 hover:scale-105 hover:shadow-2xl group"
+                class="inline-flex items-center justify-center gap-4 px-12 py-5 bg-white text-zinc-900 rounded-full font-['Inter'] text-sm font-bold tracking-[0.2em] uppercase transition-all duration-500 hover:bg-zinc-100 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] group"
             >
                 <span>{t("contact.btn_email")}</span>
                 <svg
@@ -55,7 +52,7 @@ const t = useTranslations(lang);
             >
                 <button
                     id="copy-email-btn"
-                    class="group flex items-center gap-2 text-zinc-400 hover:text-zinc-900 transition-colors duration-300 font-['Inter'] text-[11px] font-bold tracking-[0.2em] uppercase"
+                    class="group flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-300 font-['Inter'] text-[11px] font-bold tracking-[0.2em] uppercase"
                 >
                     <svg
                         class="w-4 h-4"
@@ -70,12 +67,12 @@ const t = useTranslations(lang);
                         ></path></svg
                     >
                     <span
-                        class="border-b border-transparent group-hover:border-zinc-900 transition-colors pb-0.5"
+                        class="border-b border-transparent group-hover:border-white transition-colors pb-0.5"
                         >{t("contact.btn_copy")}</span
                     >
                 </button>
 
-                <div class="w-1 h-1 rounded-full bg-zinc-300 hidden sm:block">
+                <div class="w-1 h-1 rounded-full bg-zinc-600 hidden sm:block">
                 </div>
 
                 <a
