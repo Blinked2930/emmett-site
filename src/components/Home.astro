@@ -23,7 +23,6 @@ const reorderedProjects = lettersProject
 </style>
 
 <Layout title={t("nav.title")}>
-    <!-- Hero Section -->
     <section class="relative h-screen overflow-hidden bg-zinc-900 group">
         <div
             id="hero-slider"
@@ -89,14 +88,12 @@ const reorderedProjects = lettersProject
             <div
                 class="flex flex-col sm:flex-row items-center justify-center gap-6"
             >
-                <!-- Primary CTA - Most prominent element -->
                 <a
-                    href="#footer-contact"
+                    href="#contact"
                     class="group w-full sm:w-auto px-10 py-5 bg-white text-zinc-900 rounded-full font-['Inter'] text-sm font-bold tracking-[0.2em] uppercase hover:bg-zinc-100 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-500"
                 >
                     {t("hero.btn.primary")}
                 </a>
-                <!-- Secondary CTA -->
                 <a
                     href="#showcase"
                     class="group w-full sm:w-auto px-8 py-5 bg-zinc-900/30 border border-white/40 text-white rounded-full font-['Inter'] text-sm font-bold tracking-[0.2em] uppercase hover:bg-white/10 hover:border-white transition-all duration-500 backdrop-blur-sm"
@@ -124,7 +121,6 @@ const reorderedProjects = lettersProject
         </div>
     </section>
 
-    <!-- Quote Section -->
     <section
         class="bg-zinc-50 border-b border-zinc-200 py-32 px-4 sm:px-6 lg:px-8"
     >
@@ -145,7 +141,6 @@ const reorderedProjects = lettersProject
         </div>
     </section>
 
-    <!-- About Section -->
     <section class="py-24 px-6 bg-white border-b border-zinc-100">
         <div class="max-w-3xl mx-auto text-center glide">
             <h2
@@ -161,7 +156,6 @@ const reorderedProjects = lettersProject
         </div>
     </section>
 
-    <!-- Core Capabilities (Replacing News) -->
     <section class="py-32 px-6 bg-zinc-50 border-b border-zinc-200">
         <div class="max-w-6xl mx-auto glide">
             <div class="text-center mb-20">
@@ -173,9 +167,7 @@ const reorderedProjects = lettersProject
                 <div class="w-16 h-1 bg-zinc-900 mx-auto rounded-full"></div>
             </div>
 
-            <!-- Strict Symmetry: 2x2 Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                <!-- Card 1 -->
                 <div
                     class="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 border border-zinc-100 group flex flex-col justify-between h-full"
                 >
@@ -209,7 +201,6 @@ const reorderedProjects = lettersProject
                     </p>
                 </div>
 
-                <!-- Card 2 -->
                 <div
                     class="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 border border-zinc-100 group flex flex-col justify-between h-full"
                 >
@@ -243,7 +234,6 @@ const reorderedProjects = lettersProject
                     </p>
                 </div>
 
-                <!-- Card 3 -->
                 <div
                     class="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 border border-zinc-100 group flex flex-col justify-between h-full"
                 >
@@ -281,7 +271,6 @@ const reorderedProjects = lettersProject
                     </p>
                 </div>
 
-                <!-- Card 4 -->
                 <div
                     class="bg-white rounded-3xl p-10 shadow-sm hover:shadow-xl transition-shadow duration-500 border border-zinc-100 group flex flex-col justify-between h-full"
                 >
@@ -318,7 +307,6 @@ const reorderedProjects = lettersProject
         </div>
     </section>
 
-    <!-- Visual Showcase -->
     <section id="showcase" class="py-32 px-6 max-w-7xl mx-auto scroll-mt-20">
         <div class="mb-24 text-center glide">
             <h2
@@ -331,7 +319,6 @@ const reorderedProjects = lettersProject
             </p>
         </div>
 
-        <!-- Asymmetrical Grid -->
         <div
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-[400px]"
         >
@@ -406,7 +393,6 @@ const reorderedProjects = lettersProject
         </div>
     </section>
 
-    <!-- Testimonials (Social Proof) Section -->
     <section
         class="py-32 px-6 bg-zinc-900 text-zinc-50 border-t border-zinc-800"
     >
@@ -421,7 +407,6 @@ const reorderedProjects = lettersProject
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
                 <div
                     class="bg-zinc-800/50 rounded-3xl p-10 border border-zinc-700/50 flex flex-col justify-between h-full hover:bg-zinc-800 transition-colors duration-500"
                 >
@@ -453,7 +438,6 @@ const reorderedProjects = lettersProject
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
                 <div
                     class="bg-zinc-800/50 rounded-3xl p-10 border border-zinc-700/50 flex flex-col justify-between h-full hover:bg-zinc-800 transition-colors duration-500"
                 >
@@ -485,7 +469,6 @@ const reorderedProjects = lettersProject
                     </div>
                 </div>
 
-                <!-- Testimonial 3 -->
                 <div
                     class="bg-zinc-800/50 rounded-3xl p-10 border border-zinc-700/50 flex flex-col justify-between h-full hover:bg-zinc-800 transition-colors duration-500"
                 >
@@ -517,6 +500,45 @@ const reorderedProjects = lettersProject
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section
+        id="contact"
+        class="py-32 px-6 bg-white scroll-mt-0 border-t border-zinc-200"
+    >
+        <div class="max-w-4xl mx-auto text-center glide">
+            <h2
+                class="font-['Montserrat'] text-5xl md:text-7xl font-black text-zinc-900 mb-8 tracking-tight leading-tight"
+            >
+                Let's Build Something<br />
+                <span class="text-zinc-400 italic">Together.</span>
+            </h2>
+            <p
+                class="font-['Inter'] text-xl text-zinc-600 font-light leading-relaxed mb-12 max-w-2xl mx-auto"
+            >
+                Whether you have a specific project in mind, want to collaborate
+                on a community initiative, or just want to chat about system
+                design, my inbox is always open.
+            </p>
+            <a
+                href="mailto:emmettfrett@gmail.com?subject=Let's%20Collaborate"
+                class="inline-flex items-center justify-center gap-4 px-12 py-6 bg-zinc-900 text-white rounded-full font-['Inter'] text-lg font-bold tracking-[0.1em] transition-all duration-500 hover:bg-zinc-800 hover:scale-105 hover:shadow-2xl group"
+            >
+                <span>Start the Conversation</span>
+                <svg
+                    class="w-6 h-6 group-hover:translate-x-2 transition-transform duration-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+                </svg>
+            </a>
         </div>
     </section>
 
