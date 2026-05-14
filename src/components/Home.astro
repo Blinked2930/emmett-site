@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ContactBlock from "./ContactBlock.astro";
 import projects from "../data/projects.json";
 import { useTranslations } from "../i18n/utils";
 
@@ -503,8 +502,6 @@ const reorderedProjects = lettersProject
             </div>
         </div>
     </section>
-
-    <ContactBlock />
 
     <script is:inline>
         document.addEventListener("DOMContentLoaded", () => {
