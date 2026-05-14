@@ -17,98 +17,94 @@ const toggleText = lang === "en" ? "Shqip (SQ)" : "English (EN)";
 ---
 
 <footer id="footer-contact" class="border-t border-zinc-100 bg-white">
-  <div class="max-w-6xl mx-auto px-6 py-24">
-    <div class="flex flex-col lg:flex-row justify-between items-start gap-16">
-      <div class="max-w-xl glide">
+  <div class="max-w-6xl mx-auto px-6 py-16">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-10">
+      <div class="text-center lg:text-left glide">
         <h2
-          class="font-['Inter'] text-2xl md:text-3xl font-light text-zinc-900 leading-snug tracking-tight"
+          class="font-['Inter'] text-xl md:text-2xl font-light text-zinc-900 leading-snug tracking-tight"
         >
           {t("footer.headline")}
         </h2>
       </div>
 
       <div
-        class="flex flex-col items-center lg:items-end gap-10 w-full lg:w-auto glide"
+        class="flex flex-col items-center lg:items-end gap-6 w-full lg:w-auto glide"
       >
-        <div
-          class="flex flex-col sm:flex-row items-center gap-5 sm:gap-6 w-full sm:w-auto"
-        >
+        <div class="flex items-center justify-center gap-6">
+          <a
+            href="/cv"
+            class="inline-block font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-zinc-900 transition-all duration-300 hover:scale-110"
+          >
+            CV & Media
+          </a>
+
+          <div class="w-px h-4 bg-zinc-200"></div>
+
           <a
             href="mailto:emmettfrett@gmail.com?subject=Hello%20from%20the%20website"
-            class="group flex items-center justify-center gap-3 h-12 px-7 w-full sm:w-fit bg-zinc-900 text-white rounded-full font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 hover:bg-zinc-800 hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
+            class="text-zinc-500 hover:text-zinc-900 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-md"
+            aria-label="Email"
           >
-            <span>{t("footer.btn")}</span>
             <svg
-              class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-500"
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              viewBox="0 0 24 24"
             >
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
+              <path
+                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              ></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
           </a>
 
-          <div class="hidden sm:block w-px h-6 bg-zinc-200"></div>
-
-          <div class="flex items-center gap-5">
-            <a
-              href="/cv"
-              class="inline-block font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-zinc-900 transition-all duration-300 hover:scale-110"
+          <a
+            href="https://www.linkedin.com/in/emmettfrett/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-zinc-500 hover:text-[#0A66C2] transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-md"
+            aria-label="LinkedIn"
+          >
+            <svg
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              CV & Media
-            </a>
+              <path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              ></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
 
-            <div class="w-px h-4 bg-zinc-200"></div>
-
-            <a
-              href="https://www.linkedin.com/in/emmettfrett/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-zinc-500 hover:text-[#0A66C2] transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-md"
-              aria-label="LinkedIn"
+          <a
+            href="https://substack.com/@emmettfrett"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-zinc-500 hover:text-[#FF6719] transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:drop-shadow-md"
+            aria-label="Substack"
+          >
+            <svg
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              <svg
-                class="w-6 h-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                ></path>
-                <rect x="2" y="9" width="4" height="12"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
-            </a>
-
-            <a
-              href="https://substack.com/@emmettfrett"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-zinc-500 hover:text-zinc-900 transition-colors duration-300 hover:scale-110"
-              aria-label="Substack"
-            >
-              <svg
-                class="w-6 h-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M4 5h16v3H4z"></path>
-                <path d="M4 11h16v10l-8-4-8 4z"></path>
-              </svg>
-            </a>
-          </div>
+              <path d="M4 5h16v3H4z"></path>
+              <path d="M4 11h16v10l-8-4-8 4z"></path>
+            </svg>
+          </a>
         </div>
 
         <div class="text-center lg:text-right w-full lg:w-auto">
@@ -127,7 +123,7 @@ const toggleText = lang === "en" ? "Shqip (SQ)" : "English (EN)";
     </div>
 
     <div
-      class="mt-24 pt-10 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6"
+      class="mt-16 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6"
     >
       {/* THE LANGUAGE TOGGLE BUTTON (FOOTER) */}
       <a
