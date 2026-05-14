@@ -62,6 +62,13 @@ export const ui = {
     'footer.btn': 'Email Me',
     'footer.location': 'Albania',
     'footer.year': 'Peace Corps 2026',
+    'contact.title': 'Let\'s Build Something',
+    'contact.title_italic': 'Together.',
+    'contact.subtitle': 'Whether you have a specific project in mind, want to collaborate on a community initiative, or just want to chat about system design, my inbox is always open.',
+    'contact.btn_email': 'Start the Conversation',
+    'contact.btn_copy': 'Copy Email Address',
+    'contact.btn_linkedin': 'Connect on LinkedIn',
+    'contact.copied_toast': 'Email copied to clipboard!'
   },
   sq: {
     'nav.title': 'Emmett Frett | Jeta është një Aventurë',
@@ -118,5 +125,12 @@ export const ui = {
     'footer.btn': 'Më Dërgo Email',
     'footer.location': 'Shqipëri',
     'footer.year': 'Korpusi i Paqes 2026',
+    'contact.title': 'Le të ndërtojmë diçka',
+    'contact.title_italic': 'Së bashku.',
+    'contact.subtitle': 'Pavarësisht nëse keni një projekt specifik në mendje, dëshironi të bashkëpunoni në një nismë komunitare, ose thjesht dëshironi të bisedoni rreth dizajnit të sistemeve, kutia ime e postës është gjithmonë e hapur.',
+    'contact.btn_email': 'Fillo Bisedën',
+    'contact.btn_copy': 'Kopjo Emailin',
+    'contact.btn_linkedin': 'Lidhu në LinkedIn',
+    'contact.copied_toast': 'Emaili u kopjua!'
   },
 } as const;
