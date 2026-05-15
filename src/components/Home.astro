@@ -23,12 +23,12 @@ const reorderedProjects = lettersProject
 </style>
 
 <Layout title={t("nav.title")}>
-    <section class="relative h-screen overflow-hidden bg-zinc-900 group">
+    <section class="relative h-[85vh] md:h-screen overflow-hidden bg-zinc-900 group">
         <div
             id="hero-slider"
-            class="flex w-full h-full transition-transform duration-1000 ease-[cubic-bezier(0.7,0,0.3,1)]"
+            class="flex w-full h-full md:transition-transform md:duration-1000 md:ease-[cubic-bezier(0.7,0,0.3,1)]"
         >
-            <div class="min-w-full h-full relative">
+            <div class="min-w-full h-full relative shrink-0">
                 <img
                     src="/images/albanian-sunset.jpeg"
                     alt="Albanian Sunset"
@@ -37,7 +37,7 @@ const reorderedProjects = lettersProject
                 <div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply">
                 </div>
             </div>
-            <div class="min-w-full h-full relative">
+            <div class="min-w-full h-full relative shrink-0 hidden md:block">
                 <img
                     src="/images/on-top-bunker.jpeg"
                     alt="Sunset in Albania"
@@ -46,7 +46,7 @@ const reorderedProjects = lettersProject
                 <div class="absolute inset-0 bg-zinc-900/50 mix-blend-multiply">
                 </div>
             </div>
-            <div class="min-w-full h-full relative">
+            <div class="min-w-full h-full relative shrink-0 hidden md:block">
                 <img
                     src="/images/shaking-hands.jpeg"
                     alt="Shaking Hands"
@@ -63,7 +63,7 @@ const reorderedProjects = lettersProject
         </div>
 
         <div
-            class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto mt-20 glide"
+            class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto mt-10 md:mt-20 glide"
         >
             <h1
                 class="font-['Montserrat'] font-black text-6xl sm:text-7xl md:text-8xl text-white mb-6 tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
@@ -72,7 +72,7 @@ const reorderedProjects = lettersProject
             </h1>
 
             <p
-                class="font-['Inter'] text-xl sm:text-2xl md:text-3xl text-zinc-100 font-light mb-12 leading-relaxed max-w-4xl mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
+                class="font-['Inter'] text-xl sm:text-2xl md:text-3xl text-zinc-100 font-light mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]"
             >
                 <span class="font-semibold text-white tracking-wide"
                     >{t("hero.subheadline.building")}</span
@@ -104,7 +104,7 @@ const reorderedProjects = lettersProject
         </div>
 
         <div
-            class="absolute bottom-12 left-0 right-0 z-30 flex justify-center gap-4"
+            class="hidden md:flex absolute bottom-12 left-0 right-0 z-30 justify-center gap-4"
         >
             <button
                 class="slider-dot w-2 h-2 rounded-full bg-white transition-all duration-300 scale-150 opacity-100"
@@ -542,7 +542,7 @@ const reorderedProjects = lettersProject
     <script is:inline>
         document.addEventListener("DOMContentLoaded", () => {
             const slider = document.getElementById("hero-slider");
-            if (slider) {
+            if (slider && window.innerWidth >= 768) {
                 const dots = document.querySelectorAll(".slider-dot");
                 const slideCount = dots.length;
                 let currentIndex = 0;

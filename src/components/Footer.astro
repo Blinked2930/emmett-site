@@ -11,6 +11,7 @@ if (currentPath.startsWith("/sq/")) {
 } else if (currentPath === "/sq" || currentPath === "/sq/") {
   currentPath = "/";
 }
+const isHome = currentPath === "/" || currentPath === "/sq" || currentPath === "/sq/";
 const togglePath =
   lang === "en" ? `/sq${currentPath === "/" ? "" : currentPath}` : currentPath;
 const toggleText = lang === "en" ? "Shqip (SQ)" : "English (EN)";
@@ -126,12 +127,14 @@ const toggleText = lang === "en" ? "Shqip (SQ)" : "English (EN)";
       class="mt-16 pt-8 border-t border-zinc-50 flex flex-col md:flex-row justify-between items-center gap-6"
     >
       {/* THE LANGUAGE TOGGLE BUTTON (FOOTER) */}
-      <a
-        href={togglePath}
-        class="font-['Inter'] text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
-      >
-        {toggleText}
-      </a>
+      {!isHome && (
+        <a
+          href={togglePath}
+          class="font-['Inter'] text-[9px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
+        >
+          {toggleText}
+        </a>
+      )}
 
       <div
         class="flex gap-6 font-['Inter'] text-[9px] uppercase tracking-[0.4em] font-medium opacity-30"

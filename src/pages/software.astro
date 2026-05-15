@@ -15,10 +15,12 @@ const t = useTranslations(lang);
         </div>
 
         <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto glide pt-10">
-            <a href="/" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-sm tracking-widest uppercase mb-16 inline-flex items-center gap-2 font-bold z-20">
-                &larr; Back to Home
-            </a>
-            <h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl">
+            <div class="absolute top-6 left-6 z-50">
+                <a href="/" class="text-zinc-300 hover:text-white transition-colors duration-300 font-['Inter'] text-xs tracking-[0.2em] uppercase flex items-center gap-2 font-bold bg-zinc-900/50 backdrop-blur-sm px-4 py-2 rounded-sm border border-zinc-800/50">
+                    &larr; Back to Home
+                </a>
+            </div>
+            <h1 class="font-['Montserrat'] font-black text-5xl sm:text-6xl md:text-7xl text-white mb-6 tracking-tight drop-shadow-xl mt-8">
                 Software & Solutions
             </h1>
             
@@ -41,7 +43,7 @@ const t = useTranslations(lang);
                 {apps.map((app, index) => {
                     const isEven = index % 2 === 0;
                     return (
-                        <article id={app.id} class="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
+                        <article id={app.id} class="flex flex-col-reverse lg:flex-row items-stretch gap-8 lg:gap-16 group glide">
                             
                             {/* Image Container */}
                             <a 
