@@ -39,19 +39,30 @@ const toggleText = lang === 'en' ? 'Shqip (SQ)' : 'English (EN)';
   <body class="bg-white text-zinc-900 antialiased">
     
     {/* Language Toggle and Nav */}
-    <div id="header-nav-container" class={`z-50 transition-all duration-500 flex items-center gap-4 ${isHome ? 'absolute md:fixed top-6 right-6 md:opacity-50 hover:opacity-100' : 'absolute top-6 right-6'}`}>
+    <div id="header-nav-container" class={`z-50 transition-all duration-500 ${isHome ? 'absolute md:fixed top-6 md:left-1/2 md:-translate-x-1/2 md:opacity-60 hover:opacity-100 w-full md:w-auto px-6 md:px-0 flex justify-end md:block' : 'absolute top-6 right-6'}`}>
       
-      {isHome && (
-        <nav class="hidden md:flex items-center gap-6 bg-white/80 backdrop-blur-sm px-6 py-2 border border-zinc-200 rounded-sm shadow-sm h-[34px]">
-          <a href={lang === 'en' ? "#showcase" : "/sq#showcase"} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-zinc-900">Projects</a>
-          <a href={lang === 'en' ? "/cv" : "/sq/cv"} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-zinc-900">CV</a>
-          <a href={lang === 'en' ? "/essays" : "/sq/essays"} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 hover:text-zinc-900">Essays</a>
-        </nav>
+      {isHome ? (
+        <>
+          {/* Desktop Nav Pill */}
+          <nav class="hidden md:flex items-center bg-zinc-900/80 backdrop-blur-md border border-zinc-700/50 shadow-2xl rounded-full p-1.5 gap-1">
+            <a href={lang === 'en' ? "#showcase" : "/sq#showcase"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">Projects</a>
+            <a href={lang === 'en' ? "/cv" : "/sq/cv"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">CV</a>
+            <a href={lang === 'en' ? "/essays" : "/sq/essays"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">Essays</a>
+            <div class="w-px h-4 bg-zinc-700 mx-2"></div>
+            <a href={togglePath} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">
+              {toggleText}
+            </a>
+          </nav>
+          {/* Mobile Language Toggle */}
+          <a href={togglePath} class="md:hidden font-['Inter'] text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 bg-white/80 backdrop-blur-sm rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors shadow-sm flex items-center">
+            {toggleText}
+          </a>
+        </>
+      ) : (
+        <a href={togglePath} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 bg-white/80 backdrop-blur-sm rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors shadow-sm flex items-center">
+          {toggleText}
+        </a>
       )}
-
-      <a href={togglePath} class="font-['Inter'] text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 px-4 py-2 border border-zinc-200 bg-white/80 backdrop-blur-sm rounded-sm hover:bg-zinc-100 hover:text-zinc-900 transition-colors shadow-sm h-[34px] flex items-center">
-        {toggleText}
-      </a>
     </div>
 
     {/* This slot is the magic portal where your Home.astro content appears */}
