@@ -45,9 +45,15 @@ const toggleText = lang === 'en' ? 'Shqip (SQ)' : 'English (EN)';
         <>
           {/* Desktop Nav Pill */}
           <nav class="hidden md:flex items-center bg-zinc-900/80 backdrop-blur-md border border-zinc-700/50 shadow-2xl rounded-full p-1.5 gap-1">
-            <a href={lang === 'en' ? "#showcase" : "/sq#showcase"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">Projects</a>
-            <a href={lang === 'en' ? "/cv" : "/sq/cv"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">CV</a>
-            <a href={lang === 'en' ? "/essays" : "/sq/essays"} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">Essays</a>
+            <a href={lang === 'en' ? "#showcase" : "/sq#showcase"} class="font-['Inter'] flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase bg-zinc-100 text-zinc-900 hover:bg-white px-5 py-2.5 rounded-full transition-all">
+              Projects <span class="text-xs leading-none">&darr;</span>
+            </a>
+            <a href={lang === 'en' ? "/cv" : "/sq/cv"} class="font-['Inter'] flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-5 py-2.5 rounded-full transition-all">
+              CV <span class="text-xs leading-none opacity-50">&nearr;</span>
+            </a>
+            <a href={lang === 'en' ? "/essays" : "/sq/essays"} class="font-['Inter'] flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-5 py-2.5 rounded-full transition-all">
+              Essays <span class="text-xs leading-none opacity-50">&nearr;</span>
+            </a>
             <div class="w-px h-4 bg-zinc-700 mx-2"></div>
             <a href={togglePath} class="font-['Inter'] text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-300 hover:text-white hover:bg-zinc-800 px-6 py-2.5 rounded-full transition-all">
               {toggleText}
